@@ -1,0 +1,63 @@
+[
+    {
+        "concept": "#Metaphysics",
+        "simple": "The study of the fundamental nature of reality, existence, and the world.",
+        "detailed": "Metaphysics is the branch of philosophy that examines the fundamental nature of reality, including the relationship between mind and matter, between substance and attribute, and between potentiality and actuality. It asks questions like: What is there? and What is it like? Key topics include ontology (the study of being), cosmology, and the nature of time and space."
+    },
+    {
+        "concept": "#Naturalism",
+        "simple": "The belief that only natural laws and forces operate in the universe.",
+        "detailed": "Naturalism is the philosophical viewpoint that everything arises from natural properties and causes, and supernatural or spiritual explanations are excluded or discounted. It holds that all phenomena can be explained in terms of natural causes and laws, without reference to a divine or supernatural realm."
+    },
+    {
+        "concept": "#Mathematics",
+        "simple": "The study of numbers, quantity, structure, and space.",
+        "detailed": "In philosophy, mathematics is often explored for its relationship with truth and reality. Philosophers like Pythagoras and Plato believed that mathematical objects were more real than the physical world, representing a perfect, abstract realm. The philosophy of mathematics investigates the assumptions, foundations, and implications of mathematics."
+    },
+    {
+        "concept": "#Mysticism",
+        "simple": "The belief in achieving a union or direct experience with ultimate reality.",
+        "detailed": "Mysticism involves the belief that one can attain a direct, intuitive experience of ultimate reality or divinity that transcends ordinary human knowledge. This experience is often described as a state of union with the absolute. Pythagoreanism, for instance, had mystical elements, believing that the study of numbers and music could purify the soul."
+    },
+    {
+        "concept": "#Ethics",
+        "simple": "The branch of philosophy dealing with moral principles and what is right and wrong.",
+        "detailed": "Ethics, or moral philosophy, is a branch of philosophy that involves systematizing, defending, and recommending concepts of right and wrong conduct. It seeks to resolve questions of human morality by defining concepts such as good and evil, right and wrong, virtue and vice, and justice and crime."
+    },
+    {
+        "concept": "#Epistemology",
+        "simple": "The study of knowledge itself: how we know what we know.",
+        "detailed": "Epistemology is the theory of knowledge. It is the branch of philosophy concerned with the nature of knowledge, justification, and the rationality of belief. It addresses questions such as: What does it mean to say that we 'know' something? What makes justified beliefs justified? And how do we acquire knowledge?"
+    },
+    {
+        "concept": "#SocraticMethod",
+        "simple": "A form of cooperative argumentative dialogue to stimulate critical thinking.",
+        "detailed": "The Socratic method is a form of inquiry and discussion between individuals, based on asking and answering questions to stimulate critical thinking and to draw out ideas and underlying presuppositions. It is a dialectical method, often involving a discussion in which the defense of one point of view is questioned; one participant may lead another to contradict themselves in some way, thus weakening the defender's point."
+    },
+    {
+        "concept": "#PoliticalPhilosophy",
+        "simple": "The study of fundamental questions about government, politics, liberty, and justice.",
+        "detailed": "Political philosophy is the study of topics such as power, justice, rights, law, and the enforcement of a legal code by authority. It often explores questions about the nature, scope, and legitimacy of public agents and institutions and the relationships between them. Plato's 'Republic' is a foundational text in this field."
+    },
+    {
+        "concept": "#Forms",
+        "simple": "Plato's theory that the physical world is not the 'real' world; instead, ultimate reality exists beyond our physical world.",
+        "detailed": "The Theory of Forms, articulated by Plato, argues that non-physical Forms (or Ideas) represent the most accurate reality. When we see a tree, we are only seeing a shadow or imitation of the perfect 'Form of Tree' that exists in an abstract, non-physical realm. These Forms are eternal, unchanging, and the source of all truth and knowledge."
+    },
+    {
+        "concept": "#Logic",
+        "simple": "The study of reasoning and valid inference.",
+        "detailed": "Logic is the systematic study of the form of valid inference and reasoning. It examines how conclusions can be derived from premises in a structured way. Aristotle is often considered the 'father of logic,' as he was the first to develop a formal system for reasoning, known as syllogistic logic."
+    },
+    {
+        "concept": "#Biology",
+        "simple": "The scientific study of life and living organisms.",
+        "detailed": "In philosophy, biology informs discussions on topics like the nature of life, evolution, and ethics. Aristotle was a pioneering biologist, conducting extensive empirical studies of animals and plants. His biological work was deeply intertwined with his philosophical inquiries into cause, form, and purpose (telos)."
+    },
+    {
+        "concept": "#Empiricism",
+        "simple": "The theory that all knowledge is based on experience derived from the senses.",
+        "detailed": "Empiricism is a philosophical stance that emphasizes the role of sensory experience in the formation of ideas, while discounting the notion of innate ideas. It argues that knowledge comes primarily or solely from sensory experience. Aristotle's focus on direct observation of the natural world makes him a key early figure in the empiricist tradition."
+    }
+]
+

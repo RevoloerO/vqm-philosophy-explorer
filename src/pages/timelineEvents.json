@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "Thales of Miletus",
+        "year": "c. 600 BC",
+        "fullYear": "c. 624–546 BC",
+        "summary": "The dawn of naturalistic explanation.",
+        "description": "Often considered the first philosopher and scientist in the Greek tradition, Thales of Miletus represents a pivotal shift from mythological explanations of the world to scientific inquiry. He sought to find a single, underlying substance (an 'arche') from which all things are derived, famously positing that this fundamental principle is water. By attempting to explain natural phenomena through observation and reason rather than the whims of gods, he laid the groundwork for all Western science and philosophy.",
+        "align": "right",
+        "concepts": ["#Metaphysics", "#Naturalism"]
+    },
+    {
+        "id": 2,
+        "title": "Pythagoras",
+        "year": "c. 530 BC",
+        "fullYear": "c. 570–495 BC",
+        "summary": "Mathematics as the language of the universe.",
+        "description": "Pythagoras and his semi-mystical school believed that the universe was governed by mathematical principles. For them, numbers were not just symbols but the actual essence of reality, creating the harmony they observed in music and the cosmos (the 'harmony of the spheres'). Their work went beyond the famous Pythagorean theorem, delving into concepts like the transmigration of souls and the importance of a structured, ascetic lifestyle to purify the spirit. This blend of mathematics and mysticism deeply influenced later philosophers, most notably Plato.",
+        "align": "left",
+        "concepts": ["#Metaphysics", "#Mathematics", "#Mysticism"]
+    },
+    {
+        "id": 3,
+        "title": "Socrates",
+        "year": "c. 440 BC",
+        "fullYear": "c. 470–399 BC",
+        "summary": "The unexamined life is not worth living.",
+        "description": "Socrates turned philosophy's focus inward, from the nature of the cosmos to the nature of human virtue and knowledge. Prowling the streets of Athens, he acted as a 'gadfly,' engaging citizens in dialogue and using his famous method of persistent questioning (the Socratic method) to expose contradictions in their beliefs. He wrote nothing himself, but his student Plato immortalized his relentless pursuit of truth. Socrates's insistence on self-examination and his dramatic trial and execution cemented his legacy as a martyr for free thought.",
+        "align": "right",
+        "concepts": ["#Ethics", "#Epistemology", "#SocraticMethod"]
+    },
+    {
+        "id": 4,
+        "title": "Plato Founds the Academy",
+        "year": "c. 387 BC",
+        "fullYear": "c. 387 BC",
+        "summary": "The world of ideal Forms is the true reality.",
+        "description": "A student of Socrates, Plato established the Academy, the first institution of higher learning in the Western world. At its core was his Theory of Forms, which posits that the physical world we perceive is merely a shadow of a higher, eternal reality of perfect concepts or 'Forms.' For example, we only see imperfect circles, but they are all copies of the perfect 'Form of the Circle.' In works like 'The Republic,' he explored how understanding these Forms could lead to a just and virtuous society, profoundly shaping Western political philosophy and epistemology.",
+        "align": "left",
+        "concepts": ["#Metaphysics", "#Epistemology", "#Ethics", "#PoliticalPhilosophy", "#Forms"]
+    },
+    {
+        "id": 5,
+        "title": "Aristotle & The Lyceum",
+        "year": "c. 335 BC",
+        "fullYear": "c. 335 BC",
+        "summary": "Systematizing logic and the natural world.",
+        "description": "Plato's most famous student, Aristotle, took a decidedly different approach. Instead of looking to a higher world of Forms, he focused on the empirical world around us. At his school, the Lyceum, he pioneered the systematic study of a breathtaking range of subjects, including biology, logic, ethics, politics, and physics. He invented formal logic, developed a framework for scientific inquiry based on observation, and argued that everything has a purpose or 'telos.' His comprehensive and methodical work became the foundation of Western thought for nearly two thousand years.",
+        "align": "right",
+        "concepts": ["#Logic", "#Ethics", "#Metaphysiscs", "#Biology", "#Empiricism"]
+    }
+]
