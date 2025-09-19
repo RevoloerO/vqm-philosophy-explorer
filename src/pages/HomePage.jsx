@@ -5,23 +5,31 @@ import philosophyConcepts from './philosophyConcepts.json';
 
 const conceptsMap = new Map(philosophyConcepts.map(c => [c.concept, c]));
 
+// Group events by era for structured rendering
+const eventsByEra = timelineEvents.reduce((acc, event) => {
+    const era = event.era || 'Unknown Era';
+    if (!acc[era]) {
+        acc[era] = [];
+    }
+    acc[era].push(event);
+    return acc;
+}, {});
+
 function HomePage() {
     const [eventModal, setEventModal] = useState(null);
     const [conceptModal, setConceptModal] = useState(null);
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [showGoToTop, setShowGoToTop] = useState(false);
     const [vortexPath, setVortexPath] = useState('');
+    const [dotProgress, setDotProgress] = useState(0); // For moving dot animation
 
     const timelineRef = useRef(null);
     const itemRefs = useRef([]);
     const ctaRef = useRef(null);
-    itemRefs.current = []; // Clear refs on re-render
-
-    const addToRefs = (el) => {
-        if (el && !itemRefs.current.includes(el)) {
-            itemRefs.current.push(el);
-        }
-    };
+    
+    itemRefs.current = timelineEvents.map(
+        (_, i) => itemRefs.current[i] ?? React.createRef()
+    );
 
     const drawVortexPath = () => {
         const ctaButton = ctaRef.current;
@@ -37,18 +45,19 @@ function HomePage() {
         let lastX = startX;
         let lastY = startY;
 
-        itemRefs.current.forEach((item) => {
+        itemRefs.current.forEach((itemRef, index) => {
+            const item = itemRef.current;
             if (!item) return;
-            const dot = item.querySelector('.timeline-dot');
-            if(!dot) return;
-            const dotRect = dot.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
             
-            const pointX = dotRect.left + dotRect.width / 2 - timelineContainerRect.left;
-            const pointY = dotRect.top + dotRect.height / 2 - timelineContainerRect.top;
+            const pointX = itemRect.left + itemRect.width / 2 - timelineContainerRect.left;
+            const pointY = itemRect.top + itemRect.height / 2 - timelineContainerRect.top;
 
-            const controlX1 = lastX;
+            // Create a more direct, serpentine downward path
+            const curveIntensity = 80;
+            const controlX1 = lastX + (index % 2 === 0 ? curveIntensity : -curveIntensity);
             const controlY1 = lastY + (pointY - lastY) * 0.5;
-            const controlX2 = pointX;
+            const controlX2 = pointX + (index % 2 === 0 ? -curveIntensity : curveIntensity);
             const controlY2 = pointY - (pointY - lastY) * 0.5;
             
             pathData += ` C ${controlX1},${controlY1} ${controlX2},${controlY2} ${pointX},${pointY}`;
@@ -58,9 +67,8 @@ function HomePage() {
 
         setVortexPath(pathData);
     };
-
+    
     useLayoutEffect(() => {
-        // A small timeout allows the DOM to settle before we measure element positions
         const timer = setTimeout(drawVortexPath, 100);
         window.addEventListener('resize', drawVortexPath);
         return () => {
@@ -78,14 +86,19 @@ function HomePage() {
                 const windowHeight = window.innerHeight;
                 setShowGoToTop(scrollY > windowHeight / 2);
                 if (!timelineRef.current) return;
+                
                 if (scrollY < windowHeight * 0.5) {
                     setFocusedIndex(null);
+                    setDotProgress(0); // Reset dot to start
                     return;
                 }
+
                 const viewportCenterY = windowHeight / 2;
                 let closestIndex = -1;
                 let minDistance = Infinity;
-                itemRefs.current.forEach((item, index) => {
+
+                itemRefs.current.forEach((itemRef, index) => {
+                    const item = itemRef.current;
                     if (!item) return;
                     const itemRect = item.getBoundingClientRect();
                     const itemCenterY = itemRect.top + itemRect.height / 2;
@@ -95,8 +108,14 @@ function HomePage() {
                         closestIndex = index;
                     }
                 });
+
                 if (closestIndex !== -1) {
-                    setFocusedIndex(prev => (closestIndex !== prev ? closestIndex : prev));
+                    if (closestIndex !== focusedIndex) {
+                        setFocusedIndex(closestIndex);
+                        // Update dot progress based on the focused item
+                        const targetProgress = (closestIndex + 1) / timelineEvents.length;
+                        setDotProgress(targetProgress);
+                    }
                 }
             });
         };
@@ -106,7 +125,19 @@ function HomePage() {
             window.removeEventListener('scroll', handleScroll);
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
         };
-    }, []);
+    }, [focusedIndex]); // Dependency added to ensure correct state comparison
+
+    const navigateToNextEvent = () => {
+        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % timelineEvents.length;
+        const nextEventElement = itemRefs.current[nextIndex]?.current;
+
+        if (nextEventElement) {
+            nextEventElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    };
 
     const openEventModal = (data) => setEventModal(data);
     const closeEventModal = () => setEventModal(null);
@@ -128,6 +159,8 @@ function HomePage() {
         );
     };
 
+    let eventCounter = -1;
+
     return (
         <div className="homepage-container">
             <header className="hero-section">
@@ -139,55 +172,94 @@ function HomePage() {
             </header>
 
             <main id="timeline" className="timeline-section" ref={timelineRef}>
-                <svg className="timeline-vortex">
+                <svg className="timeline-vortex" aria-hidden="true">
                     <path className="vortex-path" d={vortexPath} />
                 </svg>
+                <div
+                  className="moving-dot"
+                  style={{
+                    offsetPath: vortexPath ? `path("${vortexPath}")` : 'none',
+                    offsetDistance: `${dotProgress * 100}%`,
+                    opacity: vortexPath ? 1 : 0
+                  }}
+                />
                 <div className="timeline-items-container">
-                    {timelineEvents.map((event, index) => {
-                        const isFocused = index === focusedIndex;
-                        return (
-                            <div key={event.id} className={`timeline-item-wrapper ${isFocused ? 'focused' : ''}`} ref={addToRefs}>
-                                <div className="timeline-dot"></div>
-                                <div className="timeline-item-content" onClick={() => isFocused && openEventModal(event)}>
-                                    <div className="content-header">
-                                        <h3>{event.title}</h3>
-                                        <span>{event.year}</span>
+                    {Object.keys(eventsByEra).map(era => (
+                        <React.Fragment key={era}>
+                            <h2 className="era-title">{era}</h2>
+                            {eventsByEra[era].map((event) => {
+                                eventCounter++;
+                                const currentIndex = eventCounter;
+                                const isFocused = currentIndex === focusedIndex;
+                                return (
+                                    <div 
+                                        key={event.id} 
+                                        className={`timeline-item-wrapper ${isFocused ? 'focused' : ''}`} 
+                                        ref={itemRefs.current[currentIndex]}
+                                        onClick={() => isFocused && openEventModal(event)}
+                                    >
+                                        <div className="timeline-item-content">
+                                            <div className="content-header">
+                                                <h3>{event.title}</h3>
+                                                <span>{event.year}</span>
+                                            </div>
+                                            <p>{event.summary}</p>
+                                            <div className="concepts-container">
+                                                {event.concepts.map(c => <ConceptTag key={c} concept={c} />)}
+                                            </div>
+                                            {isFocused && <div className="event-details-prompt">Click to discover more</div>}
+                                        </div>
                                     </div>
-                                    <p>{event.summary}</p>
-                                    <div className="concepts-container">
-                                        {event.concepts.map(c => <ConceptTag key={c} concept={c} />)}
-                                    </div>
-                                    {isFocused && <div className="event-details-prompt">Click for more details</div>}
-                                </div>
-                            </div>
-                        );
-                    })}
+                                );
+                            })}
+                        </React.Fragment>
+                    ))}
                 </div>
             </main>
 
             {eventModal && (
-                 <div className="modal-overlay" onClick={closeEventModal}>
+                <div className="modal-overlay" onClick={closeEventModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2 className="modal-title">{eventModal.title}</h2>
                         <p className="modal-year">{eventModal.fullYear}</p>
                         <p className="modal-description">{eventModal.description}</p>
-                        <div className="concepts-container modal-concepts">
-                            {eventModal.concepts.map(c => <ConceptTag key={c} concept={c} />)}
+                        <div className="concepts-container">
+                             {eventModal.concepts.map(c => <ConceptTag key={c} concept={c} />)}
                         </div>
+                        {eventModal.miniEvents && eventModal.miniEvents.length > 0 && (
+                            <>
+                                <h4 className="mini-events-title">Related Developments</h4>
+                                <div className="mini-events-tray">
+                                    {eventModal.miniEvents.map(miniEvent => (
+                                        <div key={miniEvent.id} className="mini-event-card">
+                                            <h5>{miniEvent.title}</h5>
+                                            <p>{miniEvent.summary}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
                         <button className="modal-close" onClick={closeEventModal}>Close</button>
                     </div>
                 </div>
             )}
-
+            
             {conceptModal && (
                  <div className="modal-overlay" onClick={closeConceptModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">#{conceptModal.concept}</h2>
+                        <h2 className="modal-title">{conceptModal.concept}</h2>
+                        <h3 className="modal-category">{conceptModal.category}</h3>
                         <p className="modal-description">{conceptModal.detailed}</p>
                         <button className="modal-close" onClick={closeConceptModal}>Close</button>
                     </div>
                 </div>
             )}
+
+            <button className="event-navigator" onClick={navigateToNextEvent} aria-label="Go to next event">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+                </svg>
+            </button>
 
             <button className={`scroll-to-top ${showGoToTop ? 'visible' : ''}`} onClick={scrollToTop} aria-label="Go to top">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">

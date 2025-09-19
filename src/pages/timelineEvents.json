@@ -1,198 +1,198 @@
 [
 {
 "id": 1,
+"era": "Ancient & Classical Thought",
 "title": "Thales of Miletus",
 "year": "c. 600 BC",
 "fullYear": "c. 624–546 BC",
 "summary": "The dawn of naturalistic explanation.",
 "description": "Often considered the first philosopher, Thales sought to explain the world through natural phenomena, positing water as the single underlying substance ('arche').",
-"concepts": [
-"Metaphysics",
-"Naturalism"
+"concepts": [ "Metaphysics", "Naturalism" ],
+"miniEvents": [
+{ "id": "1a", "title": "Anaximander's 'Apeiron'", "summary": "Thales's student proposes an indefinite, boundless substance as the origin of all things." },
+{ "id": "1b", "title": "Anaximenes's 'Aer'", "summary": "Suggests 'aer' (air) is the primary substance, explaining matter via condensation and rarefaction." }
 ]
 },
 {
 "id": 2,
+"era": "Ancient & Classical Thought",
 "title": "Socrates",
 "year": "c. 440 BC",
 "fullYear": "c. 470–399 BC",
 "summary": "The unexamined life is not worth living.",
 "description": "Socrates shifted philosophy's focus to ethics and self-examination, using his Socratic method of questioning to reveal ignorance and pursue truth.",
-"concepts": [
-"Ethics",
-"Epistemology",
-"SocraticMethod"
+"concepts": [ "Ethics", "Epistemology", "SocraticMethod" ],
+"miniEvents": [
+{ "id": "2a", "title": "The Oracle at Delphi", "summary": "The Oracle's famous declaration spurred his mission to question the supposed wisdom of others." },
+{ "id": "2b", "title": "Trial and Execution", "summary": "His methods led to his trial for corrupting the youth, where he chose death over exile." }
 ]
 },
 {
 "id": 3,
+"era": "Ancient & Classical Thought",
 "title": "Plato Founds the Academy",
 "year": "c. 387 BC",
 "fullYear": "c. 387 BC",
 "summary": "The world of ideal Forms is the true reality.",
 "description": "Plato's Theory of Forms posits a higher reality of perfect concepts, of which our world is a mere shadow. His Academy was the first institution of higher learning in the West.",
-"concepts": [
-"Metaphysics",
-"PoliticalPhilosophy",
-"Forms"
+"concepts": [ "Metaphysics", "PoliticalPhilosophy", "Forms" ],
+"miniEvents": [
+{ "id": "3a", "title": "Writing 'The Republic'", "summary": "Plato outlines his vision of a just state ruled by philosopher-kings and the Allegory of the Cave." },
+{ "id": "3b", "title": "The 'Symposium'", "summary": "A dialogue exploring the nature of love, climbing from carnal desire to abstract beauty." }
 ]
 },
 {
 "id": 4,
+"era": "Ancient & Classical Thought",
 "title": "Aristotle & The Lyceum",
 "year": "c. 335 BC",
 "fullYear": "c. 335 BC",
 "summary": "Systematizing logic and the natural world.",
 "description": "A student of Plato, Aristotle focused on the empirical world, developing formal logic and systematically studying biology, ethics, and politics.",
-"concepts": [
-"Logic",
-"Empiricism",
-"Ethics",
-"Biology"
+"concepts": [ "Logic", "Empiricism", "Ethics", "Biology" ],
+"miniEvents": [
+{ "id": "4a", "title": "Nicomachean Ethics", "summary": "Aristotle's inquiry into 'eudaimonia' (human flourishing) and virtue through the 'golden mean'." },
+{ "id": "4b", "title": "Prior Analytics", "summary": "The invention of the syllogism, a form of deductive reasoning that founded logic for centuries." }
 ]
 },
 {
 "id": 5,
-"title": "Rise of Stoicism",
-"year": "c. 300 BC",
-"fullYear": "c. 301 BC",
-"summary": "Virtue is sufficient for happiness.",
-"description": "Founded by Zeno of Citium, Stoicism teaches that virtue is the only good and that we should live in accordance with nature and divine reason (logos).",
-"concepts": [
-"Ethics",
-"Stoicism",
-"Logic"
+"era": "Medieval & Renaissance Philosophy",
+"title": "Augustine of Hippo",
+"year": "c. 400 AD",
+"fullYear": "354-430 AD",
+"summary": "Bridging Christian theology with Platonic philosophy.",
+"description": "Augustine's work, such as 'Confessions' and 'City of God', profoundly shaped Western Christianity and explored concepts of free will, divine grace, and original sin.",
+"concepts": ["Theology", "FreeWill", "Metaphysics"],
+"miniEvents": [
+{ "id": "5a", "title": "Doctrine of Original Sin", "summary": "His formulation of the concept that humanity is inherently flawed from the sin of Adam." },
+{ "id": "5b", "title": "Just War Theory", "summary": "Early articulations of the conditions under which war could be morally justifiable." }
 ]
 },
 {
 "id": 6,
-"title": "Augustine of Hippo",
-"year": "c. 400 AD",
-"fullYear": "354–430 AD",
-"summary": "Synthesizing Christian doctrine with Neoplatonism.",
-"description": "A pivotal figure in early Christian philosophy, Augustine explored concepts of free will, original sin, and God's grace, deeply influencing Western theology.",
-"concepts": [
-"Theology",
-"Metaphysics",
-"FreeWill"
+"era": "Medieval & Renaissance Philosophy",
+"title": "Avicenna (Ibn Sina)",
+"year": "c. 1020 AD",
+"fullYear": "c. 980-1037 AD",
+"summary": "Synthesizing Islamic theology and Aristotelianism.",
+"description": "A Persian polymath, Avicenna's 'The Canon of Medicine' was a standard medical text for centuries, and his philosophical works integrated Aristotle's ideas into the Islamic world.",
+"concepts": ["Metaphysics", "Medicine", "Logic"],
+"miniEvents": [
+{ "id": "6a", "title": "The Floating Man", "summary": "A thought experiment to demonstrate the existence of the soul and self-awareness, independent of sensory experience." },
+{ "id": "6b", "title": "Proof of the Truthful", "summary": "An ontological argument for the existence of God as a 'necessary existent'." }
 ]
 },
 {
 "id": 7,
-"title": "Avicenna (Ibn Sina)",
-"year": "c. 1020 AD",
-"fullYear": "c. 980–1037 AD",
-"summary": "The pinnacle of Islamic philosophy.",
-"description": "Avicenna was a Persian polymath whose works on Aristotelian philosophy and medicine were foundational for later Islamic and European scholasticism.",
-"concepts": [
-"Metaphysics",
-"Epistemology",
-"Medicine"
+"era": "Medieval & Renaissance Philosophy",
+"title": "Thomas Aquinas",
+"year": "c. 1265 AD",
+"fullYear": "1225-1274",
+"summary": "The apex of scholasticism.",
+"description": "In his 'Summa Theologica', Aquinas methodically blended Aristotelian philosophy with Christian doctrine, creating a comprehensive system of thought that became foundational for the Catholic Church.",
+"concepts": ["Scholasticism", "Theology", "Metaphysics", "Ethics"],
+"miniEvents": [
+{ "id": "7a", "title": "The Five Ways", "summary": "His five logical arguments for the existence of God, including the arguments from motion and causation." },
+{ "id": "7b", "title": "Natural Law", "summary": "His theory that human reason can discern universal moral principles inherent in nature." }
 ]
 },
 {
 "id": 8,
-"title": "Thomas Aquinas",
-"year": "c. 1265 AD",
-"fullYear": "1225–1274 AD",
-"summary": "Reconciling Aristotelian philosophy with Christianity.",
-"description": "Aquinas's 'Summa Theologica' is a landmark of scholasticism, arguing that faith and reason are complementary paths to truth.",
-"concepts": [
-"Scholasticism",
-"Theology",
-"Ethics"
+"era": "The Age of Reason & Enlightenment",
+"title": "René Descartes",
+"year": "1637",
+"fullYear": "1596–1650",
+"summary": "Cogito, ergo sum: I think, therefore I am.",
+"description": "Descartes's method of radical doubt established a foundation for modern philosophy, emphasizing reason as the primary source of knowledge.",
+"concepts": [ "Rationalism", "Epistemology", "MindBodyProblem" ],
+"miniEvents": [
+{ "id": "8a", "title": "'Discourse on the Method'", "summary": "Publication of his seminal work, introducing his method and the famous 'Cogito' as an indubitable truth." },
+{ "id": "8b", "title": "Cartesian Dualism", "summary": "The formal separation of the immaterial mind from the material body, setting the stage for debate." }
 ]
 },
 {
 "id": 9,
-"title": "René Descartes",
-"year": "1637",
-"fullYear": "1596–1560",
-"summary": "Cogito, ergo sum: I think, therefore I am.",
-"description": "Descartes's method of radical doubt established a foundation for modern philosophy, emphasizing reason as the primary source of knowledge.",
-"concepts": [
-"Rationalism",
-"Epistemology",
-"MindBodyProblem"
+"era": "The Age of Reason & Enlightenment",
+"title": "John Locke",
+"year": "1689",
+"fullYear": "1632-1704",
+"summary": "The father of Liberalism and the Tabula Rasa.",
+"description": "Locke's theories on government by consent and natural rights were pivotal for the American Revolution. He argued the mind is a 'blank slate' at birth, shaped by experience.",
+"concepts": ["Empiricism", "PoliticalPhilosophy", "Liberalism"],
+"miniEvents": [
+{ "id": "9a", "title": "'Two Treatises of Government'", "summary": "A foundational text for liberal democracy, arguing against the divine right of kings." },
+{ "id": "9b", "title": "Tabula Rasa", "summary": "His theory of the 'blank slate' mind, a cornerstone of empiricism." }
 ]
 },
 {
 "id": 10,
-"title": "John Locke",
-"year": "1689",
-"fullYear": "1632–1704",
-"summary": "The mind as a 'tabula rasa' (blank slate).",
-"description": "A key figure in empiricism and liberalism, Locke argued that knowledge comes from sensory experience and championed rights to life, liberty, and property.",
-"concepts": [
-"Empiricism",
-"PoliticalPhilosophy",
-"Liberalism"
-]
-},
-{
-"id": 11,
+"era": "The Age of Reason & Enlightenment",
 "title": "Immanuel Kant",
 "year": "1781",
 "fullYear": "1724–1804",
 "summary": "Synthesizing rationalism and empiricism.",
 "description": "Kant's 'Critique of Pure Reason' revolutionized philosophy, arguing that the mind actively structures our experience of reality.",
-"concepts": [
-"Idealism",
-"Epistemology",
-"Ethics",
-"CategoricalImperative"
+"concepts": [ "Idealism", "Epistemology", "Ethics", "CategoricalImperative" ],
+"miniEvents": [
+{ "id": "10a", "title": "The Copernican Revolution", "summary": "Kant's proposal that objects conform to our knowledge, rather than our knowledge to objects." },
+{ "id": "10b", "title": "'What is Enlightenment?'", "summary": "An influential essay arguing for the use of one's own reason and courage to think for oneself ('Sapere aude')." }
+]
+},
+{
+"id": 11,
+"era": "19th Century Philosophy",
+"title": "G.W.F. Hegel",
+"year": "1807",
+"fullYear": "1770-1831",
+"summary": "History as the progression of Spirit (Geist).",
+"description": "Hegel developed a comprehensive system of German Idealism, viewing history as a rational process of dialectical progression towards absolute knowledge.",
+"concepts": ["Idealism", "Dialectic", "Historicism"],
+"miniEvents": [
+{ "id": "11a", "title": "'Phenomenology of Spirit'", "summary": "Traces the evolution of consciousness from sense-perception to absolute knowledge." },
+{ "id": "11b", "title": "Master-Slave Dialectic", "summary": "A famous allegory describing the development of self-consciousness through a struggle for recognition." }
 ]
 },
 {
 "id": 12,
-"title": "Georg W. F. Hegel",
-"year": "1807",
-"fullYear": "1770–1831",
-"summary": "History as the unfolding of Absolute Spirit.",
-"description": "Hegel developed a comprehensive system of dialectical idealism, viewing history as a rational process of thesis, antithesis, and synthesis.",
-"concepts": [
-"Idealism",
-"Dialectic",
-"Historicism"
-]
-},
-{
-"id": 13,
+"era": "19th Century Philosophy",
 "title": "Friedrich Nietzsche",
 "year": "1883",
 "fullYear": "1844–1900",
 "summary": "The death of God and the will to power.",
 "description": "Nietzsche was a fierce critic of traditional morality and religion, proposing the concepts of the Übermensch and eternal recurrence.",
-"concepts": [
-"Existentialism",
-"Nihilism",
-"WillToPower"
+"concepts": [ "Existentialism", "Nihilism", "WillToPower" ],
+"miniEvents": [
+{ "id": "12a", "title": "'Thus Spoke Zarathustra'", "summary": "A philosophical novel introducing the concepts of the Übermensch (Overman) and eternal recurrence." },
+{ "id": "12b", "title": "Master-Slave Morality", "summary": "A central theme critiquing Judeo-Christian ethics as a 'slave revolt' in morality." }
+]
+},
+{
+"id": 13,
+"era": "Contemporary Thought",
+"title": "Ludwig Wittgenstein",
+"year": "1921",
+"fullYear": "1889-1951",
+"summary": "The limits of my language mean the limits of my world.",
+"description": "Wittgenstein's work transformed analytic philosophy, first with his picture theory of meaning and later with his concept of language-games.",
+"concepts": ["AnalyticPhilosophy", "PhilosophyOfLanguage", "Logic"],
+"miniEvents": [
+{ "id": "13a", "title": "'Tractatus Logico-Philosophicus'", "summary": "His early work arguing that language can only represent the world, and what cannot be said must be passed over in silence." },
+{ "id": "13b", "title": "'Philosophical Investigations'", "summary": "His posthumous work rejecting many of his earlier ideas, introducing the concept of language as a tool with many uses." }
 ]
 },
 {
 "id": 14,
-"title": "Ludwig Wittgenstein",
-"year": "1921",
-"fullYear": "1889–1951",
-"summary": "The limits of my language mean the limits of my world.",
-"description": "A central figure in analytic philosophy, Wittgenstein's work explored the relationship between language, logic, and reality.",
-"concepts": [
-"AnalyticPhilosophy",
-"PhilosophyOfLanguage",
-"Logic"
-]
-},
-{
-"id": 15,
+"era": "Contemporary Thought",
 "title": "Simone de Beauvoir",
 "year": "1949",
 "fullYear": "1908–1986",
 "summary": "One is not born, but rather becomes, a woman.",
 "description": "De Beauvoir's 'The Second Sex' is a foundational text of second-wave feminism, analyzing the social construction of gender.",
-"concepts": [
-"Existentialism",
-"Feminism",
-"Ethics"
+"concepts": [ "Existentialism", "Feminism", "Ethics" ],
+"miniEvents": [
+{ "id": "14a", "title": "The Other", "summary": "Her analysis of how man is positioned as the default subject, while woman is constructed as the 'Other'." },
+{ "id": "14b", "title": "Ethics of Ambiguity", "summary": "An exploration of existentialist ethics, arguing that human freedom is the ultimate good." }
 ]
 }
 ]

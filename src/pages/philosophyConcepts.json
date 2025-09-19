@@ -1,142 +1,206 @@
 [
-    {
-        "concept": "Metaphysics",
-        "simple": "The study of the fundamental nature of reality.",
-        "detailed": "Metaphysics examines the nature of reality, including the relationship between mind and matter, substance and attribute, and potentiality and actuality."
-    },
-    {
-        "concept": "Naturalism",
-        "simple": "The belief that only natural laws and forces operate.",
-        "detailed": "Naturalism holds that all phenomena can be explained in terms of natural causes and laws, without reference to a supernatural realm."
-    },
-    {
-        "concept": "Ethics",
-        "simple": "The branch of philosophy dealing with moral principles.",
-        "detailed": "Ethics, or moral philosophy, involves systematizing, defending, and recommending concepts of right and wrong conduct."
-    },
-    {
-        "concept": "Epistemology",
-        "simple": "The study of knowledge itself: how we know what we know.",
-        "detailed": "Epistemology is the theory of knowledge, concerned with the nature of knowledge, justification, and the rationality of belief."
-    },
-    {
-        "concept": "SocraticMethod",
-        "simple": "A dialogue-based method of inquiry and critical thinking.",
-        "detailed": "A form of cooperative argumentative dialogue between individuals, based on asking and answering questions to stimulate critical thinking and expose contradictions."
-    },
-    {
-        "concept": "Forms",
-        "simple": "Plato's theory of a higher, perfect reality.",
-        "detailed": "The Theory of Forms argues that non-physical Forms (or Ideas) represent the most accurate reality, and our physical world contains only imperfect copies."
-    },
-    {
-        "concept": "PoliticalPhilosophy",
-        "simple": "The study of government, politics, liberty, and justice.",
-        "detailed": "Political philosophy explores fundamental questions about the nature, scope, and legitimacy of public agents and institutions."
-    },
-    {
-        "concept": "Logic",
-        "simple": "The study of reasoning and valid inference.",
-        "detailed": "Logic is the systematic study of the form of valid inference and reasoning, examining how conclusions can be derived from premises."
-    },
-    {
-        "concept": "Empiricism",
-        "simple": "The theory that knowledge comes from sensory experience.",
-        "detailed": "Empiricism emphasizes the role of sensory experience in the formation of ideas, while discounting the notion of innate ideas."
-    },
-    {
-        "concept": "Biology",
-        "simple": "The scientific study of life and living organisms.",
-        "detailed": "In philosophy, biology informs discussions on topics like the nature of life, evolution, and ethics. Aristotle was a pioneering biologist."
-    },
-    {
-        "concept": "Stoicism",
-        "simple": "An ancient Greek school of philosophy.",
-        "detailed": "Stoicism teaches that virtue is the only good, and that a person can achieve happiness by living in accordance with nature and reason (logos)."
-    },
-    {
-        "concept": "Theology",
-        "simple": "The study of religious faith, practice, and experience.",
-        "detailed": "Theology is the systematic study of the nature of the divine and, more broadly, of religious belief. It is often intertwined with metaphysics and ethics."
-    },
-    {
-        "concept": "FreeWill",
-        "simple": "The capacity to choose between different possible courses of action.",
-        "detailed": "The concept of free will is a central debate in philosophy, questioning whether our actions are predetermined or if we have genuine control over them."
-    },
-    {
-        "concept": "Medicine",
-        "simple": "The science and practice of the diagnosis, treatment, and prevention of disease.",
-        "detailed": "Philosophers like Avicenna blended medical practice with philosophical inquiry, exploring the relationship between the body, mind, and soul."
-    },
-    {
-        "concept": "Scholasticism",
-        "simple": "The dominant philosophical system of medieval Europe.",
-        "detailed": "Scholasticism sought to reconcile the philosophy of ancient classical philosophers (like Aristotle) with medieval Christian theology."
-    },
-    {
-        "concept": "Rationalism",
-        "simple": "The belief that reason is the chief source of knowledge.",
-        "detailed": "Rationalists, like Descartes, argue that reality has a logical structure and that certain truths can be known through intellect and deduction alone."
-    },
-    {
-        "concept": "MindBodyProblem",
-        "simple": "The philosophical problem concerning the relationship between mind and body.",
-        "detailed": "This problem asks: what is the relationship between mental properties and physical properties? Are they the same, or distinct?"
-    },
-    {
-        "concept": "Liberalism",
-        "simple": "A political and moral philosophy based on liberty and equality.",
-        "detailed": "Liberalism, championed by thinkers like John Locke, emphasizes individual rights, consent of the governed, and equality before the law."
-    },
-    {
-        "concept": "Idealism",
-        "simple": "The philosophical view that reality is fundamentally mental or spiritual.",
-        "detailed": "Idealists, like Kant and Hegel, posit that our experience of the world is shaped by the structure and categories of our own minds."
-    },
-    {
-        "concept": "CategoricalImperative",
-        "simple": "Kant's central concept in moral philosophy.",
-        "detailed": "An absolute, unconditional moral law that dictates that one should act only according to that maxim whereby you can at the same time will that it should become a universal law."
-    },
-    {
-        "concept": "Dialectic",
-        "simple": "A method of argument for resolving disagreement.",
-        "detailed": "Hegel's dialectic involves a process of thesis (an idea), antithesis (a conflicting idea), and synthesis (a new idea that resolves the conflict)."
-    },
-    {
-        "concept": "Historicism",
-        "simple": "The theory that social and cultural phenomena are determined by history.",
-        "detailed": "Historicism is the idea that history unfolds in a rational, predictable way, and that our understanding of anything can only be gained through its historical context."
-    },
-    {
-        "concept": "Existentialism",
-        "simple": "A philosophy that emphasizes individual freedom and responsibility.",
-        "detailed": "Existentialism posits that individuals are free and responsible for giving their own meaning to life. 'Existence precedes essence.'"
-    },
-    {
-        "concept": "Nihilism",
-        "simple": "The rejection of all religious and moral principles.",
-        "detailed": "Nihilism is the belief that life is without meaning, purpose, or intrinsic value. Nietzsche famously explored the implications of the 'death of God.'"
-    },
-    {
-        "concept": "WillToPower",
-        "simple": "Nietzsche's concept of the main driving force in humans.",
-        "detailed": "The will to power is the fundamental striving of all living things to expand their power, to grow, and to overcome obstacles."
-    },
-    {
-        "concept": "AnalyticPhilosophy",
-        "simple": "A style of philosophy dominant in English-speaking countries.",
-        "detailed": "Analytic philosophy emphasizes clarity, logic, and argumentation, often through the analysis of language and its meaning."
-    },
-    {
-        "concept": "PhilosophyOfLanguage",
-        "simple": "The philosophical study of language.",
-        "detailed": "It investigates the nature of meaning, the relationship between language, language users, and the world."
-    },
-    {
-        "concept": "Feminism",
-        "simple": "A range of social movements and ideologies that aim to define and establish equality.",
-        "detailed": "Feminist philosophy uses philosophical methods to challenge and critique traditional assumptions about gender, power, and social structures."
-    }
+{
+"concept": "Metaphysics",
+"category": "Core Branches",
+"simple": "The study of the fundamental nature of reality.",
+"detailed": "Metaphysics examines the nature of reality, including the relationship between mind and matter, substance and attribute, and potentiality and actuality."
+},
+{
+"concept": "Epistemology",
+"category": "Core Branches",
+"simple": "The study of knowledge itself: how we know what we know.",
+"detailed": "Epistemology is the theory of knowledge, concerned with the nature of knowledge, justification, and the rationality of belief."
+},
+{
+"concept": "Ethics",
+"category": "Core Branches",
+"simple": "The branch of philosophy dealing with moral principles.",
+"detailed": "Ethics, or moral philosophy, involves systematizing, defending, and recommending concepts of right and wrong conduct."
+},
+{
+"concept": "Aesthetics",
+"category": "Core Branches",
+"simple": "The branch of philosophy concerned with the nature of beauty and art.",
+"detailed": "Aesthetics explores the nature of art, beauty, and taste, with the creation and appreciation of beauty. It examines questions like 'What is art?' and 'What makes something beautiful?'"
+},
+{
+"concept": "Logic",
+"category": "Core Branches",
+"simple": "The study of reasoning and valid inference.",
+"detailed": "Logic is the systematic study of the form of valid inference and reasoning, examining how conclusions can be derived from premises."
+},
+{
+"concept": "PoliticalPhilosophy",
+"category": "Core Branches",
+"simple": "The study of government, politics, liberty, and justice.",
+"detailed": "Political philosophy explores fundamental questions about the nature, scope, and legitimacy of public agents and institutions."
+},
+{
+"concept": "Naturalism",
+"category": "Metaphysical Concepts",
+"simple": "The belief that only natural laws and forces operate.",
+"detailed": "Naturalism holds that all phenomena can be explained in terms of natural causes and laws, without reference to a supernatural realm."
+},
+{
+"concept": "Forms",
+"category": "Metaphysical Concepts",
+"simple": "Plato's theory of a higher, perfect reality.",
+"detailed": "The Theory of Forms argues that non-physical Forms (or Ideas) represent the most accurate reality, and our physical world contains only imperfect copies."
+},
+{
+"concept": "MindBodyProblem",
+"category": "Metaphysical Concepts",
+"simple": "The philosophical problem concerning the relationship between mind and body.",
+"detailed": "This problem asks: what is the relationship between mental properties and physical properties? Are they the same, or distinct?"
+},
+{
+"concept": "Idealism",
+"category": "Metaphysical Concepts",
+"simple": "The philosophical view that reality is fundamentally mental or spiritual.",
+"detailed": "Idealists, like Kant and Hegel, posit that our experience of the world is shaped by the structure and categories of our own minds."
+},
+{
+"concept": "Dualism",
+"category": "Metaphysical Concepts",
+"simple": "The view that the mind and body are two distinct and separable substances.",
+"detailed": "In metaphysics, dualism is the position that mind and matter (or mind and body) are fundamentally distinct kinds of substances or properties."
+},
+{
+"concept": "Empiricism",
+"category": "Epistemological Concepts",
+"simple": "The theory that knowledge comes from sensory experience.",
+"detailed": "Empiricism emphasizes the role of sensory experience in the formation of ideas, while discounting the notion of innate ideas."
+},
+{
+"concept": "Rationalism",
+"category": "Epistemological Concepts",
+"simple": "The belief that reason is the chief source of knowledge.",
+"detailed": "Rationalists, like Descartes, argue that reality has a logical structure and that certain truths can be known through intellect and deduction alone."
+},
+{
+"concept": "Stoicism",
+"category": "Ethical Concepts",
+"simple": "An ancient Greek school of philosophy.",
+"detailed": "Stoicism teaches that virtue is the only good, and that a person can achieve happiness by living in accordance with nature and reason (logos)."
+},
+{
+"concept": "FreeWill",
+"category": "Ethical Concepts",
+"simple": "The capacity to choose between different possible courses of action.",
+"detailed": "The concept of free will is a central debate in philosophy, questioning whether our actions are predetermined or if we have genuine control over them."
+},
+{
+"concept": "CategoricalImperative",
+"category": "Ethical Concepts",
+"simple": "Kant's central concept in moral philosophy.",
+"detailed": "An absolute, unconditional moral law that dictates that one should act only according to that maxim whereby you can at the same time will that it should become a universal law."
+},
+{
+"concept": "Nihilism",
+"category": "Ethical Concepts",
+"simple": "The rejection of all religious and moral principles.",
+"detailed": "Nihilism is the belief that life is without meaning, purpose, or intrinsic value. Nietzsche famously explored the implications of the 'death of God.'"
+},
+{
+"concept": "Utilitarianism",
+"category": "Ethical Concepts",
+"simple": "An ethical theory that promotes actions that maximize happiness for the greatest number.",
+"detailed": "Utilitarianism is a consequentialist theory holding that the best moral action is the one that maximizes utility, usually defined as that which maximizes well-being or happiness."
+},
+{
+"concept": "Liberalism",
+"category": "Political & Social Concepts",
+"simple": "A political and moral philosophy based on liberty and equality.",
+"detailed": "Liberalism, championed by thinkers like John Locke, emphasizes individual rights, consent of the governed, and equality before the law."
+},
+{
+"concept": "Feminism",
+"category": "Political & Social Concepts",
+"simple": "A range of social movements and ideologies that aim to define and establish equality.",
+"detailed": "Feminist philosophy uses philosophical methods to challenge and critique traditional assumptions about gender, power, and social structures."
+},
+{
+"concept": "SocraticMethod",
+"category": "Methodologies & Schools",
+"simple": "A dialogue-based method of inquiry and critical thinking.",
+"detailed": "A form of cooperative argumentative dialogue between individuals, based on asking and answering questions to stimulate critical thinking and expose contradictions."
+},
+{
+"concept": "Scholasticism",
+"category": "Methodologies & Schools",
+"simple": "The dominant philosophical system of medieval Europe.",
+"detailed": "Scholasticism sought to reconcile the philosophy of ancient classical philosophers (like Aristotle) with medieval Christian theology."
+},
+{
+"concept": "Dialectic",
+"category": "Methodologies & Schools",
+"simple": "A method of argument for resolving disagreement.",
+"detailed": "Hegel's dialectic involves a process of thesis (an idea), antithesis (a conflicting idea), and synthesis (a new idea that resolves the conflict)."
+},
+{
+"concept": "Historicism",
+"category": "Methodologies & Schools",
+"simple": "The theory that social and cultural phenomena are determined by history.",
+"detailed": "Historicism is the idea that history unfolds in a rational, predictable way, and that our understanding of anything can only be gained through its historical context."
+},
+{
+"concept": "Existentialism",
+"category": "Methodologies & Schools",
+"simple": "A philosophy that emphasizes individual freedom and responsibility.",
+"detailed": "Existentialism posits that individuals are free and responsible for giving their own meaning to life. 'Existence precedes essence.'"
+},
+{
+"concept": "AnalyticPhilosophy",
+"category": "Methodologies & Schools",
+"simple": "A style of philosophy dominant in English-speaking countries.",
+"detailed": "Analytic philosophy emphasizes clarity, logic, and argumentation, often through the analysis of language and its meaning."
+},
+{
+"concept": "Phenomenology",
+"category": "Methodologies & Schools",
+"simple": "The study of structures of consciousness as experienced from the first-person point of view.",
+"detailed": "Phenomenology is a philosophical movement that emphasizes the study of subjective experience and consciousness, seeking to understand how things appear to us."
+},
+{
+"concept": "Deconstruction",
+"category": "Methodologies & Schools",
+"simple": "A critical approach that questions traditional assumptions about language and meaning.",
+"detailed": "Developed by Jacques Derrida, deconstruction is a method of critical analysis that involves taking apart texts to reveal their underlying assumptions and internal contradictions."
+},
+{
+"concept": "Absurdism",
+"category": "Methodologies & Schools",
+"simple": "The belief that human beings exist in a purposeless, chaotic universe.",
+"detailed": "Associated with Albert Camus, absurdism is the philosophical stance that a conflict exists between our search for meaning and the universe's lack of it. The response is to embrace the absurd."
+},
+{
+"concept": "Theology",
+"category": "Other Key Concepts",
+"simple": "The study of religious faith, practice, and experience.",
+"detailed": "Theology is the systematic study of the nature of the divine and, more broadly, of religious belief. It is often intertwined with metaphysics and ethics."
+},
+{
+"concept": "Biology",
+"category": "Other Key Concepts",
+"simple": "The scientific study of life and living organisms.",
+"detailed": "In philosophy, biology informs discussions on topics like the nature of life, evolution, and ethics. Aristotle was a pioneering biologist."
+},
+{
+"concept": "Medicine",
+"category": "Other Key Concepts",
+"simple": "The science and practice of the diagnosis, treatment, and prevention of disease.",
+"detailed": "Philosophers like Avicenna blended medical practice with philosophical inquiry, exploring the relationship between the body, mind, and soul."
+},
+{
+"concept": "WillToPower",
+"category": "Other Key Concepts",
+"simple": "Nietzsche's concept of the main driving force in humans.",
+"detailed": "The will to power is the fundamental striving of all living things to expand their power, to grow, and to overcome obstacles."
+},
+{
+"concept": "PhilosophyOfLanguage",
+"category": "Other Key Concepts",
+"simple": "The philosophical study of language.",
+"detailed": "It investigates the nature of meaning, the relationship between language, language users, and the world."
+}
 ]
