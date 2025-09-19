@@ -1,52 +1,198 @@
 [
-    {
-        "id": 1,
-        "title": "Thales of Miletus",
-        "year": "c. 600 BC",
-        "fullYear": "c. 624–546 BC",
-        "summary": "The dawn of naturalistic explanation.",
-        "description": "Often considered the first philosopher and scientist in the Greek tradition, Thales of Miletus represents a pivotal shift from mythological explanations of the world to scientific inquiry. He sought to find a single, underlying substance (an 'arche') from which all things are derived, famously positing that this fundamental principle is water. By attempting to explain natural phenomena through observation and reason rather than the whims of gods, he laid the groundwork for all Western science and philosophy.",
-        "align": "right",
-        "concepts": ["#Metaphysics", "#Naturalism"]
-    },
-    {
-        "id": 2,
-        "title": "Pythagoras",
-        "year": "c. 530 BC",
-        "fullYear": "c. 570–495 BC",
-        "summary": "Mathematics as the language of the universe.",
-        "description": "Pythagoras and his semi-mystical school believed that the universe was governed by mathematical principles. For them, numbers were not just symbols but the actual essence of reality, creating the harmony they observed in music and the cosmos (the 'harmony of the spheres'). Their work went beyond the famous Pythagorean theorem, delving into concepts like the transmigration of souls and the importance of a structured, ascetic lifestyle to purify the spirit. This blend of mathematics and mysticism deeply influenced later philosophers, most notably Plato.",
-        "align": "left",
-        "concepts": ["#Metaphysics", "#Mathematics", "#Mysticism"]
-    },
-    {
-        "id": 3,
-        "title": "Socrates",
-        "year": "c. 440 BC",
-        "fullYear": "c. 470–399 BC",
-        "summary": "The unexamined life is not worth living.",
-        "description": "Socrates turned philosophy's focus inward, from the nature of the cosmos to the nature of human virtue and knowledge. Prowling the streets of Athens, he acted as a 'gadfly,' engaging citizens in dialogue and using his famous method of persistent questioning (the Socratic method) to expose contradictions in their beliefs. He wrote nothing himself, but his student Plato immortalized his relentless pursuit of truth. Socrates's insistence on self-examination and his dramatic trial and execution cemented his legacy as a martyr for free thought.",
-        "align": "right",
-        "concepts": ["#Ethics", "#Epistemology", "#SocraticMethod"]
-    },
-    {
-        "id": 4,
-        "title": "Plato Founds the Academy",
-        "year": "c. 387 BC",
-        "fullYear": "c. 387 BC",
-        "summary": "The world of ideal Forms is the true reality.",
-        "description": "A student of Socrates, Plato established the Academy, the first institution of higher learning in the Western world. At its core was his Theory of Forms, which posits that the physical world we perceive is merely a shadow of a higher, eternal reality of perfect concepts or 'Forms.' For example, we only see imperfect circles, but they are all copies of the perfect 'Form of the Circle.' In works like 'The Republic,' he explored how understanding these Forms could lead to a just and virtuous society, profoundly shaping Western political philosophy and epistemology.",
-        "align": "left",
-        "concepts": ["#Metaphysics", "#Epistemology", "#Ethics", "#PoliticalPhilosophy", "#Forms"]
-    },
-    {
-        "id": 5,
-        "title": "Aristotle & The Lyceum",
-        "year": "c. 335 BC",
-        "fullYear": "c. 335 BC",
-        "summary": "Systematizing logic and the natural world.",
-        "description": "Plato's most famous student, Aristotle, took a decidedly different approach. Instead of looking to a higher world of Forms, he focused on the empirical world around us. At his school, the Lyceum, he pioneered the systematic study of a breathtaking range of subjects, including biology, logic, ethics, politics, and physics. He invented formal logic, developed a framework for scientific inquiry based on observation, and argued that everything has a purpose or 'telos.' His comprehensive and methodical work became the foundation of Western thought for nearly two thousand years.",
-        "align": "right",
-        "concepts": ["#Logic", "#Ethics", "#Metaphysiscs", "#Biology", "#Empiricism"]
-    }
+{
+"id": 1,
+"title": "Thales of Miletus",
+"year": "c. 600 BC",
+"fullYear": "c. 624–546 BC",
+"summary": "The dawn of naturalistic explanation.",
+"description": "Often considered the first philosopher, Thales sought to explain the world through natural phenomena, positing water as the single underlying substance ('arche').",
+"concepts": [
+"Metaphysics",
+"Naturalism"
+]
+},
+{
+"id": 2,
+"title": "Socrates",
+"year": "c. 440 BC",
+"fullYear": "c. 470–399 BC",
+"summary": "The unexamined life is not worth living.",
+"description": "Socrates shifted philosophy's focus to ethics and self-examination, using his Socratic method of questioning to reveal ignorance and pursue truth.",
+"concepts": [
+"Ethics",
+"Epistemology",
+"SocraticMethod"
+]
+},
+{
+"id": 3,
+"title": "Plato Founds the Academy",
+"year": "c. 387 BC",
+"fullYear": "c. 387 BC",
+"summary": "The world of ideal Forms is the true reality.",
+"description": "Plato's Theory of Forms posits a higher reality of perfect concepts, of which our world is a mere shadow. His Academy was the first institution of higher learning in the West.",
+"concepts": [
+"Metaphysics",
+"PoliticalPhilosophy",
+"Forms"
+]
+},
+{
+"id": 4,
+"title": "Aristotle & The Lyceum",
+"year": "c. 335 BC",
+"fullYear": "c. 335 BC",
+"summary": "Systematizing logic and the natural world.",
+"description": "A student of Plato, Aristotle focused on the empirical world, developing formal logic and systematically studying biology, ethics, and politics.",
+"concepts": [
+"Logic",
+"Empiricism",
+"Ethics",
+"Biology"
+]
+},
+{
+"id": 5,
+"title": "Rise of Stoicism",
+"year": "c. 300 BC",
+"fullYear": "c. 301 BC",
+"summary": "Virtue is sufficient for happiness.",
+"description": "Founded by Zeno of Citium, Stoicism teaches that virtue is the only good and that we should live in accordance with nature and divine reason (logos).",
+"concepts": [
+"Ethics",
+"Stoicism",
+"Logic"
+]
+},
+{
+"id": 6,
+"title": "Augustine of Hippo",
+"year": "c. 400 AD",
+"fullYear": "354–430 AD",
+"summary": "Synthesizing Christian doctrine with Neoplatonism.",
+"description": "A pivotal figure in early Christian philosophy, Augustine explored concepts of free will, original sin, and God's grace, deeply influencing Western theology.",
+"concepts": [
+"Theology",
+"Metaphysics",
+"FreeWill"
+]
+},
+{
+"id": 7,
+"title": "Avicenna (Ibn Sina)",
+"year": "c. 1020 AD",
+"fullYear": "c. 980–1037 AD",
+"summary": "The pinnacle of Islamic philosophy.",
+"description": "Avicenna was a Persian polymath whose works on Aristotelian philosophy and medicine were foundational for later Islamic and European scholasticism.",
+"concepts": [
+"Metaphysics",
+"Epistemology",
+"Medicine"
+]
+},
+{
+"id": 8,
+"title": "Thomas Aquinas",
+"year": "c. 1265 AD",
+"fullYear": "1225–1274 AD",
+"summary": "Reconciling Aristotelian philosophy with Christianity.",
+"description": "Aquinas's 'Summa Theologica' is a landmark of scholasticism, arguing that faith and reason are complementary paths to truth.",
+"concepts": [
+"Scholasticism",
+"Theology",
+"Ethics"
+]
+},
+{
+"id": 9,
+"title": "René Descartes",
+"year": "1637",
+"fullYear": "1596–1560",
+"summary": "Cogito, ergo sum: I think, therefore I am.",
+"description": "Descartes's method of radical doubt established a foundation for modern philosophy, emphasizing reason as the primary source of knowledge.",
+"concepts": [
+"Rationalism",
+"Epistemology",
+"MindBodyProblem"
+]
+},
+{
+"id": 10,
+"title": "John Locke",
+"year": "1689",
+"fullYear": "1632–1704",
+"summary": "The mind as a 'tabula rasa' (blank slate).",
+"description": "A key figure in empiricism and liberalism, Locke argued that knowledge comes from sensory experience and championed rights to life, liberty, and property.",
+"concepts": [
+"Empiricism",
+"PoliticalPhilosophy",
+"Liberalism"
+]
+},
+{
+"id": 11,
+"title": "Immanuel Kant",
+"year": "1781",
+"fullYear": "1724–1804",
+"summary": "Synthesizing rationalism and empiricism.",
+"description": "Kant's 'Critique of Pure Reason' revolutionized philosophy, arguing that the mind actively structures our experience of reality.",
+"concepts": [
+"Idealism",
+"Epistemology",
+"Ethics",
+"CategoricalImperative"
+]
+},
+{
+"id": 12,
+"title": "Georg W. F. Hegel",
+"year": "1807",
+"fullYear": "1770–1831",
+"summary": "History as the unfolding of Absolute Spirit.",
+"description": "Hegel developed a comprehensive system of dialectical idealism, viewing history as a rational process of thesis, antithesis, and synthesis.",
+"concepts": [
+"Idealism",
+"Dialectic",
+"Historicism"
+]
+},
+{
+"id": 13,
+"title": "Friedrich Nietzsche",
+"year": "1883",
+"fullYear": "1844–1900",
+"summary": "The death of God and the will to power.",
+"description": "Nietzsche was a fierce critic of traditional morality and religion, proposing the concepts of the Übermensch and eternal recurrence.",
+"concepts": [
+"Existentialism",
+"Nihilism",
+"WillToPower"
+]
+},
+{
+"id": 14,
+"title": "Ludwig Wittgenstein",
+"year": "1921",
+"fullYear": "1889–1951",
+"summary": "The limits of my language mean the limits of my world.",
+"description": "A central figure in analytic philosophy, Wittgenstein's work explored the relationship between language, logic, and reality.",
+"concepts": [
+"AnalyticPhilosophy",
+"PhilosophyOfLanguage",
+"Logic"
+]
+},
+{
+"id": 15,
+"title": "Simone de Beauvoir",
+"year": "1949",
+"fullYear": "1908–1986",
+"summary": "One is not born, but rather becomes, a woman.",
+"description": "De Beauvoir's 'The Second Sex' is a foundational text of second-wave feminism, analyzing the social construction of gender.",
+"concepts": [
+"Existentialism",
+"Feminism",
+"Ethics"
+]
+}
 ]
