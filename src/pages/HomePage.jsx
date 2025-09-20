@@ -21,16 +21,14 @@ function HomePage() {
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [showGoToTop, setShowGoToTop] = useState(false);
     const [vortexPath, setVortexPath] = useState('');
-    const [dotProgress, setDotProgress] = useState(0); // For moving dot animation
+    const [dotProgress, setDotProgress] = useState(0);
 
     const timelineRef = useRef(null);
-    const itemRefs = useRef([]);
+    // Initialize refs once and avoid re-creation on every render
+    const itemRefs = useRef(timelineEvents.map(() => React.createRef()));
     const ctaRef = useRef(null);
     
-    itemRefs.current = timelineEvents.map(
-        (_, i) => itemRefs.current[i] ?? React.createRef()
-    );
-
+    // Function to draw the SVG path connecting timeline items
     const drawVortexPath = () => {
         const ctaButton = ctaRef.current;
         if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) return;
@@ -53,7 +51,6 @@ function HomePage() {
             const pointX = itemRect.left + itemRect.width / 2 - timelineContainerRect.left;
             const pointY = itemRect.top + itemRect.height / 2 - timelineContainerRect.top;
 
-            // Create a more direct, serpentine downward path
             const curveIntensity = 80;
             const controlX1 = lastX + (index % 2 === 0 ? curveIntensity : -curveIntensity);
             const controlY1 = lastY + (pointY - lastY) * 0.5;
@@ -68,6 +65,7 @@ function HomePage() {
         setVortexPath(pathData);
     };
     
+    // useLayoutEffect to draw the path after the layout is calculated
     useLayoutEffect(() => {
         const timer = setTimeout(drawVortexPath, 100);
         window.addEventListener('resize', drawVortexPath);
@@ -77,6 +75,7 @@ function HomePage() {
         }
     }, []);
 
+    // Effect for scroll-based animations and focusing
     useEffect(() => {
         let animationFrameId = null;
         const handleScroll = () => {
@@ -89,7 +88,7 @@ function HomePage() {
                 
                 if (scrollY < windowHeight * 0.5) {
                     setFocusedIndex(null);
-                    setDotProgress(0); // Reset dot to start
+                    setDotProgress(0);
                     return;
                 }
 
@@ -109,13 +108,10 @@ function HomePage() {
                     }
                 });
 
-                if (closestIndex !== -1) {
-                    if (closestIndex !== focusedIndex) {
-                        setFocusedIndex(closestIndex);
-                        // Update dot progress based on the focused item
-                        const targetProgress = (closestIndex + 1) / timelineEvents.length;
-                        setDotProgress(targetProgress);
-                    }
+                if (closestIndex !== -1 && closestIndex !== focusedIndex) {
+                    setFocusedIndex(closestIndex);
+                    const targetProgress = (closestIndex + 1) / timelineEvents.length;
+                    setDotProgress(targetProgress);
                 }
             });
         };
@@ -125,7 +121,20 @@ function HomePage() {
             window.removeEventListener('scroll', handleScroll);
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
         };
-    }, [focusedIndex]); // Dependency added to ensure correct state comparison
+    }, [focusedIndex]);
+
+    // Effect to handle closing modals with the Escape key
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                closeEventModal();
+                closeConceptModal();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
 
     const navigateToNextEvent = () => {
         const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % timelineEvents.length;
@@ -159,8 +168,6 @@ function HomePage() {
         );
     };
 
-    let eventCounter = -1;
-
     return (
         <div className="homepage-container">
             <header className="hero-section">
@@ -188,8 +195,8 @@ function HomePage() {
                         <React.Fragment key={era}>
                             <h2 className="era-title">{era}</h2>
                             {eventsByEra[era].map((event) => {
-                                eventCounter++;
-                                const currentIndex = eventCounter;
+                                // Use findIndex for a more robust way to get the item's index
+                                const currentIndex = timelineEvents.findIndex(e => e.id === event.id);
                                 const isFocused = currentIndex === focusedIndex;
                                 return (
                                     <div 
@@ -197,6 +204,16 @@ function HomePage() {
                                         className={`timeline-item-wrapper ${isFocused ? 'focused' : ''}`} 
                                         ref={itemRefs.current[currentIndex]}
                                         onClick={() => isFocused && openEventModal(event)}
+                                        // Accessibility improvements
+                                        onKeyDown={(e) => {
+                                            if (isFocused && (e.key === 'Enter' || e.key === ' ')) {
+                                                e.preventDefault();
+                                                openEventModal(event);
+                                            }
+                                        }}
+                                        role="button"
+                                        tabIndex={isFocused ? 0 : -1}
+                                        aria-label={`View details for ${event.title}`}
                                     >
                                         <div className="timeline-item-content">
                                             <div className="content-header">
@@ -275,4 +292,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

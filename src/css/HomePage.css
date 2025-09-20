@@ -157,6 +157,7 @@ body::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-r
     filter: blur(3px);
     pointer-events: none;
     z-index: 1;
+    outline: none; /* Remove default focus outline */
 }
 
 .timeline-item-wrapper:nth-child(even) { align-self: flex-start; }
@@ -292,4 +293,3 @@ body::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-r
     .scroll-to-top { bottom: 1rem; right: 1rem; width: 45px; height: 45px; }
     .scroll-to-top svg { width: 22px; height: 22px; }
 }
-
