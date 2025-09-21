@@ -1,19 +1,9 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
 import '../css/HomePage.css';
 import timelineEvents from './timelineEvents.json';
 import philosophyConcepts from './philosophyConcepts.json';
 
 const conceptsMap = new Map(philosophyConcepts.map(c => [c.concept, c]));
-
-// Group events by era for structured rendering
-const eventsByEra = timelineEvents.reduce((acc, event) => {
-    const era = event.era || 'Unknown Era';
-    if (!acc[era]) {
-        acc[era] = [];
-    }
-    acc[era].push(event);
-    return acc;
-}, {});
 
 function HomePage() {
     const [eventModal, setEventModal] = useState(null);
@@ -24,11 +14,22 @@ function HomePage() {
     const [dotProgress, setDotProgress] = useState(0);
 
     const timelineRef = useRef(null);
-    // Initialize refs once and avoid re-creation on every render
     const itemRefs = useRef(timelineEvents.map(() => React.createRef()));
     const ctaRef = useRef(null);
-    
-    // Function to draw the SVG path connecting timeline items
+
+    // Suggestion 1: Memoize the eventsByEra calculation
+    // This ensures the reduce operation only runs once, not on every render.
+    const eventsByEra = useMemo(() => {
+        return timelineEvents.reduce((acc, event) => {
+            const era = event.era || 'Unknown Era';
+            if (!acc[era]) {
+                acc[era] = [];
+            }
+            acc[era].push(event);
+            return acc;
+        }, {});
+    }, []); // Empty dependency array means it runs only on the initial render.
+
     const drawVortexPath = () => {
         const ctaButton = ctaRef.current;
         if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) return;
@@ -65,7 +66,6 @@ function HomePage() {
         setVortexPath(pathData);
     };
     
-    // useLayoutEffect to draw the path after the layout is calculated
     useLayoutEffect(() => {
         const timer = setTimeout(drawVortexPath, 100);
         window.addEventListener('resize', drawVortexPath);
@@ -75,55 +75,64 @@ function HomePage() {
         }
     }, []);
 
-    // Effect for scroll-based animations and focusing
+    // Suggestion 2: Use Intersection Observer for focusing items
+    // This is more performant than calculating positions on every scroll event.
     useEffect(() => {
-        let animationFrameId = null;
-        const handleScroll = () => {
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(() => {
-                const scrollY = window.scrollY;
-                const windowHeight = window.innerHeight;
-                setShowGoToTop(scrollY > windowHeight / 2);
-                if (!timelineRef.current) return;
-                
-                if (scrollY < windowHeight * 0.5) {
-                    setFocusedIndex(null);
-                    setDotProgress(0);
-                    return;
-                }
-
-                const viewportCenterY = windowHeight / 2;
-                let closestIndex = -1;
-                let minDistance = Infinity;
-
-                itemRefs.current.forEach((itemRef, index) => {
-                    const item = itemRef.current;
-                    if (!item) return;
-                    const itemRect = item.getBoundingClientRect();
-                    const itemCenterY = itemRect.top + itemRect.height / 2;
-                    const distance = Math.abs(viewportCenterY - itemCenterY);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestIndex = index;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const intersectingEntry = entries.find(entry => entry.isIntersecting);
+                if (intersectingEntry) {
+                    const target = intersectingEntry.target;
+                    const itemIndex = itemRefs.current.findIndex(ref => ref.current === target);
+                    
+                    if (itemIndex !== -1) {
+                        setFocusedIndex(itemIndex);
+                        const targetProgress = (itemIndex + 1) / timelineEvents.length;
+                        setDotProgress(targetProgress);
                     }
-                });
+                }
+            },
+            {
+                root: null, // observes intersections relative to the viewport
+                rootMargin: "-50% 0px -50% 0px", // defines a horizontal line at the center of the viewport
+                threshold: 0,
+            }
+        );
 
-                if (closestIndex !== -1 && closestIndex !== focusedIndex) {
-                    setFocusedIndex(closestIndex);
-                    const targetProgress = (closestIndex + 1) / timelineEvents.length;
-                    setDotProgress(targetProgress);
+        itemRefs.current.forEach(ref => {
+            if (ref.current) {
+                observer.observe(ref.current);
+            }
+        });
+
+        return () => {
+            itemRefs.current.forEach(ref => {
+                if (ref.current) {
+                    observer.unobserve(ref.current);
                 }
             });
         };
-        handleScroll();
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-        };
-    }, [focusedIndex]);
+    }, []); // This effect runs only once on component mount.
 
-    // Effect to handle closing modals with the Escape key
+    // A separate, lightweight effect for the scroll-to-top button and for clearing focus
+    // when the user scrolls back to the top of the page.
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            setShowGoToTop(scrollY > windowHeight / 2);
+
+            // If user scrolls back to the hero section, unfocus all items
+            if (scrollY < windowHeight * 0.5) {
+                setFocusedIndex(null);
+                setDotProgress(0);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -134,7 +143,6 @@ function HomePage() {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
-
 
     const navigateToNextEvent = () => {
         const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % timelineEvents.length;
@@ -195,7 +203,6 @@ function HomePage() {
                         <React.Fragment key={era}>
                             <h2 className="era-title">{era}</h2>
                             {eventsByEra[era].map((event) => {
-                                // Use findIndex for a more robust way to get the item's index
                                 const currentIndex = timelineEvents.findIndex(e => e.id === event.id);
                                 const isFocused = currentIndex === focusedIndex;
                                 return (
@@ -204,7 +211,6 @@ function HomePage() {
                                         className={`timeline-item-wrapper ${isFocused ? 'focused' : ''}`} 
                                         ref={itemRefs.current[currentIndex]}
                                         onClick={() => isFocused && openEventModal(event)}
-                                        // Accessibility improvements
                                         onKeyDown={(e) => {
                                             if (isFocused && (e.key === 'Enter' || e.key === ' ')) {
                                                 e.preventDefault();
