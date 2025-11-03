@@ -32,12 +32,48 @@ const validatePhilosophyConcepts = (concepts) => {
     });
 };
 
-const validatedTimelineEvents = validateTimelineEvents(timelineEvents);
-const validatedPhilosophyConcepts = validatePhilosophyConcepts(philosophyConcepts);
-const conceptsMap = new Map(validatedPhilosophyConcepts.map(c => [c.concept, c]));
+// Safely validate data with error handling
+let validatedTimelineEvents = [];
+let validatedPhilosophyConcepts = [];
+let conceptsMap = new Map();
+
+try {
+    console.log('Raw timeline events:', timelineEvents?.length);
+    console.log('Raw philosophy concepts:', philosophyConcepts?.length);
+
+    validatedTimelineEvents = validateTimelineEvents(timelineEvents);
+    validatedPhilosophyConcepts = validatePhilosophyConcepts(philosophyConcepts);
+    conceptsMap = new Map(validatedPhilosophyConcepts.map(c => [c.concept, c]));
+
+    console.log('Validated timeline events:', validatedTimelineEvents.length);
+    console.log('Validated philosophy concepts:', validatedPhilosophyConcepts.length);
+} catch (error) {
+    console.error('Failed to load timeline data:', error);
+}
+
+// ConceptTag component extracted and memoized to prevent unnecessary re-renders
+const ConceptTag = React.memo(({ concept, conceptsMap, onOpenModal }) => {
+    const conceptData = conceptsMap.get(concept);
+    if (!conceptData) return null;
+    return (
+        <span
+            className="concept-tag"
+            onClick={(e) => {
+                e.stopPropagation();
+                onOpenModal(conceptData);
+            }}
+        >
+            {concept}
+            <div className="tooltip">
+                <p className="tooltip-simple">{conceptData.simple}</p>
+                <p className="tooltip-prompt">Click for more details</p>
+            </div>
+        </span>
+    );
+});
 
 // Focus trap hook for modal accessibility
-const useFocusTrap = (isActive, closeCallback) => {
+const useFocusTrap = (isActive) => {
     const trapRef = useRef(null);
 
     useEffect(() => {
@@ -48,6 +84,9 @@ const useFocusTrap = (isActive, closeCallback) => {
         );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
+
+        // Store previously focused element to restore later
+        const previouslyFocused = document.activeElement;
 
         // Focus first element when modal opens
         firstElement?.focus();
@@ -69,13 +108,20 @@ const useFocusTrap = (isActive, closeCallback) => {
         };
 
         document.addEventListener('keydown', handleTabKey);
-        return () => document.removeEventListener('keydown', handleTabKey);
+
+        return () => {
+            document.removeEventListener('keydown', handleTabKey);
+            // Restore focus when modal closes
+            previouslyFocused?.focus();
+        };
     }, [isActive]);
 
     return trapRef;
 };
 
 function HomePage() {
+    console.log('HomePage rendering');
+
     const [eventModal, setEventModal] = useState(null);
     const [conceptModal, setConceptModal] = useState(null);
     const [focusedIndex, setFocusedIndex] = useState(null);
@@ -84,6 +130,9 @@ function HomePage() {
     const [dotProgress, setDotProgress] = useState(0);
     const [targetProgress, setTargetProgress] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+
+    console.log('Loading state:', isLoading);
+    console.log('Validated events count:', validatedTimelineEvents.length);
 
     const timelineRef = useRef(null);
     const itemRefs = useRef(validatedTimelineEvents.map(() => React.createRef()));
@@ -108,7 +157,16 @@ function HomePage() {
 
     const drawVortexPath = () => {
         const ctaButton = ctaRef.current;
-        if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) return;
+        console.log('drawVortexPath called:', {
+            ctaButton: !!ctaButton,
+            itemRefsLength: itemRefs.current.length,
+            timelineRef: !!timelineRef.current
+        });
+
+        if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) {
+            console.log('drawVortexPath returning early - refs not ready');
+            return;
+        }
 
         const timelineContainerRect = timelineRef.current.getBoundingClientRect();
 
@@ -140,11 +198,25 @@ function HomePage() {
         });
 
         setVortexPath(pathData);
-        setIsLoading(false); // Mark as loaded once path is drawn
     };
-    
+
+    // Set loading to false after a short delay to let the component mount
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('Setting isLoading to false');
+            setIsLoading(false);
+        }, 100);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Draw vortex path after timeline is rendered (when isLoading becomes false)
     useLayoutEffect(() => {
-        const timer = setTimeout(drawVortexPath, 100);
+        if (isLoading) return; // Don't run while loading
+
+        console.log('Drawing vortex path after timeline rendered');
+        const timer = setTimeout(() => {
+            drawVortexPath();
+        }, 100);
 
         let resizeTimer;
         const debouncedResize = () => {
@@ -158,7 +230,7 @@ function HomePage() {
             clearTimeout(resizeTimer);
             window.removeEventListener('resize', debouncedResize);
         };
-    }, []);
+    }, [isLoading]); // Re-run when isLoading changes
 
     // Suggestion 2: Use Intersection Observer for focusing items
     // This is more performant than calculating positions on every scroll event.
@@ -179,7 +251,7 @@ function HomePage() {
             {
                 root: null, // observes intersections relative to the viewport
                 rootMargin: "-50% 0px -50% 0px", // defines a horizontal line at the center of the viewport
-                threshold: 0,
+                threshold: [0, 0.25, 0.5, 0.75, 1], // Multiple thresholds for better detection
             }
         );
 
@@ -199,15 +271,27 @@ function HomePage() {
     }, []); // This effect runs only once on component mount.
 
     // Smooth animation for dot progress using interpolation
+    // Fixed to prevent infinite loop by only depending on targetProgress
     useEffect(() => {
-        const diff = targetProgress - dotProgress;
-        if (Math.abs(diff) > 0.001) {
-            const timer = requestAnimationFrame(() => {
-                setDotProgress(prev => prev + diff * 0.1); // Smooth interpolation
+        let animationId;
+
+        const animate = () => {
+            setDotProgress(prev => {
+                const diff = targetProgress - prev;
+                if (Math.abs(diff) > 0.001) {
+                    animationId = requestAnimationFrame(animate);
+                    return prev + diff * 0.1;
+                }
+                return targetProgress;
             });
-            return () => cancelAnimationFrame(timer);
-        }
-    }, [targetProgress, dotProgress]);
+        };
+
+        animate();
+
+        return () => {
+            if (animationId) cancelAnimationFrame(animationId);
+        };
+    }, [targetProgress]);
 
     // A separate, lightweight effect for the scroll-to-top button and for clearing focus
     // when the user scrolls back to the top of the page.
@@ -240,14 +324,31 @@ function HomePage() {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
+            // Handle escape key for modals
             if (e.key === 'Escape') {
                 closeEventModal();
                 closeConceptModal();
+                return;
+            }
+
+            // Don't interfere with arrow keys when modals are open
+            if (eventModal || conceptModal) {
+                return;
+            }
+
+            // Arrow key navigation for timeline events
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                navigateToNextEvent();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateToPreviousEvent();
             }
         };
+
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [focusedIndex, eventModal, conceptModal]);
 
     const navigateToNextEvent = () => {
         const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
@@ -261,47 +362,45 @@ function HomePage() {
         }
     };
 
+    const navigateToPreviousEvent = () => {
+        const prevIndex = focusedIndex === null
+            ? validatedTimelineEvents.length - 1
+            : (focusedIndex - 1 + validatedTimelineEvents.length) % validatedTimelineEvents.length;
+
+        const prevEventElement = itemRefs.current[prevIndex]?.current;
+
+        if (prevEventElement) {
+            prevEventElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    };
+
     const openEventModal = (data) => setEventModal(data);
     const closeEventModal = () => setEventModal(null);
     const openConceptModal = (data) => setConceptModal(data);
     const closeConceptModal = () => setConceptModal(null);
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const ConceptTag = ({ concept }) => {
-        const conceptData = conceptsMap.get(concept);
-        if (!conceptData) return null;
-        return (
-            <span className="concept-tag" onClick={(e) => { e.stopPropagation(); openConceptModal(conceptData); }}>
-                {concept}
-                <div className="tooltip">
-                    <p className="tooltip-simple">{conceptData.simple}</p>
-                    <p className="tooltip-prompt">Click for more details</p>
-                </div>
-            </span>
-        );
-    };
-
     // Show loading state while initializing
     if (isLoading) {
+        console.log('Showing loading screen');
         return (
-            <div className="loading-container" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                gap: '1rem',
-                fontFamily: 'Georgia, serif'
-            }}>
-                <div className="loading-spinner" style={{
-                    width: '48px',
-                    height: '48px',
-                    border: '4px solid rgba(139, 92, 246, 0.2)',
-                    borderTop: '4px solid rgb(139, 92, 246)',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                }}></div>
-                <p style={{ fontSize: '1.25rem', color: '#4b5563' }}>Loading philosophy...</p>
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p className="loading-text">Loading philosophy...</p>
+            </div>
+        );
+    }
+
+    // Show error if no events loaded
+    if (validatedTimelineEvents.length === 0) {
+        console.error('No timeline events loaded!');
+        return (
+            <div className="loading-container">
+                <h2 style={{ color: '#d32f2f' }}>Error Loading Timeline</h2>
+                <p className="loading-text">No timeline events found. Please check the data files.</p>
             </div>
         );
     }
@@ -358,7 +457,14 @@ function HomePage() {
                                             </div>
                                             <p>{event.summary}</p>
                                             <div className="concepts-container">
-                                                {event.concepts.map(c => <ConceptTag key={c} concept={c} />)}
+                                                {event.concepts.map(c => (
+                                                    <ConceptTag
+                                                        key={c}
+                                                        concept={c}
+                                                        conceptsMap={conceptsMap}
+                                                        onOpenModal={openConceptModal}
+                                                    />
+                                                ))}
                                             </div>
                                             {isFocused && <div className="event-details-prompt">Click to discover more</div>}
                                         </div>
@@ -387,7 +493,14 @@ function HomePage() {
                         <p className="modal-year">{eventModal.fullYear}</p>
                         <p className="modal-description">{eventModal.description}</p>
                         <div className="concepts-container">
-                             {eventModal.concepts.map(c => <ConceptTag key={c} concept={c} />)}
+                             {eventModal.concepts.map(c => (
+                                <ConceptTag
+                                    key={c}
+                                    concept={c}
+                                    conceptsMap={conceptsMap}
+                                    onOpenModal={openConceptModal}
+                                />
+                             ))}
                         </div>
                         {eventModal.miniEvents && eventModal.miniEvents.length > 0 && (
                             <>

@@ -7,6 +7,7 @@ function App() {
     <ErrorBoundary>
       <div>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/vqm-philosophy-explorer/" element={<HomePage />} />
         </Routes>
       </div>
