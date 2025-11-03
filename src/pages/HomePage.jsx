@@ -3,7 +3,77 @@ import '../css/HomePage.css';
 import timelineEvents from './timelineEvents.json';
 import philosophyConcepts from './philosophyConcepts.json';
 
-const conceptsMap = new Map(philosophyConcepts.map(c => [c.concept, c]));
+// Data validation
+const validateTimelineEvents = (events) => {
+    if (!Array.isArray(events)) {
+        console.error('Timeline events must be an array');
+        return [];
+    }
+    return events.filter(event => {
+        const isValid = event.id && event.title && event.year && event.summary && Array.isArray(event.concepts);
+        if (!isValid) {
+            console.warn('Invalid timeline event:', event);
+        }
+        return isValid;
+    });
+};
+
+const validatePhilosophyConcepts = (concepts) => {
+    if (!Array.isArray(concepts)) {
+        console.error('Philosophy concepts must be an array');
+        return [];
+    }
+    return concepts.filter(concept => {
+        const isValid = concept.concept && concept.category && concept.simple && concept.detailed;
+        if (!isValid) {
+            console.warn('Invalid philosophy concept:', concept);
+        }
+        return isValid;
+    });
+};
+
+const validatedTimelineEvents = validateTimelineEvents(timelineEvents);
+const validatedPhilosophyConcepts = validatePhilosophyConcepts(philosophyConcepts);
+const conceptsMap = new Map(validatedPhilosophyConcepts.map(c => [c.concept, c]));
+
+// Focus trap hook for modal accessibility
+const useFocusTrap = (isActive, closeCallback) => {
+    const trapRef = useRef(null);
+
+    useEffect(() => {
+        if (!isActive || !trapRef.current) return;
+
+        const focusableElements = trapRef.current.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        // Focus first element when modal opens
+        firstElement?.focus();
+
+        const handleTabKey = (e) => {
+            if (e.key !== 'Tab') return;
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement?.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement?.focus();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleTabKey);
+        return () => document.removeEventListener('keydown', handleTabKey);
+    }, [isActive]);
+
+    return trapRef;
+};
 
 function HomePage() {
     const [eventModal, setEventModal] = useState(null);
@@ -12,15 +82,21 @@ function HomePage() {
     const [showGoToTop, setShowGoToTop] = useState(false);
     const [vortexPath, setVortexPath] = useState('');
     const [dotProgress, setDotProgress] = useState(0);
+    const [targetProgress, setTargetProgress] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     const timelineRef = useRef(null);
-    const itemRefs = useRef(timelineEvents.map(() => React.createRef()));
+    const itemRefs = useRef(validatedTimelineEvents.map(() => React.createRef()));
     const ctaRef = useRef(null);
+
+    // Focus trap refs for modals
+    const eventModalRef = useFocusTrap(!!eventModal);
+    const conceptModalRef = useFocusTrap(!!conceptModal);
 
     // Suggestion 1: Memoize the eventsByEra calculation
     // This ensures the reduce operation only runs once, not on every render.
     const eventsByEra = useMemo(() => {
-        return timelineEvents.reduce((acc, event) => {
+        return validatedTimelineEvents.reduce((acc, event) => {
             const era = event.era || 'Unknown Era';
             if (!acc[era]) {
                 acc[era] = [];
@@ -35,7 +111,7 @@ function HomePage() {
         if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) return;
 
         const timelineContainerRect = timelineRef.current.getBoundingClientRect();
-        
+
         const startPoint = ctaButton.getBoundingClientRect();
         const startX = startPoint.left + startPoint.width / 2 - timelineContainerRect.left;
         const startY = startPoint.bottom - timelineContainerRect.top;
@@ -48,7 +124,7 @@ function HomePage() {
             const item = itemRef.current;
             if (!item) return;
             const itemRect = item.getBoundingClientRect();
-            
+
             const pointX = itemRect.left + itemRect.width / 2 - timelineContainerRect.left;
             const pointY = itemRect.top + itemRect.height / 2 - timelineContainerRect.top;
 
@@ -57,22 +133,31 @@ function HomePage() {
             const controlY1 = lastY + (pointY - lastY) * 0.5;
             const controlX2 = pointX + (index % 2 === 0 ? -curveIntensity : curveIntensity);
             const controlY2 = pointY - (pointY - lastY) * 0.5;
-            
+
             pathData += ` C ${controlX1},${controlY1} ${controlX2},${controlY2} ${pointX},${pointY}`;
             lastX = pointX;
             lastY = pointY;
         });
 
         setVortexPath(pathData);
+        setIsLoading(false); // Mark as loaded once path is drawn
     };
     
     useLayoutEffect(() => {
         const timer = setTimeout(drawVortexPath, 100);
-        window.addEventListener('resize', drawVortexPath);
+
+        let resizeTimer;
+        const debouncedResize = () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(drawVortexPath, 150);
+        };
+
+        window.addEventListener('resize', debouncedResize);
         return () => {
             clearTimeout(timer);
-            window.removeEventListener('resize', drawVortexPath);
-        }
+            clearTimeout(resizeTimer);
+            window.removeEventListener('resize', debouncedResize);
+        };
     }, []);
 
     // Suggestion 2: Use Intersection Observer for focusing items
@@ -84,11 +169,10 @@ function HomePage() {
                 if (intersectingEntry) {
                     const target = intersectingEntry.target;
                     const itemIndex = itemRefs.current.findIndex(ref => ref.current === target);
-                    
+
                     if (itemIndex !== -1) {
                         setFocusedIndex(itemIndex);
-                        const targetProgress = (itemIndex + 1) / timelineEvents.length;
-                        setDotProgress(targetProgress);
+                        setTargetProgress((itemIndex + 1) / validatedTimelineEvents.length);
                     }
                 }
             },
@@ -114,18 +198,39 @@ function HomePage() {
         };
     }, []); // This effect runs only once on component mount.
 
+    // Smooth animation for dot progress using interpolation
+    useEffect(() => {
+        const diff = targetProgress - dotProgress;
+        if (Math.abs(diff) > 0.001) {
+            const timer = requestAnimationFrame(() => {
+                setDotProgress(prev => prev + diff * 0.1); // Smooth interpolation
+            });
+            return () => cancelAnimationFrame(timer);
+        }
+    }, [targetProgress, dotProgress]);
+
     // A separate, lightweight effect for the scroll-to-top button and for clearing focus
     // when the user scrolls back to the top of the page.
+    // Uses requestAnimationFrame to throttle updates and prevent excessive re-renders.
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-            setShowGoToTop(scrollY > windowHeight / 2);
+        let ticking = false;
 
-            // If user scrolls back to the hero section, unfocus all items
-            if (scrollY < windowHeight * 0.5) {
-                setFocusedIndex(null);
-                setDotProgress(0);
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const windowHeight = window.innerHeight;
+                    setShowGoToTop(scrollY > windowHeight / 2);
+
+                    // If user scrolls back to the hero section, unfocus all items
+                    if (scrollY < windowHeight * 0.5) {
+                        setFocusedIndex(null);
+                        setTargetProgress(0);
+                        setDotProgress(0);
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         };
 
@@ -145,7 +250,7 @@ function HomePage() {
     }, []);
 
     const navigateToNextEvent = () => {
-        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % timelineEvents.length;
+        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
         const nextEventElement = itemRefs.current[nextIndex]?.current;
 
         if (nextEventElement) {
@@ -176,6 +281,31 @@ function HomePage() {
         );
     };
 
+    // Show loading state while initializing
+    if (isLoading) {
+        return (
+            <div className="loading-container" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100vh',
+                gap: '1rem',
+                fontFamily: 'Georgia, serif'
+            }}>
+                <div className="loading-spinner" style={{
+                    width: '48px',
+                    height: '48px',
+                    border: '4px solid rgba(139, 92, 246, 0.2)',
+                    borderTop: '4px solid rgb(139, 92, 246)',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                }}></div>
+                <p style={{ fontSize: '1.25rem', color: '#4b5563' }}>Loading philosophy...</p>
+            </div>
+        );
+    }
+
     return (
         <div className="homepage-container">
             <header className="hero-section">
@@ -203,7 +333,7 @@ function HomePage() {
                         <React.Fragment key={era}>
                             <h2 className="era-title">{era}</h2>
                             {eventsByEra[era].map((event) => {
-                                const currentIndex = timelineEvents.findIndex(e => e.id === event.id);
+                                const currentIndex = validatedTimelineEvents.findIndex(e => e.id === event.id);
                                 const isFocused = currentIndex === focusedIndex;
                                 return (
                                     <div 
@@ -241,9 +371,19 @@ function HomePage() {
             </main>
 
             {eventModal && (
-                <div className="modal-overlay" onClick={closeEventModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">{eventModal.title}</h2>
+                <div
+                    className="modal-overlay"
+                    onClick={closeEventModal}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="event-modal-title"
+                >
+                    <div
+                        className="modal-content"
+                        onClick={(e) => e.stopPropagation()}
+                        ref={eventModalRef}
+                    >
+                        <h2 id="event-modal-title" className="modal-title">{eventModal.title}</h2>
                         <p className="modal-year">{eventModal.fullYear}</p>
                         <p className="modal-description">{eventModal.description}</p>
                         <div className="concepts-container">
@@ -262,18 +402,28 @@ function HomePage() {
                                 </div>
                             </>
                         )}
-                        <button className="modal-close" onClick={closeEventModal}>Close</button>
+                        <button className="modal-close" onClick={closeEventModal} aria-label="Close event modal">Close</button>
                     </div>
                 </div>
             )}
             
             {conceptModal && (
-                 <div className="modal-overlay" onClick={closeConceptModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">{conceptModal.concept}</h2>
+                 <div
+                    className="modal-overlay"
+                    onClick={closeConceptModal}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="concept-modal-title"
+                >
+                    <div
+                        className="modal-content"
+                        onClick={(e) => e.stopPropagation()}
+                        ref={conceptModalRef}
+                    >
+                        <h2 id="concept-modal-title" className="modal-title">{conceptModal.concept}</h2>
                         <h3 className="modal-category">{conceptModal.category}</h3>
                         <p className="modal-description">{conceptModal.detailed}</p>
-                        <button className="modal-close" onClick={closeConceptModal}>Close</button>
+                        <button className="modal-close" onClick={closeConceptModal} aria-label="Close concept modal">Close</button>
                     </div>
                 </div>
             )}

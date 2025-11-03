@@ -278,6 +278,17 @@ body::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-r
 
 .footer { text-align: center; padding: 3rem; background-color: var(--background-color); color: #94a3b8; border-top: 1px solid var(--border-color); }
 
+/* Loading spinner animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.loading-container {
+    background-color: var(--background-color);
+    background-image: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+}
+
 @media (max-width: 768px) {
     .hero-title { font-size: 3rem; }
     .hero-subtitle { font-size: 1.1rem; }
