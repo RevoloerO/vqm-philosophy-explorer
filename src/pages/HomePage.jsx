@@ -3,32 +3,62 @@ import '../css/HomePage.css';
 import timelineEvents from './timelineEvents.json';
 import philosophyConcepts from './philosophyConcepts.json';
 
-const conceptsMap = new Map(philosophyConcepts.map(c => [c.concept, c]));
+// Data validation
+const validateTimelineEvents = (events) => {
+    if (!Array.isArray(events)) {
+        console.error('Timeline events must be an array');
+        return [];
+    }
+    return events.filter(event => {
+        const isValid = event.id && event.title && event.year && event.summary && Array.isArray(event.concepts);
+        if (!isValid) {
+            console.warn('Invalid timeline event:', event);
+        }
+        return isValid;
+    });
+};
+
+const validatePhilosophyConcepts = (concepts) => {
+    if (!Array.isArray(concepts)) {
+        console.error('Philosophy concepts must be an array');
+        return [];
+    }
+    return concepts.filter(concept => {
+        const isValid = concept.concept && concept.category && concept.simple && concept.detailed;
+        if (!isValid) {
+            console.warn('Invalid philosophy concept:', concept);
+        }
+        return isValid;
+    });
+};
+
+// Safely validate data with error handling
+let validatedTimelineEvents = [];
+let validatedPhilosophyConcepts = [];
+let conceptsMap = new Map();
+
+try {
+    validatedTimelineEvents = validateTimelineEvents(timelineEvents);
+    validatedPhilosophyConcepts = validatePhilosophyConcepts(philosophyConcepts);
+    conceptsMap = new Map(validatedPhilosophyConcepts.map(c => [c.concept, c]));
+} catch (error) {
+    console.error('Failed to load timeline data:', error);
+}
 
 // Calculate concept frequency across all events
-const conceptFrequency = timelineEvents.reduce((acc, event) => {
+const conceptFrequency = validatedTimelineEvents.reduce((acc, event) => {
     event.concepts.forEach(concept => {
         acc[concept] = (acc[concept] || 0) + 1;
     });
     return acc;
 }, {});
 
-const maxFrequency = Math.max(...Object.values(conceptFrequency));
+const maxFrequency = Math.max(...Object.values(conceptFrequency), 1);
 
 // Get events that contain a specific concept
 const getEventsWithConcept = (concept) => {
-    return timelineEvents.filter(event => event.concepts.includes(concept));
+    return validatedTimelineEvents.filter(event => event.concepts.includes(concept));
 };
-
-// Group events by era for structured rendering
-const eventsByEra = timelineEvents.reduce((acc, event) => {
-    const era = event.era || 'Unknown Era';
-    if (!acc[era]) {
-        acc[era] = [];
-    }
-    acc[era].push(event);
-    return acc;
-}, {});
 
 // Era mapping for styling
 const eraMapping = {
@@ -66,15 +96,28 @@ function HomePage() {
     const [miniEventPreview, setMiniEventPreview] = useState(null);
     const [parallaxOffset, setParallaxOffset] = useState(0);
     const [showSwipeHint, setShowSwipeHint] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const timelineRef = useRef(null);
-    const itemRefs = useRef(timelineEvents.map(() => React.createRef()));
+    const itemRefs = useRef(validatedTimelineEvents.map(() => React.createRef()));
     const eraRefs = useRef({});
     const ctaRef = useRef(null);
     const searchInputRef = useRef(null);
     const particleIdCounter = useRef(0);
     const touchStartX = useRef(0);
     const touchStartY = useRef(0);
+
+    // Memoize eventsByEra calculation
+    const eventsByEra = useMemo(() => {
+        return validatedTimelineEvents.reduce((acc, event) => {
+            const era = event.era || 'Unknown Era';
+            if (!acc[era]) {
+                acc[era] = [];
+            }
+            acc[era].push(event);
+            return acc;
+        }, {});
+    }, []);
 
     // Constellation dots for parallax background
     const constellationDots = useMemo(() => {
@@ -102,7 +145,7 @@ function HomePage() {
         const results = [];
 
         // Search events
-        timelineEvents.forEach(event => {
+        validatedTimelineEvents.forEach(event => {
             if (event.title.toLowerCase().includes(lowerQuery) ||
                 event.summary.toLowerCase().includes(lowerQuery) ||
                 event.description.toLowerCase().includes(lowerQuery)) {
@@ -111,7 +154,7 @@ function HomePage() {
         });
 
         // Search concepts
-        philosophyConcepts.forEach(concept => {
+        validatedPhilosophyConcepts.forEach(concept => {
             if (concept.concept.toLowerCase().includes(lowerQuery) ||
                 concept.simple.toLowerCase().includes(lowerQuery)) {
                 results.push({ type: 'concept', data: concept });
@@ -123,7 +166,7 @@ function HomePage() {
 
     // Navigate to event from search
     const navigateToEvent = useCallback((event) => {
-        const index = timelineEvents.findIndex(e => e.id === event.id);
+        const index = validatedTimelineEvents.findIndex(e => e.id === event.id);
         if (index !== -1 && itemRefs.current[index]?.current) {
             itemRefs.current[index].current.scrollIntoView({
                 behavior: 'smooth',
@@ -211,8 +254,8 @@ function HomePage() {
         for (let i = 0; i < eventsWithConcept.length - 1; i++) {
             const event1 = eventsWithConcept[i];
             const event2 = eventsWithConcept[i + 1];
-            const idx1 = timelineEvents.findIndex(e => e.id === event1.id);
-            const idx2 = timelineEvents.findIndex(e => e.id === event2.id);
+            const idx1 = validatedTimelineEvents.findIndex(e => e.id === event1.id);
+            const idx2 = validatedTimelineEvents.findIndex(e => e.id === event2.id);
 
             const ref1 = itemRefs.current[idx1]?.current;
             const ref2 = itemRefs.current[idx2]?.current;
@@ -233,15 +276,33 @@ function HomePage() {
         setConnectionLines(lines);
     }, []);
 
-    // useLayoutEffect to draw the path after the layout is calculated
+    // Set loading to false after component mounts
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 100);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Draw vortex path after timeline is rendered
     useLayoutEffect(() => {
+        if (isLoading) return;
+
         const timer = setTimeout(drawVortexPath, 100);
-        window.addEventListener('resize', drawVortexPath);
+
+        let resizeTimer;
+        const debouncedResize = () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(drawVortexPath, 150);
+        };
+
+        window.addEventListener('resize', debouncedResize);
         return () => {
             clearTimeout(timer);
-            window.removeEventListener('resize', drawVortexPath);
-        }
-    }, [drawVortexPath]);
+            clearTimeout(resizeTimer);
+            window.removeEventListener('resize', debouncedResize);
+        };
+    }, [isLoading, drawVortexPath]);
 
     // Effect for scroll-based animations and focusing
     useEffect(() => {
@@ -285,7 +346,7 @@ function HomePage() {
 
                 if (closestIndex !== -1 && closestIndex !== focusedIndex) {
                     setFocusedIndex(closestIndex);
-                    const targetProgress = (closestIndex + 1) / timelineEvents.length;
+                    const targetProgress = (closestIndex + 1) / validatedTimelineEvents.length;
                     setDotProgress(targetProgress);
 
                     // Update active era
@@ -394,7 +455,7 @@ function HomePage() {
     }, [focusedIndex]);
 
     const navigateToNextEvent = () => {
-        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % timelineEvents.length;
+        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
         const nextEventElement = itemRefs.current[nextIndex]?.current;
 
         if (nextEventElement) {
@@ -407,7 +468,7 @@ function HomePage() {
 
     const navigateToPrevEvent = () => {
         const prevIndex = focusedIndex === null || focusedIndex === 0
-            ? timelineEvents.length - 1
+            ? validatedTimelineEvents.length - 1
             : focusedIndex - 1;
         const prevEventElement = itemRefs.current[prevIndex]?.current;
 
@@ -451,6 +512,26 @@ function HomePage() {
     };
 
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Show loading state while initializing
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p className="loading-text">Loading philosophy...</p>
+            </div>
+        );
+    }
+
+    // Show error if no events loaded
+    if (validatedTimelineEvents.length === 0) {
+        return (
+            <div className="loading-container">
+                <h2 style={{ color: '#d32f2f' }}>Error Loading Timeline</h2>
+                <p className="loading-text">No timeline events found. Please check the data files.</p>
+            </div>
+        );
+    }
 
     const handleMiniEventHover = (miniEvent, e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -699,7 +780,7 @@ function HomePage() {
                                 {era}
                             </h2>
                             {eventsByEra[era].map((event) => {
-                                const currentIndex = timelineEvents.findIndex(e => e.id === event.id);
+                                const currentIndex = validatedTimelineEvents.findIndex(e => e.id === event.id);
                                 const isFocused = currentIndex === focusedIndex;
                                 const isFiltered = isEventFiltered(event);
 
