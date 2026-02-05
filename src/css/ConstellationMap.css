@@ -1,0 +1,862 @@
+/**
+ * ConstellationMap Styles
+ * Styling for the constellation map view
+ */
+
+/* ========== Container ========== */
+.constellation-map-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+        180deg,
+        #0a0a12 0%,
+        #0d1117 30%,
+        #10141c 70%,
+        #0d1117 100%
+    );
+    overflow: hidden;
+    cursor: grab;
+}
+
+.constellation-map-container:active {
+    cursor: grabbing;
+}
+
+.constellation-map-container.animating {
+    cursor: default;
+}
+
+/* ========== Canvas ========== */
+.constellation-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.transform-group {
+    transition: none;
+}
+
+.constellation-map-container.animating .transform-group {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== Background Stars ========== */
+.bg-star {
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.bg-star:nth-child(odd) {
+    animation-delay: -2s;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+/* ========== Era Regions ========== */
+.era-region {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+/* ========== Star Nodes ========== */
+.star-node {
+    transition: transform 0.3s ease;
+}
+
+.star-node:focus {
+    outline: none;
+}
+
+.star-node:focus .star-core {
+    stroke: white;
+    stroke-width: 2;
+}
+
+.star-glow {
+    pointer-events: none;
+}
+
+.star-core {
+    animation: starPulse 3s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+.star-rays {
+    transition: opacity 0.3s ease;
+}
+
+.star-selection-ring {
+    transform-origin: center;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Label animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.star-label {
+    font-family: 'Inter', sans-serif;
+    pointer-events: none;
+}
+
+/* ========== Zoom Controls ========== */
+.zoom-controls {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+}
+
+.constellation-zoom-controls {
+    background: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.zoom-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.zoom-btn:hover:not(.disabled) {
+    background: rgba(124, 58, 237, 0.3);
+    border-color: rgba(124, 58, 237, 0.5);
+    color: white;
+}
+
+.zoom-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.zoom-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.zoom-level {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0;
+    font-family: 'Inter', monospace;
+}
+
+/* ========== Modal ========== */
+.constellation-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.constellation-modal {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 90%;
+    box-shadow: 0 0 60px rgba(124, 58, 237, 0.3);
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.constellation-modal-title {
+    font-size: 2rem;
+    color: white;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+}
+
+.constellation-modal-year {
+    color: #8b5cf6;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0 1.5rem;
+}
+
+.constellation-modal-description {
+    color: #a7b6c8;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.constellation-modal-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.constellation-modal-concepts .concept-tag {
+    background: rgba(124, 58, 237, 0.2);
+    color: #8b5cf6;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.constellation-modal-mini-events {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.constellation-modal-mini-events h4 {
+    color: #e0e7ff;
+    margin: 0 0 1rem;
+    font-size: 1rem;
+}
+
+.constellation-modal-mini-events .mini-event {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.constellation-modal-mini-events .mini-event h5 {
+    color: #e0e7ff;
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+}
+
+.constellation-modal-mini-events .mini-event p {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.constellation-modal-close {
+    display: block;
+    margin: 1.5rem 0 0 auto;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.constellation-modal-close:hover {
+    background: #8b5cf6;
+    transform: translateY(-1px);
+}
+
+/* ========== Instructions Overlay ========== */
+.constellation-instructions {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    z-index: 50;
+    animation: instructionsFade 6s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes instructionsFade {
+    0%, 80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ========== Discovery Animation ========== */
+.star-node.discovered .star-glow {
+    animation: discoveryPulse 0.8s ease-out;
+}
+
+@keyframes discoveryPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(3); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 768px) {
+    .zoom-controls {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .zoom-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .constellation-modal {
+        padding: 1.5rem;
+        max-height: 70vh;
+    }
+
+    .constellation-modal-title {
+        font-size: 1.5rem;
+    }
+
+    .constellation-instructions {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+        bottom: 1rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .star-node {
+        /* Larger touch targets */
+        cursor: pointer;
+    }
+
+    .constellation-instructions span::before {
+        content: 'Pinch to zoom • ';
+    }
+
+    .constellation-instructions span {
+        display: block;
+    }
+}
+
+/* ========== Scrollbar Styling ========== */
+.constellation-modal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.constellation-modal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.constellation-modal::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.4);
+    border-radius: 3px;
+}
+
+.constellation-modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.6);
+}
+
+/* ========== Time Slider ========== */
+.time-slider-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem 1.5rem;
+    z-index: 90;
+}
+
+.time-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.time-slider-range {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.time-slider-count {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+}
+
+.time-slider-reset {
+    background: transparent;
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    color: #8b5cf6;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.time-slider-reset:hover {
+    background: rgba(124, 58, 237, 0.2);
+    border-color: #8b5cf6;
+}
+
+.time-slider-track {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 2rem 0 1rem;
+}
+
+.time-slider-range-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 4px;
+    cursor: grab;
+    transition: background 0.2s ease;
+}
+
+.time-slider-range-fill:hover {
+    background: linear-gradient(90deg, #9b6cf6 0%, #8c4aed 100%);
+}
+
+.time-slider-range-fill:active {
+    cursor: grabbing;
+}
+
+.time-slider-handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 2px #8b5cf6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 2;
+}
+
+.time-slider-handle:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.5), 0 0 0 3px #8b5cf6;
+}
+
+.time-slider-handle.dragging {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 2px 16px rgba(124, 58, 237, 0.6), 0 0 0 4px #8b5cf6;
+}
+
+.handle-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13, 17, 23, 0.95);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    margin-bottom: 8px;
+}
+
+.time-slider-handle:hover .handle-tooltip,
+.time-slider-handle.dragging .handle-tooltip {
+    opacity: 1;
+}
+
+.time-slider-label {
+    position: absolute;
+    bottom: -1.5rem;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.time-slider-label-start {
+    left: 0;
+}
+
+.time-slider-label-end {
+    right: 0;
+}
+
+/* Era markers */
+.era-marker {
+    position: absolute;
+    top: -1.5rem;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.era-marker-line {
+    width: 1px;
+    height: calc(100% + 1.5rem + 8px);
+    background: rgba(255, 255, 255, 0.15);
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.era-marker.active .era-marker-line {
+    background: var(--era-color);
+    opacity: 0.5;
+}
+
+.era-marker-label {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.era-marker.active .era-marker-label {
+    color: var(--era-color);
+}
+
+/* Time slider responsive */
+@media (max-width: 768px) {
+    .time-slider-container {
+        padding: 0.75rem 1rem 1rem;
+    }
+
+    .time-slider-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .time-slider-track {
+        height: 12px;
+        margin: 1.5rem 0 0.75rem;
+    }
+
+    .time-slider-handle {
+        width: 28px;
+        height: 28px;
+    }
+
+    .era-marker-label {
+        font-size: 0.55rem;
+    }
+}
+
+/* ========== Concept Tag Highlighting ========== */
+.constellation-modal-concepts .concept-tag {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.constellation-modal-concepts .concept-tag:hover,
+.constellation-modal-concepts .concept-tag.highlighted {
+    background: rgba(124, 58, 237, 0.4);
+    border-color: #8b5cf6;
+    transform: translateY(-2px);
+}
+
+/* ========== Constellation Lines Layer ========== */
+.constellation-lines-layer {
+    pointer-events: none;
+}
+
+.constellation-line {
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+}
+
+.constellation-line.highlighted {
+    stroke-dasharray: none;
+}
+
+.constellation-line.hovered {
+    stroke-dasharray: none;
+}
+
+/* ========== Telescope Search ========== */
+.telescope-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.telescope-container {
+    background: rgba(30, 41, 59, 0.98);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 600px;
+    max-height: 60vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.2);
+    animation: scaleIn 0.2s ease;
+}
+
+.telescope-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.telescope-icon {
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+}
+
+.telescope-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.telescope-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.telescope-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.telescope-shortcut {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.telescope-shortcut kbd {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+    font-family: inherit;
+    font-size: 0.7rem;
+}
+
+.telescope-results {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.telescope-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.telescope-result-item:hover,
+.telescope-result-item.selected {
+    background: rgba(124, 58, 237, 0.2);
+}
+
+.telescope-result-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(124, 58, 237, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #8b5cf6;
+}
+
+.telescope-result-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.telescope-result-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.telescope-result-title {
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.telescope-result-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-top: 0.15rem;
+}
+
+.telescope-result-type {
+    font-size: 0.7rem;
+    color: #8b5cf6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.search-highlight {
+    background: rgba(245, 166, 35, 0.4);
+    color: white;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.telescope-no-results {
+    padding: 2rem;
+    text-align: center;
+}
+
+.telescope-no-results p {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.telescope-hint {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.telescope-hint-container {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.telescope-suggestions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.suggestion-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+.suggestion-chip {
+    background: rgba(124, 58, 237, 0.2);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #a78bfa;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suggestion-chip:hover {
+    background: rgba(124, 58, 237, 0.4);
+    border-color: #8b5cf6;
+    color: white;
+}
+
+/* Search button */
+.search-toggle-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    background: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 95;
+    transition: all 0.2s ease;
+}
+
+.search-toggle-btn:hover {
+    background: rgba(124, 58, 237, 0.3);
+    border-color: rgba(124, 58, 237, 0.5);
+    color: white;
+}
+
+.search-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Telescope responsive */
+@media (max-width: 768px) {
+    .telescope-overlay {
+        padding-top: 5vh;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .telescope-container {
+        max-height: 80vh;
+    }
+
+    .telescope-shortcut {
+        display: none;
+    }
+}

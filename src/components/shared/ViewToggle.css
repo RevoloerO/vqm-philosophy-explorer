@@ -1,0 +1,95 @@
+/**
+ * ViewToggle Styles
+ * Styling for the view toggle component
+ */
+
+.view-toggle {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    transition: opacity 0.3s ease;
+}
+
+.view-toggle.transitioning {
+    pointer-events: none;
+}
+
+.view-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.view-toggle-btn:hover:not(.active) {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.view-toggle-btn.active {
+    background: #7c3aed;
+    color: white;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.view-toggle-btn:disabled {
+    cursor: default;
+}
+
+.view-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.view-toggle-label {
+    white-space: nowrap;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .view-toggle {
+        top: auto;
+        bottom: 6rem;
+        left: 1rem;
+        transform: none;
+    }
+
+    .view-toggle-btn {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .view-toggle-label {
+        display: none;
+    }
+
+    .view-toggle-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* With time slider visible - adjust position */
+@media (max-width: 768px) {
+    .view-toggle {
+        bottom: 8rem;
+    }
+}

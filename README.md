@@ -1,60 +1,179 @@
-# Philosophy "Map of Thought" Project
+# VQM Philosophy Explorer - Map of Thought
 
-[cite_start]An interactive, visual knowledge website dedicated to mapping the history of human thought. [cite: 4]
+An interactive, visual knowledge website dedicated to mapping the history of human thought.
 
-## Core Concept
+**[Live Demo](https://revoloero.github.io/vqm-philosophy-explorer/)**
 
-[cite_start]This platform will present the history of philosophical thought as a branching mind map. [cite: 4] [cite_start]It is designed to allow users to explore philosophical schools, thinkers, and concepts in a dynamic and intuitive way. [cite: 4]
+## Overview
 
-## Vision
+This platform presents the history of philosophical thought as an explorable journey through time. Users can navigate through philosophical schools, thinkers, and concepts in a dynamic and intuitive way — like Google Maps for human thought.
 
-[cite_start]The vision is to make philosophy explorable like Google Maps for human thought. [cite: 6] [cite_start]Users will be able to zoom into eras, navigate across different schools of thought, and discover how ideas evolved, diverged, and influenced one another over time. [cite: 6]
+## Features
 
-## Key Features
+### Dual View System
 
-### 1. Node-Graph Interface
-* [cite_start]**Schools of Thought:** Central nodes represent major schools (e.g., Stoicism, Existentialism, Confucianism). [cite: 9]
-* [cite_start]**Philosophers:** Connected nodes represent key thinkers (e.g., Plato, Kant, Nietzsche). [cite: 10]
-* [cite_start]**Key Concepts:** Outer nodes represent their core ideas (e.g., Justice, Free Will, Virtue). [cite: 11]
-* [cite_start]**Interactive Content:** Clicking any node reveals deeper content on its founders, ideas, criticisms, and modern relevance. [cite: 12]
+Toggle between two powerful visualization modes:
 
-### 2. Dual Views
-[cite_start]Users can toggle between two primary modes to explore the data: [cite: 22]
+#### Timeline View
+- **Chronological Navigation**: Explore philosophy from Ancient Greece (600 BCE) to Contemporary Thought
+- **Visual Vortex Path**: An animated SVG path connects timeline events with a moving progress dot
+- **Focus-Based Interaction**: Timeline items blur and scale based on scroll position
+- **Era Quick-Jump**: Navigate instantly to any historical era
 
-* **Timeline View (History Mode):**
-    * [cite_start]Features a chronological time slider from 500 BCE to Today. [cite: 14]
-    * [cite_start]Reveals when ideas, philosophers, and schools emerged in history. [cite: 15]
-    * [cite_start]Visualizes influence arrows showing how ideas shaped later thinkers. [cite: 16]
+#### Constellation Map View (New!)
+- **Zoomable Star Map**: Philosophers rendered as stars with era-specific colors
+- **Constellation Lines**: Visual connections between philosophers sharing concepts
+- **Time Slider**: Filter visible philosophers by historical period
+- **Telescope Search**: Press `/` to search and zoom to any philosopher or concept
+- **Smooth Zoom/Pan**: Mouse wheel zoom, drag to pan, pinch gestures on mobile
+- **Concept Highlighting**: Hover over concepts to see all related connections glow
 
-* **Concept View (Idea Mode):**
-    * [cite_start]Clusters ideas thematically (e.g., Free Will, Knowledge, Justice). [cite: 18]
-    * [cite_start]Maps philosophers across different eras who engaged with the same concept. [cite: 19]
-    * [cite_start]Allows users to trace continuities and debates across time. [cite: 20]
+### Philosophical Content
+- **14 Major Philosophers**: From Thales of Miletus to Simone de Beauvoir
+- **32 Philosophical Concepts**: Covering metaphysics, epistemology, ethics, aesthetics, logic, and political philosophy
+- **Mini-Events**: Related developments nested within major timeline events
+- **Era Organization**: Events grouped by historical periods:
+  - Ancient & Classical Thought (Gold)
+  - Medieval & Renaissance Philosophy (Blue)
+  - The Age of Reason & Enlightenment (Orange)
+  - 19th Century Philosophy (Red)
+  - Contemporary Thought (Purple)
 
-### 3. Compare & Explore
-* [cite_start]**Compare Mode:** A side-by-side comparison of two schools (e.g., Stoicism vs. Buddhism). [cite: 27]
-* [cite_start]**Search:** A robust search function to find concepts or philosophers, which auto-highlights all related nodes on the map. [cite: 28]
-* [cite_start]**Gamification:** Users can unlock hidden branches and achievements as they explore. [cite: 29]
+### Interactive Elements
+- **Philosopher Modals**: Click stars or timeline items for detailed information
+- **Concept Tags**: Hover for quick definitions, click for in-depth explanations
+- **Keyboard Navigation**: Full accessibility support (`/` search, `Esc` close, `+/-` zoom)
+- **Touch Gestures**: Pinch zoom, swipe navigation on mobile devices
 
-## Data Backbone
+## Tech Stack
 
-[cite_start]The project is powered by a structured JSON knowledge base. [cite: 36]
-* [cite_start]**Events:** Data points are anchored in history, such as a philosopher's publications, trials, or the founding of a school. [cite: 36, 37]
-* [cite_start]**Concepts:** Data is also anchored in themes like Justice, Free Will, or Knowledge. [cite: 38]
-* [cite_start]**Links:** Each event and concept connects to related schools and influences to build the web of ideas. [cite: 39]
+- **React 19** - Modern React with latest hooks and features
+- **React Router DOM 7** - Client-side routing
+- **Vite 7** - Fast build tool and development server
+- **CSS3** - Custom properties, glassmorphism, SVG animations
+- **GitHub Pages** - Static site hosting
 
-## Project Status
+## Getting Started
 
-* [cite_start]**Current Progress:** A skeleton timeline map has been structured, covering major eras from Ancient to Contemporary philosophy. [cite: 51]
-* [cite_start]**Next Steps:** The immediate next step is to expand the map with philosophers, schools, and concepts, and to design the visual interactions. [cite: 52]
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm
 
-## Enhancements (Stretch Goals)
+### Installation
 
-* [cite_start]**AI Companion:** To answer natural language questions about philosophy. [cite: 31]
-* [cite_start]**Interactive Debates:** A feature to simulate philosophical clashes between different thinkers. [cite: 32]
-* [cite_start]**Thematic Layers:** Filters for specific branches like ethics, metaphysics, and epistemology. [cite: 33]
-* [cite_start]**Community Contributions:** Allowing scholars or users to add commentary and expand the map. [cite: 34]
+```bash
+# Clone the repository
+git clone https://github.com/revoloero/vqm-philosophy-explorer.git
 
-## How to Contribute
+# Navigate to project directory
+cd vqm-philosophy-explorer
 
-We welcome contributions from the community! If you are interested in contributing data, code, or suggestions, please check our contribution guidelines (link to be added) or open an issue.
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build locally |
+| `npm run deploy` | Deploy to GitHub Pages |
+| `npm run lint` | Run ESLint for code quality |
+
+## Project Structure
+
+```
+src/
+├── main.jsx                    # React entry point
+├── App.jsx                     # Main app with view routing
+├── index.css                   # Global styles
+├── context/
+│   └── ConstellationContext.jsx  # Shared state provider
+├── components/
+│   ├── ConstellationMap/
+│   │   ├── ConstellationMap.jsx   # Main constellation view
+│   │   ├── ConstellationCanvas.jsx # SVG rendering layer
+│   │   ├── ConstellationLines.jsx  # Concept connection lines
+│   │   ├── StarNode.jsx            # Philosopher star component
+│   │   ├── TimeSlider.jsx          # Time range filter
+│   │   ├── TelescopeSearch.jsx     # Search with zoom-to
+│   │   └── ZoomControls.jsx        # Zoom buttons
+│   └── shared/
+│       └── ViewToggle.jsx          # Timeline/Constellation switcher
+├── hooks/
+│   ├── useZoomPan.js              # Zoom/pan state management
+│   └── useTimeFilter.js           # Time-based filtering
+├── utils/
+│   ├── yearParser.js              # Parse historical dates
+│   ├── constellationLayout.js     # Star positioning algorithm
+│   └── connectionBuilder.js       # Build concept connections
+├── css/
+│   ├── HomePage.css               # Timeline styles
+│   └── ConstellationMap.css       # Constellation styles
+└── pages/
+    ├── HomePage.jsx               # Timeline view component
+    ├── timelineEvents.json        # Philosopher data
+    └── philosophyConcepts.json    # Concept definitions
+```
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `/` | Open telescope search |
+| `Esc` | Close modal/search |
+| `+` or `=` | Zoom in |
+| `-` | Zoom out |
+| `0` | Reset zoom |
+
+## Roadmap
+
+### Completed
+- [x] Interactive timeline with scroll-based focus
+- [x] Event and concept modal system
+- [x] SVG vortex path visualization
+- [x] Responsive design & keyboard accessibility
+- [x] **Constellation Map view** with zoomable star visualization
+- [x] **Time slider** for temporal filtering
+- [x] **Telescope search** with zoom-to animation
+- [x] **Constellation lines** showing concept connections
+- [x] **View toggle** between Timeline and Constellation
+
+### Planned
+- [ ] Compare mode (side-by-side school comparisons)
+- [ ] Influence arrows showing direct philosophical lineage
+- [ ] Expanded philosopher database (50+ thinkers)
+- [ ] Mini-map for constellation navigation
+
+### Stretch Goals
+- [ ] AI Companion for natural language questions
+- [ ] Interactive philosophical debates simulation
+- [ ] 3D constellation with Three.js
+- [ ] Community contributions system
+
+## Contributing
+
+Contributions are welcome! Whether it's adding philosophical content, improving the UI, or fixing bugs:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+**Vuong Quyen Mai** - [GitHub](https://github.com/revoloero)
+
+---
+
+*Explore the history of human thought, one idea at a time.*
