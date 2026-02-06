@@ -98,6 +98,7 @@ export const ConstellationProvider = ({ children }) => {
 /**
  * Custom hook to use constellation context
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const useConstellationContext = () => {
     const context = useContext(ConstellationContext);
     if (!context) {

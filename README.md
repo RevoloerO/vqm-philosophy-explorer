@@ -14,13 +14,18 @@ This platform presents the history of philosophical thought as an explorable jou
 
 Toggle between two powerful visualization modes:
 
-#### Timeline View
+#### Timeline View (Flow of Thought)
 - **Chronological Navigation**: Explore philosophy from Ancient Greece (600 BCE) to Contemporary Thought
-- **Visual Vortex Path**: An animated SVG path connects timeline events with a moving progress dot
-- **Focus-Based Interaction**: Timeline items blur and scale based on scroll position
-- **Era Quick-Jump**: Navigate instantly to any historical era
+- **River of Ideas**: An animated SVG flow path with gradient colors and floating particles connects timeline events
+- **Two-Column Layout**: Year column with flow nodes alongside content cards for better visual hierarchy
+- **Focus-Based Interaction**: Timeline items smoothly scale, blur, and transform based on scroll position
+- **Era Quick-Jump**: Navigate instantly to any historical era with numbered navigation pills
+- **Reading Progress**: Visual progress bar showing your journey through philosophical history
+- **View Modes**: Toggle between Flow (expanded) and Compact view modes
+- **Concept Filtering**: Click concept tags to filter timeline by philosophical themes
+- **Page Transitions**: Smooth fade and scale animations when switching views
 
-#### Constellation Map View (New!)
+#### Constellation Map View
 - **Zoomable Star Map**: Philosophers rendered as stars with era-specific colors
 - **Constellation Lines**: Visual connections between philosophers sharing concepts
 - **Time Slider**: Filter visible philosophers by historical period
@@ -29,28 +34,46 @@ Toggle between two powerful visualization modes:
 - **Concept Highlighting**: Hover over concepts to see all related connections glow
 
 ### Philosophical Content
-- **14 Major Philosophers**: From Thales of Miletus to Simone de Beauvoir
-- **32 Philosophical Concepts**: Covering metaphysics, epistemology, ethics, aesthetics, logic, and political philosophy
+- **44 Philosophers**: Comprehensive coverage from Thales of Miletus to Jacques Derrida
+- **38 Philosophical Concepts**: Covering metaphysics, epistemology, ethics, aesthetics, logic, political philosophy, and more
 - **Mini-Events**: Related developments nested within major timeline events
-- **Era Organization**: Events grouped by historical periods:
-  - Ancient & Classical Thought (Gold)
+- **Era Organization**: Events grouped by historical periods with unique color themes:
+  - Ancient & Classical Thought (Gold/Amber)
   - Medieval & Renaissance Philosophy (Blue)
-  - The Age of Reason & Enlightenment (Orange)
+  - The Age of Reason & Enlightenment (Orange/Yellow)
   - 19th Century Philosophy (Red)
   - Contemporary Thought (Purple)
 
 ### Interactive Elements
-- **Philosopher Modals**: Click stars or timeline items for detailed information
-- **Concept Tags**: Hover for quick definitions, click for in-depth explanations
+- **Philosopher Modals**: Click "Explore this moment" or stars for detailed information (rendered via React Portal for proper layering)
+- **Concept Tags**: Hover for quick definitions with dynamically positioned tooltips, click for filtering or detailed panels
+- **Concept Slide Panel**: In-depth concept explanations with related philosophers
 - **Keyboard Navigation**: Full accessibility support (`/` search, `Esc` close, `+/-` zoom)
 - **Touch Gestures**: Pinch zoom, swipe navigation on mobile devices
 
+## Philosophers Included
+
+### Ancient & Classical Thought
+- Thales of Miletus, Pythagoras, Heraclitus, Parmenides, Socrates, Democritus, Plato, Aristotle, Epicurus, Zeno of Citium, Marcus Aurelius
+
+### Medieval & Renaissance Philosophy
+- Augustine of Hippo, Boethius, Al-Farabi, Avicenna, Maimonides, Thomas Aquinas, William of Ockham
+
+### The Age of Reason & Enlightenment
+- Rene Descartes, Baruch Spinoza, John Locke, George Berkeley, Gottfried Wilhelm Leibniz, David Hume, Jean-Jacques Rousseau, Voltaire, Immanuel Kant
+
+### 19th Century Philosophy
+- G.W.F. Hegel, Arthur Schopenhauer, Soren Kierkegaard, Karl Marx, John Stuart Mill, Charles Sanders Peirce, Friedrich Nietzsche, William James
+
+### Contemporary Thought
+- Ludwig Wittgenstein, Martin Heidegger, Albert Camus, Jean-Paul Sartre, Simone de Beauvoir, Hannah Arendt, Michel Foucault, Jacques Derrida, John Rawls
+
 ## Tech Stack
 
-- **React 19** - Modern React with latest hooks and features
+- **React 19** - Modern React with latest hooks (useState, useRef, useCallback, useMemo, createPortal)
 - **React Router DOM 7** - Client-side routing
 - **Vite 7** - Fast build tool and development server
-- **CSS3** - Custom properties, glassmorphism, SVG animations
+- **CSS3** - Custom properties, glassmorphism, SVG animations, backdrop-filter
 - **GitHub Pages** - Static site hosting
 
 ## Getting Started
@@ -90,8 +113,8 @@ npm run dev
 ```
 src/
 ├── main.jsx                    # React entry point
-├── App.jsx                     # Main app with view routing
-├── index.css                   # Global styles
+├── App.jsx                     # Main app with view routing & transitions
+├── index.css                   # Global styles & page transitions
 ├── context/
 │   └── ConstellationContext.jsx  # Shared state provider
 ├── components/
@@ -113,12 +136,12 @@ src/
 │   ├── constellationLayout.js     # Star positioning algorithm
 │   └── connectionBuilder.js       # Build concept connections
 ├── css/
-│   ├── HomePage.css               # Timeline styles
+│   ├── HomePage.css               # Timeline styles (era colors, animations)
 │   └── ConstellationMap.css       # Constellation styles
 └── pages/
     ├── HomePage.jsx               # Timeline view component
-    ├── timelineEvents.json        # Philosopher data
-    └── philosophyConcepts.json    # Concept definitions
+    ├── timelineEvents.json        # 44 philosophers with metadata
+    └── philosophyConcepts.json    # 38 concept definitions
 ```
 
 ## Keyboard Shortcuts
@@ -131,24 +154,43 @@ src/
 | `-` | Zoom out |
 | `0` | Reset zoom |
 
+## Recent Updates
+
+### UI/UX Improvements
+- Redesigned timeline flow line as a "River of Ideas" with gradient colors and animated particles
+- Two-column timeline layout with dedicated year column and flow nodes
+- Enhanced "Explore this moment" button with hover animations and era-specific colors
+- Fixed tooltip positioning using dynamic calculations to prevent clipping
+- Modal rendering via React Portal for proper z-index handling
+- Improved hover states on focused timeline cards
+- Page transition animations for smooth view switching
+
+### Content Expansion
+- Added 10 new philosophers including Parmenides, Democritus, Marcus Aurelius, Leibniz, Berkeley, Peirce, William James, Hannah Arendt, John Rawls, and Jacques Derrida
+- Added 7 new philosophical concepts: Monism, Materialism, Theodicy, Pragmatism, Philosophy of Mind, and Semiotics
+
 ## Roadmap
 
 ### Completed
 - [x] Interactive timeline with scroll-based focus
 - [x] Event and concept modal system
-- [x] SVG vortex path visualization
+- [x] SVG flow path visualization with animated particles
 - [x] Responsive design & keyboard accessibility
-- [x] **Constellation Map view** with zoomable star visualization
-- [x] **Time slider** for temporal filtering
-- [x] **Telescope search** with zoom-to animation
-- [x] **Constellation lines** showing concept connections
-- [x] **View toggle** between Timeline and Constellation
+- [x] Constellation Map view with zoomable star visualization
+- [x] Time slider for temporal filtering
+- [x] Telescope search with zoom-to animation
+- [x] Constellation lines showing concept connections
+- [x] View toggle between Timeline and Constellation
+- [x] Two-column timeline layout with flow nodes
+- [x] Era-specific theming and colors
+- [x] Concept filtering system
+- [x] Page transition animations
 
 ### Planned
 - [ ] Compare mode (side-by-side school comparisons)
 - [ ] Influence arrows showing direct philosophical lineage
-- [ ] Expanded philosopher database (50+ thinkers)
 - [ ] Mini-map for constellation navigation
+- [ ] Expanded philosopher database (75+ thinkers)
 
 ### Stretch Goals
 - [ ] AI Companion for natural language questions

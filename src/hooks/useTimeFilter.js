@@ -1,140 +1,118 @@
 /**
  * useTimeFilter Hook
- * Manages time-based filtering of philosophers in the constellation map
+ * Manages era-based filtering and major/minor toggle of philosophers
+ * in the constellation map
  */
 
 import { useState, useMemo, useCallback } from 'react';
-import { parseYear, ERA_BOUNDARIES } from '../utils/yearParser';
 
-// Default time range covering all philosophers
-const DEFAULT_TIME_RANGE = {
-    start: -600,  // 600 BC
-    end: 1950     // 1950 AD
+// Era name to key mapping
+const ERA_KEY_MAP = {
+    'Ancient & Classical Thought': 'ancient',
+    'Medieval & Renaissance Philosophy': 'medieval',
+    'The Age of Reason & Enlightenment': 'enlightenment',
+    '19th Century Philosophy': '19th',
+    'Contemporary Thought': 'contemporary'
+};
+
+// Era definitions with display labels and colors
+const ERA_DEFINITIONS = {
+    ancient:       { label: 'Ancient',       color: '#d4a574' },
+    medieval:      { label: 'Medieval',      color: '#4a90d9' },
+    enlightenment: { label: 'Enlightenment', color: '#f5a623' },
+    '19th':        { label: '19th Century',  color: '#e74c3c' },
+    contemporary:  { label: 'Contemporary',  color: '#9b59b6' }
 };
 
 /**
- * Custom hook for time-based filtering
- * @param {Array} philosophers - Array of philosopher objects
- * @param {Object} initialRange - Initial time range { start, end }
- * @returns {Object} Time filter state and methods
+ * Get era key from philosopher's era name string
  */
-export const useTimeFilter = (philosophers, initialRange = DEFAULT_TIME_RANGE) => {
-    const [timeRange, setTimeRange] = useState(initialRange);
-    const [isAnimating, setIsAnimating] = useState(false);
+const getEraKey = (eraName) => ERA_KEY_MAP[eraName] || 'ancient';
 
-    // Parse and cache philosopher years
-    const philosophersWithYears = useMemo(() => {
+/**
+ * Custom hook for era-based filtering and major/minor toggle
+ * @param {Array} philosophers - Array of philosopher objects
+ * @returns {Object} Era filter state and methods
+ */
+export const useTimeFilter = (philosophers) => {
+    const [selectedEras, setSelectedEras] = useState(new Set());
+    const [showMinor, setShowMinor] = useState(true); // true = show all, false = major only
+
+    // Cache philosophers with their era keys
+    const philosophersWithEras = useMemo(() => {
         return philosophers.map(p => ({
             ...p,
-            numericYear: parseYear(p.year)
+            eraKey: getEraKey(p.era)
         }));
     }, [philosophers]);
 
     // Calculate visibility and opacity for each philosopher
     const filteredPhilosophers = useMemo(() => {
-        return philosophersWithYears.map(p => {
-            const year = p.numericYear;
-            const isVisible = year >= timeRange.start && year <= timeRange.end;
+        const hasEraFilter = selectedEras.size > 0;
 
-            // Calculate opacity based on proximity to edges
+        return philosophersWithEras.map(p => {
+            const passesEraFilter = !hasEraFilter || selectedEras.has(p.eraKey);
+            const passesTypeFilter = showMinor || p.type !== 'minor';
+            const isVisible = passesEraFilter && passesTypeFilter;
+
+            // If hidden by type filter, fully hide (opacity 0)
+            // If hidden by era filter only, dim (opacity 0.15)
             let opacity = 1;
-            if (!isVisible) {
+            if (!passesTypeFilter) {
+                opacity = 0;
+            } else if (!passesEraFilter) {
                 opacity = 0.15;
-            } else {
-                // Fade near edges
-                const rangeSize = timeRange.end - timeRange.start;
-                const fadeZone = rangeSize * 0.1; // 10% fade zone
-
-                if (year - timeRange.start < fadeZone) {
-                    opacity = 0.5 + 0.5 * ((year - timeRange.start) / fadeZone);
-                } else if (timeRange.end - year < fadeZone) {
-                    opacity = 0.5 + 0.5 * ((timeRange.end - year) / fadeZone);
-                }
             }
 
             return {
                 ...p,
                 isVisible,
-                opacity: Math.max(0.15, opacity)
+                opacity
             };
         });
-    }, [philosophersWithYears, timeRange]);
+    }, [philosophersWithEras, selectedEras, showMinor]);
 
     // Get visible philosopher count
     const visibleCount = useMemo(() => {
         return filteredPhilosophers.filter(p => p.isVisible).length;
     }, [filteredPhilosophers]);
 
-    // Update time range with optional animation
-    const updateTimeRange = useCallback((newRange, animate = false) => {
-        if (animate) {
-            setIsAnimating(true);
-            // Animation would be handled by CSS transitions
-            setTimeout(() => setIsAnimating(false), 400);
-        }
-        setTimeRange({
-            start: Math.max(-600, newRange.start),
-            end: Math.min(1950, newRange.end)
+    // Toggle an era on/off
+    const toggleEra = useCallback((era) => {
+        setSelectedEras(prev => {
+            const next = new Set(prev);
+            if (next.has(era)) {
+                next.delete(era);
+            } else {
+                next.add(era);
+            }
+            return next;
         });
     }, []);
 
-    // Reset to full range
-    const resetTimeRange = useCallback(() => {
-        updateTimeRange(DEFAULT_TIME_RANGE, true);
-    }, [updateTimeRange]);
+    // Clear all era selections
+    const clearEras = useCallback(() => {
+        setSelectedEras(new Set());
+    }, []);
 
-    // Jump to a specific era
-    const jumpToEra = useCallback((era) => {
-        const eraRanges = {
-            ancient: { start: -600, end: 400 },
-            medieval: { start: 400, end: 1500 },
-            enlightenment: { start: 1500, end: 1800 },
-            '19th': { start: 1800, end: 1900 },
-            contemporary: { start: 1900, end: 1950 }
-        };
+    // Toggle major/minor visibility
+    const toggleShowMinor = useCallback(() => {
+        setShowMinor(prev => !prev);
+    }, []);
 
-        const range = eraRanges[era];
-        if (range) {
-            updateTimeRange(range, true);
-        }
-    }, [updateTimeRange]);
-
-    // Get current era(s) based on time range
-    const currentEras = useMemo(() => {
-        const eras = [];
-        const boundaries = [
-            { era: 'ancient', start: -600, end: 400 },
-            { era: 'medieval', start: 400, end: 1500 },
-            { era: 'enlightenment', start: 1500, end: 1800 },
-            { era: '19th', start: 1800, end: 1900 },
-            { era: 'contemporary', start: 1900, end: 1950 }
-        ];
-
-        boundaries.forEach(({ era, start, end }) => {
-            if (timeRange.start <= end && timeRange.end >= start) {
-                eras.push(era);
-            }
-        });
-
-        return eras;
-    }, [timeRange]);
-
-    // Check if currently showing full range
-    const isFullRange = timeRange.start === DEFAULT_TIME_RANGE.start &&
-        timeRange.end === DEFAULT_TIME_RANGE.end;
+    const hasActiveFilter = selectedEras.size > 0 || !showMinor;
 
     return {
-        timeRange,
-        setTimeRange: updateTimeRange,
-        resetTimeRange,
-        jumpToEra,
+        selectedEras,
+        toggleEra,
+        clearEras,
         filteredPhilosophers,
         visibleCount,
         totalCount: philosophers.length,
-        currentEras,
-        isFullRange,
-        isAnimating,
-        eraBoundaries: ERA_BOUNDARIES
+        hasActiveFilter,
+        eraDefinitions: ERA_DEFINITIONS,
+        showMinor,
+        toggleShowMinor
     };
 };
 

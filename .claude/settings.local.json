@@ -5,7 +5,13 @@
       "Bash(npm run build:*)",
       "Bash(timeout 10 npm run dev:*)",
       "Bash(taskkill:*)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\quyen\\\\Documents\\\\GitHub\\\\vqm-philosophy-explorer\\\\src\")",
+      "Bash(findstr:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm i:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm audit fix:*)"
     ]
   }
 }

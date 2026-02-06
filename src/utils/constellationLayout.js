@@ -28,13 +28,13 @@ export const getEraKey = (eraName) => ERA_MAPPING[eraName] || 'ancient';
  * Compute initial star positions based on time
  * @param {Array} philosophers - Array of philosopher objects from timelineEvents
  * @param {Object} canvasSize - { width, height }
- * @returns {Array} Array of position objects { id, x, y, philosopher, era }
+ * @returns {Array} Array of position objects { id, x, y, philosopher, era, type }
  */
 export const computeInitialPositions = (philosophers, canvasSize) => {
     const { width, height } = canvasSize;
     const padding = 100; // Edge padding
 
-    return philosophers.map((philosopher, index) => {
+    return philosophers.map((philosopher) => {
         const year = parseYear(philosopher.year);
         const normalizedX = normalizeYear(year);
 
@@ -53,6 +53,7 @@ export const computeInitialPositions = (philosophers, canvasSize) => {
             y: baseY,
             philosopher,
             era: getEraKey(philosopher.era),
+            type: philosopher.type || 'major',
             year,
             concepts: philosopher.concepts || []
         };
@@ -129,7 +130,7 @@ const applyConceptGravity = (positions, conceptMap, strength = 0.1) => {
  * @param {number} strength - Repulsion strength
  * @returns {Array} Updated positions
  */
-const applyRepulsion = (positions, minDistance = 80, strength = 0.5) => {
+const applyRepulsion = (positions, minDistance = 60, strength = 0.5) => {
     return positions.map((pos, i) => {
         let dx = 0;
         let dy = 0;
@@ -200,7 +201,7 @@ export const computeStarPositions = (philosophers, canvasSize, iterations = 15) 
         const repulsionStrength = 0.3 * (1 - iterationProgress * 0.3);
 
         positions = applyConceptGravity(positions, conceptMap, gravityStrength);
-        positions = applyRepulsion(positions, 80, repulsionStrength);
+        positions = applyRepulsion(positions, 60, repulsionStrength);
         positions = applyBoundaryConstraints(positions, canvasSize);
     }
 

@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "type": "major",
         "era": "Ancient & Classical Thought",
         "title": "Thales of Miletus",
         "year": "c. 600 BC",
@@ -26,6 +27,7 @@
     },
     {
         "id": 2,
+        "type": "major",
         "era": "Ancient & Classical Thought",
         "title": "Socrates",
         "year": "c. 440 BC",
@@ -52,6 +54,7 @@
     },
     {
         "id": 3,
+        "type": "major",
         "era": "Ancient & Classical Thought",
         "title": "Plato Founds the Academy",
         "year": "c. 387 BC",
@@ -78,6 +81,7 @@
     },
     {
         "id": 4,
+        "type": "major",
         "era": "Ancient & Classical Thought",
         "title": "Aristotle & The Lyceum",
         "year": "c. 335 BC",
@@ -104,7 +108,77 @@
         ]
     },
     {
+        "id": 15,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Pythagoras",
+        "year": "c. 530 BC",
+        "fullYear": "c. 570–495 BC",
+        "summary": "All is number.",
+        "description": "Pythagoras founded a philosophical and religious movement that saw mathematics as the key to understanding reality, believing numbers underlie all natural phenomena.",
+        "concepts": [
+            "Metaphysics",
+            "Naturalism"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 16,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Heraclitus",
+        "year": "c. 500 BC",
+        "fullYear": "c. 535–475 BC",
+        "summary": "Everything flows; you cannot step into the same river twice.",
+        "description": "Heraclitus proposed that change is the fundamental nature of the universe, with fire as the primary element and the Logos as the underlying order of all things.",
+        "concepts": [
+            "Metaphysics",
+            "Naturalism",
+            "Dialectic"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 17,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Epicurus",
+        "year": "c. 307 BC",
+        "fullYear": "341–270 BC",
+        "summary": "Pleasure is the highest good.",
+        "description": "Epicurus founded a school advocating a life of moderate pleasure, friendship, and freedom from fear, including fear of the gods and death.",
+        "concepts": [
+            "Ethics",
+            "Naturalism",
+            "Metaphysics"
+        ],
+        "miniEvents": [
+            {
+                "id": "17a",
+                "title": "The Garden",
+                "summary": "Epicurus's school in Athens, open to all including women and slaves, emphasizing communal philosophical living."
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Zeno of Citium",
+        "year": "c. 300 BC",
+        "fullYear": "c. 334–262 BC",
+        "summary": "Virtue is the only true good.",
+        "description": "Zeno founded Stoicism, teaching that virtue aligned with reason and nature is the path to tranquility, and that external events are beyond our control.",
+        "concepts": [
+            "Stoicism",
+            "Ethics",
+            "Logic"
+        ],
+        "miniEvents": []
+    },
+    {
         "id": 5,
+        "type": "major",
         "era": "Medieval & Renaissance Philosophy",
         "title": "Augustine of Hippo",
         "year": "c. 400 AD",
@@ -131,6 +205,7 @@
     },
     {
         "id": 6,
+        "type": "major",
         "era": "Medieval & Renaissance Philosophy",
         "title": "Avicenna (Ibn Sina)",
         "year": "c. 1020 AD",
@@ -157,6 +232,7 @@
     },
     {
         "id": 7,
+        "type": "major",
         "era": "Medieval & Renaissance Philosophy",
         "title": "Thomas Aquinas",
         "year": "c. 1265 AD",
@@ -183,9 +259,80 @@
         ]
     },
     {
+        "id": 19,
+        "type": "minor",
+        "era": "Medieval & Renaissance Philosophy",
+        "title": "Boethius",
+        "year": "c. 524 AD",
+        "fullYear": "c. 477–524 AD",
+        "summary": "The consolation of philosophy in the face of fate.",
+        "description": "Boethius wrote 'The Consolation of Philosophy' while awaiting execution, exploring how reason and philosophy can provide comfort against misfortune.",
+        "concepts": [
+            "FreeWill",
+            "Theology",
+            "Logic"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 20,
+        "type": "minor",
+        "era": "Medieval & Renaissance Philosophy",
+        "title": "Al-Farabi",
+        "year": "c. 920 AD",
+        "fullYear": "c. 872–950 AD",
+        "summary": "The Second Teacher, after Aristotle.",
+        "description": "Al-Farabi sought to harmonize Plato and Aristotle, contributing major works on logic, political philosophy, and the classification of sciences in the Islamic Golden Age.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Logic",
+            "Metaphysics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 21,
+        "type": "minor",
+        "era": "Medieval & Renaissance Philosophy",
+        "title": "Maimonides",
+        "year": "c. 1190 AD",
+        "fullYear": "1138–1204",
+        "summary": "Reconciling Jewish theology with Aristotelian philosophy.",
+        "description": "Maimonides wrote 'The Guide for the Perplexed', a landmark work reconciling faith and reason within the Jewish intellectual tradition.",
+        "concepts": [
+            "Theology",
+            "Metaphysics",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 22,
+        "type": "minor",
+        "era": "Medieval & Renaissance Philosophy",
+        "title": "William of Ockham",
+        "year": "c. 1320 AD",
+        "fullYear": "c. 1287–1347",
+        "summary": "Entities should not be multiplied without necessity.",
+        "description": "William of Ockham championed nominalism and is best known for Ockham's Razor, the principle of parsimony that favors simpler explanations over complex ones.",
+        "concepts": [
+            "Logic",
+            "Epistemology",
+            "Scholasticism"
+        ],
+        "miniEvents": [
+            {
+                "id": "22a",
+                "title": "Ockham's Razor",
+                "summary": "The methodological principle that the simplest explanation is usually the best, deeply influential in science and philosophy."
+            }
+        ]
+    },
+    {
         "id": 8,
+        "type": "major",
         "era": "The Age of Reason & Enlightenment",
-        "title": "René Descartes",
+        "title": "Rene Descartes",
         "year": "1637",
         "fullYear": "1596–1650",
         "summary": "Cogito, ergo sum: I think, therefore I am.",
@@ -210,6 +357,7 @@
     },
     {
         "id": 9,
+        "type": "major",
         "era": "The Age of Reason & Enlightenment",
         "title": "John Locke",
         "year": "1689",
@@ -236,6 +384,7 @@
     },
     {
         "id": 10,
+        "type": "major",
         "era": "The Age of Reason & Enlightenment",
         "title": "Immanuel Kant",
         "year": "1781",
@@ -262,7 +411,78 @@
         ]
     },
     {
+        "id": 23,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "Baruch Spinoza",
+        "year": "1677",
+        "fullYear": "1632–1677",
+        "summary": "God and Nature are one and the same.",
+        "description": "Spinoza's 'Ethics' presented a radical pantheistic vision where God and the universe are identical, challenging traditional religious thought with rigorous geometric reasoning.",
+        "concepts": [
+            "Metaphysics",
+            "Rationalism",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 24,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "David Hume",
+        "year": "1739",
+        "fullYear": "1711–1776",
+        "summary": "Reason is the slave of the passions.",
+        "description": "Hume's radical empiricism questioned causation, the self, and induction, arguing that our beliefs are grounded in habit and custom rather than rational proof.",
+        "concepts": [
+            "Empiricism",
+            "Epistemology",
+            "Ethics"
+        ],
+        "miniEvents": [
+            {
+                "id": "24a",
+                "title": "The Problem of Induction",
+                "summary": "Hume's argument that we cannot rationally justify the assumption that the future will resemble the past."
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "Jean-Jacques Rousseau",
+        "year": "1762",
+        "fullYear": "1712–1778",
+        "summary": "Man is born free, and everywhere he is in chains.",
+        "description": "Rousseau argued that civilization corrupts humanity's natural goodness, and that legitimate political authority rests on a social contract among citizens.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Ethics",
+            "Liberalism"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 26,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "Voltaire",
+        "year": "1759",
+        "fullYear": "1694–1778",
+        "summary": "Champion of civil liberties and freedom of expression.",
+        "description": "Voltaire was a fierce advocate of reason, religious tolerance, and separation of church and state, using satire and wit to challenge established authority.",
+        "concepts": [
+            "Liberalism",
+            "PoliticalPhilosophy",
+            "Epistemology"
+        ],
+        "miniEvents": []
+    },
+    {
         "id": 11,
+        "type": "major",
         "era": "19th Century Philosophy",
         "title": "G.W.F. Hegel",
         "year": "1807",
@@ -289,12 +509,13 @@
     },
     {
         "id": 12,
+        "type": "major",
         "era": "19th Century Philosophy",
         "title": "Friedrich Nietzsche",
         "year": "1883",
         "fullYear": "1844–1900",
         "summary": "The death of God and the will to power.",
-        "description": "Nietzsche was a fierce critic of traditional morality and religion, proposing the concepts of the Übermensch and eternal recurrence.",
+        "description": "Nietzsche was a fierce critic of traditional morality and religion, proposing the concepts of the Ubermensch and eternal recurrence.",
         "concepts": [
             "Existentialism",
             "Nihilism",
@@ -304,7 +525,7 @@
             {
                 "id": "12a",
                 "title": "'Thus Spoke Zarathustra'",
-                "summary": "A philosophical novel introducing the concepts of the Übermensch (Overman) and eternal recurrence."
+                "summary": "A philosophical novel introducing the concepts of the Ubermensch (Overman) and eternal recurrence."
             },
             {
                 "id": "12b",
@@ -314,7 +535,84 @@
         ]
     },
     {
+        "id": 27,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "Arthur Schopenhauer",
+        "year": "1818",
+        "fullYear": "1788–1860",
+        "summary": "The world as will and representation.",
+        "description": "Schopenhauer argued that reality is driven by a blind, purposeless force called the Will, and that suffering is an inherent part of existence that can only be alleviated through aesthetic contemplation and asceticism.",
+        "concepts": [
+            "Metaphysics",
+            "Aesthetics",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 28,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "Soren Kierkegaard",
+        "year": "1843",
+        "fullYear": "1813–1855",
+        "summary": "The father of existentialism.",
+        "description": "Kierkegaard emphasized the importance of individual subjective experience, the leap of faith, and the anxiety of freedom, laying the groundwork for existentialist philosophy.",
+        "concepts": [
+            "Existentialism",
+            "Ethics",
+            "Theology"
+        ],
+        "miniEvents": [
+            {
+                "id": "28a",
+                "title": "Either/Or",
+                "summary": "A work presenting contrasting aesthetic and ethical modes of life as fundamental existential choices."
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "Karl Marx",
+        "year": "1848",
+        "fullYear": "1818–1883",
+        "summary": "Philosophers have only interpreted the world; the point is to change it.",
+        "description": "Marx developed historical materialism and critiqued capitalism, arguing that class struggle drives historical change and that economic conditions shape all of society.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Historicism",
+            "Dialectic"
+        ],
+        "miniEvents": [
+            {
+                "id": "29a",
+                "title": "The Communist Manifesto",
+                "summary": "A political pamphlet calling for the workers of the world to unite and overthrow the bourgeoisie."
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "John Stuart Mill",
+        "year": "1863",
+        "fullYear": "1806–1873",
+        "summary": "The greatest happiness of the greatest number.",
+        "description": "Mill refined utilitarian philosophy, championed individual liberty, and advocated for women's rights, becoming one of the most influential liberal thinkers.",
+        "concepts": [
+            "Utilitarianism",
+            "Liberalism",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
         "id": 13,
+        "type": "major",
         "era": "Contemporary Thought",
         "title": "Ludwig Wittgenstein",
         "year": "1921",
@@ -341,6 +639,7 @@
     },
     {
         "id": 14,
+        "type": "major",
         "era": "Contemporary Thought",
         "title": "Simone de Beauvoir",
         "year": "1949",
@@ -362,6 +661,278 @@
                 "id": "14b",
                 "title": "Ethics of Ambiguity",
                 "summary": "An exploration of existentialist ethics, arguing that human freedom is the ultimate good."
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Martin Heidegger",
+        "year": "1927",
+        "fullYear": "1889–1976",
+        "summary": "The question of Being.",
+        "description": "Heidegger's 'Being and Time' explored the meaning of existence through the concept of Dasein (being-there), profoundly influencing phenomenology and existentialism.",
+        "concepts": [
+            "Phenomenology",
+            "Existentialism",
+            "Metaphysics"
+        ],
+        "miniEvents": [
+            {
+                "id": "31a",
+                "title": "Being and Time",
+                "summary": "A groundbreaking work analyzing human existence through temporality, authenticity, and being-toward-death."
+            }
+        ]
+    },
+    {
+        "id": 32,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Jean-Paul Sartre",
+        "year": "1943",
+        "fullYear": "1905–1980",
+        "summary": "Existence precedes essence.",
+        "description": "Sartre's existentialism holds that humans are condemned to be free, with no predetermined nature or purpose, and must create meaning through their choices and actions.",
+        "concepts": [
+            "Existentialism",
+            "Phenomenology",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 33,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Albert Camus",
+        "year": "1942",
+        "fullYear": "1913–1960",
+        "summary": "One must imagine Sisyphus happy.",
+        "description": "Camus explored the absurdity of human existence, arguing that life's lack of inherent meaning should be met with revolt, freedom, and passionate engagement rather than despair.",
+        "concepts": [
+            "Absurdism",
+            "Existentialism",
+            "Ethics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 34,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Michel Foucault",
+        "year": "1966",
+        "fullYear": "1926–1984",
+        "summary": "Knowledge is power.",
+        "description": "Foucault examined how power structures shape knowledge, institutions, and social norms, challenging the idea that truth exists independently of the systems that produce it.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Historicism",
+            "Deconstruction"
+        ],
+        "miniEvents": [
+            {
+                "id": "34a",
+                "title": "Discipline and Punish",
+                "summary": "An analysis of how modern institutions use surveillance and discipline to control individuals."
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Parmenides",
+        "year": "c. 475 BC",
+        "fullYear": "c. 515–450 BC",
+        "summary": "What is, is; what is not, is not.",
+        "description": "Parmenides argued that reality is one, unchanging, and eternal. Change and plurality are mere illusions. His logical arguments about being profoundly influenced metaphysics.",
+        "concepts": [
+            "Metaphysics",
+            "Logic",
+            "Monism"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 36,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Democritus",
+        "year": "c. 420 BC",
+        "fullYear": "c. 460–370 BC",
+        "summary": "Nothing exists except atoms and empty space.",
+        "description": "Democritus developed atomic theory, proposing that all matter consists of indivisible particles called atoms moving through void. This materialist view anticipated modern physics.",
+        "concepts": [
+            "Metaphysics",
+            "Naturalism",
+            "Materialism"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 37,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Marcus Aurelius",
+        "year": "c. 170 AD",
+        "fullYear": "121–180 AD",
+        "summary": "The philosopher emperor.",
+        "description": "Roman Emperor Marcus Aurelius authored 'Meditations', a series of personal writings embodying Stoic philosophy. His reflections on duty, mortality, and inner peace remain influential.",
+        "concepts": [
+            "Stoicism",
+            "Ethics",
+            "PoliticalPhilosophy"
+        ],
+        "miniEvents": [
+            {
+                "id": "37a",
+                "title": "Meditations",
+                "summary": "Personal writings offering practical Stoic wisdom on maintaining virtue amid the pressures of ruling an empire."
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "Gottfried Wilhelm Leibniz",
+        "year": "1714",
+        "fullYear": "1646–1716",
+        "summary": "We live in the best of all possible worlds.",
+        "description": "Leibniz was a polymath who developed calculus independently of Newton, proposed the theory of monads, and argued that God created the best possible world through the principle of sufficient reason.",
+        "concepts": [
+            "Rationalism",
+            "Metaphysics",
+            "Theodicy"
+        ],
+        "miniEvents": [
+            {
+                "id": "38a",
+                "title": "Monadology",
+                "summary": "His theory that reality consists of simple, indivisible substances called monads, each reflecting the entire universe."
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "George Berkeley",
+        "year": "1710",
+        "fullYear": "1685–1753",
+        "summary": "To be is to be perceived.",
+        "description": "Berkeley's idealism argued that material objects exist only as perceptions in minds. He famously questioned whether a tree falling in an empty forest makes a sound.",
+        "concepts": [
+            "Idealism",
+            "Empiricism",
+            "Epistemology"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 40,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "William James",
+        "year": "1890",
+        "fullYear": "1842–1910",
+        "summary": "The father of American psychology and pragmatism.",
+        "description": "James pioneered pragmatism, arguing that the truth of an idea is measured by its practical consequences. His work bridged philosophy and psychology.",
+        "concepts": [
+            "Pragmatism",
+            "Epistemology",
+            "PhilosophyOfMind"
+        ],
+        "miniEvents": [
+            {
+                "id": "40a",
+                "title": "The Principles of Psychology",
+                "summary": "A groundbreaking text that established psychology as a distinct scientific discipline."
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "type": "minor",
+        "era": "19th Century Philosophy",
+        "title": "Charles Sanders Peirce",
+        "year": "1878",
+        "fullYear": "1839–1914",
+        "summary": "The founder of pragmatism and semiotics.",
+        "description": "Peirce developed pragmatism as a method for clarifying ideas through their practical effects, and pioneered semiotics, the study of signs and symbols.",
+        "concepts": [
+            "Pragmatism",
+            "Logic",
+            "Semiotics"
+        ],
+        "miniEvents": []
+    },
+    {
+        "id": 42,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Hannah Arendt",
+        "year": "1958",
+        "fullYear": "1906–1975",
+        "summary": "The banality of evil.",
+        "description": "Arendt examined totalitarianism, the nature of power, and political action. Her report on the Eichmann trial introduced the concept of the banality of evil.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Ethics",
+            "Phenomenology"
+        ],
+        "miniEvents": [
+            {
+                "id": "42a",
+                "title": "The Human Condition",
+                "summary": "An exploration of vita activa—labor, work, and action—and what it means to live a fully human life."
+            }
+        ]
+    },
+    {
+        "id": 43,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "John Rawls",
+        "year": "1971",
+        "fullYear": "1921–2002",
+        "summary": "Justice as fairness.",
+        "description": "Rawls revitalized political philosophy with 'A Theory of Justice', arguing for principles of justice that rational people would choose behind a 'veil of ignorance'.",
+        "concepts": [
+            "PoliticalPhilosophy",
+            "Ethics",
+            "Liberalism"
+        ],
+        "miniEvents": [
+            {
+                "id": "43a",
+                "title": "The Veil of Ignorance",
+                "summary": "A thought experiment where people choose principles of justice without knowing their place in society."
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "type": "minor",
+        "era": "Contemporary Thought",
+        "title": "Jacques Derrida",
+        "year": "1967",
+        "fullYear": "1930–2004",
+        "summary": "There is nothing outside the text.",
+        "description": "Derrida founded deconstruction, a method of critical analysis that reveals hidden assumptions and contradictions in texts and ideas.",
+        "concepts": [
+            "Deconstruction",
+            "PhilosophyOfLanguage",
+            "Epistemology"
+        ],
+        "miniEvents": [
+            {
+                "id": "44a",
+                "title": "Of Grammatology",
+                "summary": "A seminal work challenging Western philosophy's privileging of speech over writing."
             }
         ]
     }

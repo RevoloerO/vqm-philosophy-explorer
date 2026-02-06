@@ -56,7 +56,7 @@ BackgroundStars.displayName = 'BackgroundStars';
 /**
  * Era region backgrounds (subtle colored regions)
  */
-const EraRegions = memo(({ positions, canvasSize }) => {
+const EraRegions = memo(({ positions, canvasSize, selectedEras }) => {
     // Group positions by era
     const eraGroups = React.useMemo(() => {
         const groups = {};
@@ -69,12 +69,22 @@ const EraRegions = memo(({ positions, canvasSize }) => {
         return groups;
     }, [positions]);
 
-    const eraColors = {
-        ancient: 'rgba(212, 165, 116, 0.03)',
-        medieval: 'rgba(74, 144, 217, 0.03)',
-        enlightenment: 'rgba(245, 166, 35, 0.03)',
-        '19th': 'rgba(231, 76, 60, 0.03)',
-        contemporary: 'rgba(155, 89, 182, 0.03)'
+    const eraBaseColors = {
+        ancient: '212, 165, 116',
+        medieval: '74, 144, 217',
+        enlightenment: '245, 166, 35',
+        '19th': '231, 76, 60',
+        contemporary: '155, 89, 182'
+    };
+
+    const getEraFill = (era) => {
+        const rgb = eraBaseColors[era] || '255, 255, 255';
+        const hasFilter = selectedEras && selectedEras.size > 0;
+        const isSelected = selectedEras && selectedEras.has(era);
+
+        if (!hasFilter) return `rgba(${rgb}, 0.03)`;
+        if (isSelected) return `rgba(${rgb}, 0.12)`;
+        return `rgba(${rgb}, 0.01)`;
     };
 
     return (
@@ -95,8 +105,9 @@ const EraRegions = memo(({ positions, canvasSize }) => {
                         cy={canvasSize.height / 2}
                         rx={width / 2}
                         ry={canvasSize.height * 0.4}
-                        fill={eraColors[era] || 'transparent'}
+                        fill={getEraFill(era)}
                         className={`era-region era-region-${era}`}
+                        style={{ transition: 'fill 0.4s ease' }}
                     />
                 );
             })}
@@ -115,12 +126,14 @@ const ConstellationCanvas = forwardRef(({
     positions,
     hoveredStarId,
     selectedStarId,
+    selectedEras,
     onStarHover,
     onStarLeave,
     onStarClick,
     onCanvasClick,
     children, // For constellation lines, search overlays, etc.
-    className = ''
+    className = '',
+    isLoaded = true
 }, ref) => {
     const { width, height } = canvasSize;
 
@@ -187,19 +200,20 @@ const ConstellationCanvas = forwardRef(({
                 <BackgroundStars count={80} />
 
                 {/* Era region highlights */}
-                <EraRegions positions={positions} canvasSize={canvasSize} />
+                <EraRegions positions={positions} canvasSize={canvasSize} selectedEras={selectedEras} />
 
                 {/* Constellation lines and other children go here */}
                 {children}
 
                 {/* Philosopher stars */}
-                <g className="stars-layer">
+                <g className={`stars-layer ${isLoaded ? 'stars-visible' : ''}`}>
                     {positions.map((pos) => (
                         <StarNode
                             key={pos.id}
                             position={pos}
                             philosopher={pos.philosopher}
                             era={pos.era}
+                            type={pos.type || pos.philosopher?.type || 'major'}
                             isHovered={hoveredStarId === pos.id}
                             isSelected={selectedStarId === pos.id}
                             opacity={pos.opacity ?? 1}

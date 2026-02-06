@@ -18,7 +18,10 @@ function MainView() {
   } = useConstellationContext();
 
   return (
-    <div className={`main-view ${isTransitioning ? 'transitioning' : ''}`}>
+    <div className={`main-view ${isTransitioning ? 'transitioning' : ''}`} data-view={viewMode}>
+      {/* Transition Overlay */}
+      <div className="view-transition-overlay" />
+
       {/* View Toggle Button */}
       <ViewToggle
         viewMode={viewMode}

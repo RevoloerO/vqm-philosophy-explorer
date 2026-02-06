@@ -8,8 +8,12 @@ export { default as ConstellationCanvas } from './ConstellationCanvas';
 export { default as ConstellationLines } from './ConstellationLines';
 export { default as StarNode, StarDefs } from './StarNode';
 export { default as ZoomControls } from './ZoomControls';
-export { default as TimeSlider } from './TimeSlider';
+export { default as EraFilterBar } from './EraFilterBar';
 export { default as TelescopeSearch } from './TelescopeSearch';
+export { default as PhilosopherPanel } from './PhilosopherPanel';
+export { default as TimelineAxis } from './TimelineAxis';
+export { default as MetroMap } from './MetroMap';
+export { default as MapOfThought } from './MapOfThought';
 
-// Default export is the main component
-export { default } from './ConstellationMap';
+// Default export is the wrapper with view toggle
+export { default } from './MapOfThought';

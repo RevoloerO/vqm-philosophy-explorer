@@ -36,11 +36,164 @@ body {
 }
 
 .view-container {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
 }
 
 .main-view.transitioning .view-container {
     opacity: 0;
+    transform: scale(0.98);
+}
+
+/* === Page Transition Animations === */
+
+/* Fade in animation for page load */
+@keyframes pageEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply entrance animation to main containers */
+.homepage-container,
+.constellation-container,
+.metro-map-wrapper {
+    animation: pageEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered entrance for timeline items */
+.timeline-item-wrapper {
+    animation: itemSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes itemSlideIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+    100% {
+        opacity: 0.3;
+        transform: scale(0.85) translateY(20px);
+    }
+}
+
+/* Era titles entrance */
+.era-title {
+    animation: eraTitleEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes eraTitleEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        letter-spacing: 10px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 1px;
+    }
+}
+
+/* Smooth view transition overlay */
+.view-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.2) 0%, rgba(13, 17, 23, 0.95) 100%);
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.main-view.transitioning .view-transition-overlay {
+    opacity: 1;
+}
+
+/* Hero section special entrance */
+.hero-section {
+    animation: heroEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroEnter {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.hero-title {
+    animation: heroTitleEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroTitleEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.hero-subtitle {
+    animation: heroSubtitleEnter 1s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroSubtitleEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-cta {
+    animation: heroCtaEnter 1s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroCtaEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Reading progress bar entrance */
+.reading-progress-container {
+    animation: progressBarEnter 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes progressBarEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Hide timeline-specific elements when constellation is active */

@@ -202,5 +202,41 @@
         "category": "Other Key Concepts",
         "simple": "The philosophical study of language.",
         "detailed": "It investigates the nature of meaning, the relationship between language, language users, and the world."
+    },
+    {
+        "concept": "Monism",
+        "category": "Metaphysical Concepts",
+        "simple": "The view that reality is fundamentally one unified substance.",
+        "detailed": "Monism holds that all of existence can be explained in terms of a single reality or substance, whether that is matter, mind, or some neutral substance."
+    },
+    {
+        "concept": "Materialism",
+        "category": "Metaphysical Concepts",
+        "simple": "The view that matter is the fundamental substance of nature.",
+        "detailed": "Materialism holds that everything that exists is physical matter, and all phenomena, including consciousness and thought, can be explained in terms of material interactions."
+    },
+    {
+        "concept": "Theodicy",
+        "category": "Theological Concepts",
+        "simple": "The defense of God's goodness despite the existence of evil.",
+        "detailed": "Theodicy attempts to answer the problem of evil: if God is omnipotent, omniscient, and benevolent, why does evil exist? Leibniz coined the term in defending God's creation."
+    },
+    {
+        "concept": "Pragmatism",
+        "category": "Methodologies & Schools",
+        "simple": "A philosophy that evaluates ideas by their practical consequences.",
+        "detailed": "Pragmatism, developed by Peirce, James, and Dewey, holds that the meaning and truth of ideas are determined by their practical effects and usefulness in solving problems."
+    },
+    {
+        "concept": "PhilosophyOfMind",
+        "category": "Core Branches",
+        "simple": "The study of the nature of mind, consciousness, and mental phenomena.",
+        "detailed": "Philosophy of mind examines the nature of the mind and its relationship to the physical body, including questions about consciousness, perception, intentionality, and mental states."
+    },
+    {
+        "concept": "Semiotics",
+        "category": "Methodologies & Schools",
+        "simple": "The study of signs and symbols and their use or interpretation.",
+        "detailed": "Semiotics analyzes how meaning is created and communicated through signs, symbols, and language. Peirce and Saussure are considered its founders."
     }
 ]

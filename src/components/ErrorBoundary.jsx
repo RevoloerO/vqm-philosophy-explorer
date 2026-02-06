@@ -8,7 +8,7 @@ class ErrorBoundary extends React.Component {
 
     static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI
-        return { hasError: true };
+        return { hasError: true, error };
     }
 
     componentDidCatch(error, errorInfo) {
@@ -52,7 +52,7 @@ class ErrorBoundary extends React.Component {
                     >
                         Reload Page
                     </button>
-                    {process.env.NODE_ENV === 'development' && this.state.error && (
+                    {import.meta.env.DEV && this.state.error && (
                         <details style={{
                             marginTop: '2rem',
                             textAlign: 'left',

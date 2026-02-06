@@ -8,8 +8,10 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import ConstellationCanvas from './ConstellationCanvas';
 import ConstellationLines from './ConstellationLines';
 import ZoomControls from './ZoomControls';
-import TimeSlider from './TimeSlider';
+import EraFilterBar from './EraFilterBar';
 import TelescopeSearch from './TelescopeSearch';
+import PhilosopherPanel from './PhilosopherPanel';
+import TimelineAxis from './TimelineAxis';
 import { useZoomPan } from '../../hooks/useZoomPan';
 import { useTimeFilter } from '../../hooks/useTimeFilter';
 import { computeStarPositions } from '../../utils/constellationLayout';
@@ -29,13 +31,17 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
     const [canvasSize, setCanvasSize] = useState(DEFAULT_CANVAS_SIZE);
     const containerRef = useRef(null);
 
+    // Loading and entrance animation state
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [showContent, setShowContent] = useState(false);
+
     // Interaction state
     const [hoveredStarId, setHoveredStarId] = useState(null);
     const [selectedStarId, setSelectedStarId] = useState(
         selectedPhilosopher?.id || null
     );
-    const [showModal, setShowModal] = useState(false);
-    const [modalData, setModalData] = useState(null);
+    const [panelData, setPanelData] = useState(null);
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
 
     // Zoom/pan state from custom hook
     const {
@@ -51,6 +57,20 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
         minZoom: 0.3,
         maxZoom: 4
     });
+
+    // Era filter state
+    const {
+        selectedEras,
+        toggleEra,
+        clearEras,
+        filteredPhilosophers,
+        visibleCount,
+        totalCount,
+        hasActiveFilter,
+        eraDefinitions,
+        showMinor,
+        toggleShowMinor
+    } = useTimeFilter(timelineEvents);
 
     // Compute star positions based on canvas size
     const baseStarPositions = useMemo(() => {
@@ -85,16 +105,15 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
     // Search state
     const [showSearch, setShowSearch] = useState(false);
 
-    // Time filter state
-    const {
-        timeRange,
-        setTimeRange,
-        resetTimeRange,
-        filteredPhilosophers,
-        visibleCount,
-        totalCount,
-        currentEras
-    } = useTimeFilter(timelineEvents);
+    // Entrance animation
+    useEffect(() => {
+        const loadTimer = setTimeout(() => setIsLoaded(true), 100);
+        const contentTimer = setTimeout(() => setShowContent(true), 400);
+        return () => {
+            clearTimeout(loadTimer);
+            clearTimeout(contentTimer);
+        };
+    }, []);
 
     // Update canvas size on container resize
     useEffect(() => {
@@ -130,11 +149,11 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
         setHoveredStarId(null);
     }, []);
 
-    // Handle star click
+    // Handle star click - open side panel
     const handleStarClick = useCallback((philosopher) => {
         setSelectedStarId(philosopher.id);
-        setModalData(philosopher);
-        setShowModal(true);
+        setPanelData(philosopher);
+        setIsPanelOpen(true);
 
         // Notify parent component
         if (onPhilosopherSelect) {
@@ -145,15 +164,20 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
     // Handle canvas background click (deselect)
     const handleCanvasClick = useCallback(() => {
         setSelectedStarId(null);
-        setShowModal(false);
-        setModalData(null);
+        setIsPanelOpen(false);
     }, []);
 
-    // Close modal
-    const closeModal = useCallback(() => {
-        setShowModal(false);
-        setModalData(null);
-    }, []);
+    // Close panel
+    const closePanel = useCallback(() => {
+        setIsPanelOpen(false);
+        // Delay clearing data for exit animation
+        setTimeout(() => {
+            if (!isPanelOpen) {
+                setPanelData(null);
+                setSelectedStarId(null);
+            }
+        }, 300);
+    }, [isPanelOpen]);
 
     // Handle keyboard shortcuts
     useEffect(() => {
@@ -161,13 +185,12 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
             if (e.key === 'Escape') {
                 if (showSearch) {
                     setShowSearch(false);
-                } else {
-                    closeModal();
-                    setSelectedStarId(null);
+                } else if (isPanelOpen) {
+                    closePanel();
                 }
             }
-            // / for search
-            if (e.key === '/' && !showSearch && !showModal) {
+            // / or Cmd+K for search
+            if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && !showSearch && !isPanelOpen) {
                 e.preventDefault();
                 setShowSearch(true);
             }
@@ -190,16 +213,7 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [closeModal, zoomIn, zoomOut, resetTransform, showSearch, showModal]);
-
-    // Zoom to selected star when clicking from external source
-    const handleZoomToStar = useCallback((philosopherId) => {
-        const position = starPositions.find(p => p.id === philosopherId);
-        if (position) {
-            zoomToPoint(position.x, position.y, 2);
-            setSelectedStarId(philosopherId);
-        }
-    }, [starPositions, zoomToPoint]);
+    }, [closePanel, zoomIn, zoomOut, resetTransform, showSearch, isPanelOpen]);
 
     // Handle search selection
     const handleSearchSelectPhilosopher = useCallback((philosopher) => {
@@ -208,8 +222,8 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
             zoomToPoint(position.x, position.y, 2);
             setTimeout(() => {
                 setSelectedStarId(philosopher.id);
-                setModalData(philosopher);
-                setShowModal(true);
+                setPanelData(philosopher);
+                setIsPanelOpen(true);
             }, 600); // Wait for zoom animation
         }
     }, [baseStarPositions, zoomToPoint]);
@@ -220,15 +234,27 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
         setTimeout(() => setHoveredConcept(null), 5000);
     }, []);
 
+    // Navigate to connected philosopher from panel
+    const handleNavigateToPhilosopher = useCallback((philosopherId) => {
+        const philosopher = timelineEvents.find(p => p.id === philosopherId);
+        const position = baseStarPositions.find(p => p.id === philosopherId);
+        if (philosopher && position) {
+            zoomToPoint(position.x, position.y, 2);
+            setTimeout(() => {
+                setSelectedStarId(philosopherId);
+                setPanelData(philosopher);
+            }, 400);
+        }
+    }, [baseStarPositions, zoomToPoint]);
+
     return (
         <div
-            className={`constellation-map-container ${isAnimating ? 'animating' : ''}`}
+            className={`constellation-map-container ${isAnimating ? 'animating' : ''} ${isLoaded ? 'loaded' : ''} ${showContent ? 'content-visible' : ''}`}
             ref={(el) => {
                 containerRef.current = el;
                 zoomContainerRef.current = el;
             }}
             {...handlers}
-            style={{ cursor: 'grab' }}
         >
             {/* Main Canvas */}
             <ConstellationCanvas
@@ -237,10 +263,12 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 positions={starPositions}
                 hoveredStarId={hoveredStarId}
                 selectedStarId={selectedStarId}
+                selectedEras={selectedEras}
                 onStarHover={handleStarHover}
                 onStarLeave={handleStarLeave}
                 onStarClick={handleStarClick}
                 onCanvasClick={handleCanvasClick}
+                isLoaded={showContent}
             >
                 {/* Constellation Lines */}
                 <ConstellationLines
@@ -251,6 +279,9 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 />
             </ConstellationCanvas>
 
+            {/* Timeline Axis */}
+            <TimelineAxis canvasSize={canvasSize} transform={transform} />
+
             {/* Zoom Controls */}
             <ZoomControls
                 onZoomIn={zoomIn}
@@ -260,63 +291,30 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 className="constellation-zoom-controls"
             />
 
-            {/* Philosopher Modal */}
-            {showModal && modalData && (
-                <div className="constellation-modal-overlay" onClick={closeModal}>
-                    <div
-                        className="constellation-modal"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <h2 className="constellation-modal-title">{modalData.title}</h2>
-                        <p className="constellation-modal-year">{modalData.fullYear || modalData.year}</p>
-                        <p className="constellation-modal-description">{modalData.description}</p>
+            {/* Philosopher Side Panel */}
+            <PhilosopherPanel
+                philosopher={panelData}
+                isOpen={isPanelOpen}
+                onClose={closePanel}
+                conceptsMap={conceptsMap}
+                hoveredConcept={hoveredConcept}
+                onConceptHover={setHoveredConcept}
+                onNavigateToPhilosopher={handleNavigateToPhilosopher}
+                connections={connections}
+                allPhilosophers={timelineEvents}
+            />
 
-                        {/* Concepts */}
-                        <div className="constellation-modal-concepts">
-                            {modalData.concepts?.map(concept => {
-                                const conceptData = conceptsMap.get(concept);
-                                return (
-                                    <span
-                                        key={concept}
-                                        className={`concept-tag ${hoveredConcept === concept ? 'highlighted' : ''}`}
-                                        title={conceptData?.simple}
-                                        onMouseEnter={() => setHoveredConcept(concept)}
-                                        onMouseLeave={() => setHoveredConcept(null)}
-                                    >
-                                        #{concept}
-                                    </span>
-                                );
-                            })}
-                        </div>
-
-                        {/* Mini Events */}
-                        {modalData.miniEvents && modalData.miniEvents.length > 0 && (
-                            <div className="constellation-modal-mini-events">
-                                <h4>Related Developments</h4>
-                                {modalData.miniEvents.map(mini => (
-                                    <div key={mini.id} className="mini-event">
-                                        <h5>{mini.title}</h5>
-                                        <p>{mini.summary}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        <button className="constellation-modal-close" onClick={closeModal}>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Time Slider */}
-            <TimeSlider
-                timeRange={timeRange}
-                onTimeRangeChange={setTimeRange}
-                onReset={resetTimeRange}
-                currentEras={currentEras}
+            {/* Era Filter Bar */}
+            <EraFilterBar
+                selectedEras={selectedEras}
+                onToggleEra={toggleEra}
+                onClear={() => { clearEras(); if (!showMinor) toggleShowMinor(); }}
                 visibleCount={visibleCount}
                 totalCount={totalCount}
+                hasActiveFilter={hasActiveFilter}
+                eraDefinitions={eraDefinitions}
+                showMinor={showMinor}
+                onToggleShowMinor={toggleShowMinor}
             />
 
             {/* Search Button */}
@@ -324,7 +322,7 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 className="search-toggle-btn"
                 onClick={() => setShowSearch(true)}
                 aria-label="Open search (Press /)"
-                title="Search (Press /)"
+                title="Search (/ or Cmd+K)"
             >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                     <circle cx="11" cy="11" r="8" />

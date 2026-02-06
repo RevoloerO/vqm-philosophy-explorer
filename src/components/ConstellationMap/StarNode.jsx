@@ -1,6 +1,7 @@
 /**
  * StarNode Component
  * Renders an individual philosopher as a star in the constellation map
+ * Supports two designs: major (large, detailed) and minor (small, simple)
  */
 
 import React, { memo } from 'react';
@@ -17,12 +18,131 @@ const ERA_COLORS = {
 };
 
 /**
+ * MajorStar - Full-featured star for major philosophers
+ */
+const MajorStar = ({ size, color, era, isHovered, isSelected, glowOpacity }) => (
+    <>
+        {/* Outer glow */}
+        <circle
+            className="star-glow"
+            r={size * 2.5}
+            fill={`url(#star-glow-${era})`}
+            style={{
+                opacity: glowOpacity,
+                transition: 'r 0.3s ease, opacity 0.3s ease'
+            }}
+        />
+
+        {/* Star core */}
+        <circle
+            className="star-core"
+            r={size}
+            fill={color}
+            style={{
+                filter: 'url(#star-blur)',
+                transition: 'r 0.3s ease'
+            }}
+        />
+
+        {/* Inner bright center */}
+        <circle
+            className="star-center"
+            r={size * 0.4}
+            fill="white"
+            style={{
+                opacity: isSelected ? 1 : isHovered ? 0.9 : 0.7,
+                transition: 'r 0.3s ease, opacity 0.3s ease'
+            }}
+        />
+
+        {/* Star rays (decorative points) */}
+        <g className="star-rays" style={{ opacity: isHovered || isSelected ? 0.8 : 0.3 }}>
+            {[0, 45, 90, 135].map((angle) => (
+                <line
+                    key={angle}
+                    x1={0}
+                    y1={-size * 0.6}
+                    x2={0}
+                    y2={-size * 1.5}
+                    stroke="white"
+                    strokeWidth={1}
+                    opacity={0.5}
+                    transform={`rotate(${angle})`}
+                    style={{
+                        transition: 'opacity 0.3s ease'
+                    }}
+                />
+            ))}
+        </g>
+
+        {/* Selection ring */}
+        {isSelected && (
+            <circle
+                className="star-selection-ring"
+                r={size + 8}
+                fill="none"
+                stroke={color}
+                strokeWidth={2}
+                strokeDasharray="4 2"
+                style={{
+                    opacity: 0.6,
+                    animation: 'rotate 10s linear infinite'
+                }}
+            />
+        )}
+    </>
+);
+
+/**
+ * MinorStar - Simpler, smaller star for minor philosophers
+ */
+const MinorStar = ({ size, color, era, isSelected, glowOpacity }) => (
+    <>
+        {/* Subtle glow */}
+        <circle
+            className="star-glow"
+            r={size * 1.8}
+            fill={`url(#star-glow-${era})`}
+            style={{
+                opacity: glowOpacity * 0.7,
+                transition: 'r 0.3s ease, opacity 0.3s ease'
+            }}
+        />
+
+        {/* Star core */}
+        <circle
+            className="star-core star-core-minor"
+            r={size}
+            fill={color}
+            style={{
+                transition: 'r 0.3s ease'
+            }}
+        />
+
+        {/* Selection highlight (simpler than major ring) */}
+        {isSelected && (
+            <circle
+                className="star-selection-highlight"
+                r={size + 5}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.5}
+                style={{
+                    opacity: 0.5
+                }}
+            />
+        )}
+    </>
+);
+
+/**
  * StarNode - Renders a single philosopher star
  */
 const StarNode = memo(({
     position,
     philosopher,
     era,
+    type = 'major',
     isHovered,
     isSelected,
     opacity = 1,
@@ -32,22 +152,26 @@ const StarNode = memo(({
     scale = 1
 }) => {
     const color = ERA_COLORS[era] || '#ffffff';
+    const isMajor = type === 'major';
 
-    // Size based on state
-    const baseSize = 8;
-    const size = isSelected ? 16 : isHovered ? 12 : baseSize;
-    const glowSize = size * 2.5;
+    // Size based on type and state
+    const baseSize = isMajor ? 8 : 5;
+    const size = isSelected
+        ? (isMajor ? 16 : 10)
+        : isHovered
+            ? (isMajor ? 12 : 8)
+            : baseSize;
 
     // Glow opacity based on state
     const glowOpacity = isSelected ? 1 : isHovered ? 0.8 : 0.5;
 
     // Calculate label font size based on zoom scale
     const labelFontSize = Math.max(10, Math.min(14, 12 / scale));
-    const labelOffset = size + 16;
+    const labelOffset = size + (isMajor ? 16 : 12);
 
     return (
         <g
-            className={`star-node ${isHovered ? 'hovered' : ''} ${isSelected ? 'selected' : ''}`}
+            className={`star-node ${isMajor ? 'star-major' : 'star-minor'} ${isHovered ? 'hovered' : ''} ${isSelected ? 'selected' : ''}`}
             transform={`translate(${position.x}, ${position.y})`}
             style={{
                 opacity,
@@ -70,58 +194,26 @@ const StarNode = memo(({
                 }
             }}
         >
-            {/* Outer glow */}
-            <circle
-                className="star-glow"
-                r={glowSize}
-                fill={`url(#star-glow-${era})`}
-                style={{
-                    opacity: glowOpacity,
-                    transition: 'r 0.3s ease, opacity 0.3s ease'
-                }}
-            />
-
-            {/* Star core */}
-            <circle
-                className="star-core"
-                r={size}
-                fill={color}
-                style={{
-                    filter: 'url(#star-blur)',
-                    transition: 'r 0.3s ease'
-                }}
-            />
-
-            {/* Inner bright center */}
-            <circle
-                className="star-center"
-                r={size * 0.4}
-                fill="white"
-                style={{
-                    opacity: isSelected ? 1 : isHovered ? 0.9 : 0.7,
-                    transition: 'r 0.3s ease, opacity 0.3s ease'
-                }}
-            />
-
-            {/* Star rays (decorative points) */}
-            <g className="star-rays" style={{ opacity: isHovered || isSelected ? 0.8 : 0.3 }}>
-                {[0, 45, 90, 135].map((angle) => (
-                    <line
-                        key={angle}
-                        x1={0}
-                        y1={-size * 0.6}
-                        x2={0}
-                        y2={-size * 1.5}
-                        stroke="white"
-                        strokeWidth={1}
-                        opacity={0.5}
-                        transform={`rotate(${angle})`}
-                        style={{
-                            transition: 'opacity 0.3s ease'
-                        }}
-                    />
-                ))}
-            </g>
+            {/* Render major or minor star design */}
+            {isMajor ? (
+                <MajorStar
+                    size={size}
+                    color={color}
+                    era={era}
+                    isHovered={isHovered}
+                    isSelected={isSelected}
+                    glowOpacity={glowOpacity}
+                />
+            ) : (
+                <MinorStar
+                    size={size}
+                    color={color}
+                    era={era}
+                    isHovered={isHovered}
+                    isSelected={isSelected}
+                    glowOpacity={glowOpacity}
+                />
+            )}
 
             {/* Label (shown on hover/select) */}
             {(isHovered || isSelected) && (
@@ -147,7 +239,7 @@ const StarNode = memo(({
                         textAnchor="middle"
                         fill={color}
                         fontSize={labelFontSize}
-                        fontWeight="600"
+                        fontWeight={isMajor ? '600' : '500'}
                         style={{
                             opacity: 0,
                             animation: 'fadeIn 0.2s ease forwards',
@@ -173,22 +265,6 @@ const StarNode = memo(({
                     </text>
                 </g>
             )}
-
-            {/* Selection ring */}
-            {isSelected && (
-                <circle
-                    className="star-selection-ring"
-                    r={size + 8}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth={2}
-                    strokeDasharray="4 2"
-                    style={{
-                        opacity: 0.6,
-                        animation: 'rotate 10s linear infinite'
-                    }}
-                />
-            )}
         </g>
     );
 });
@@ -201,7 +277,7 @@ StarNode.displayName = 'StarNode';
  */
 export const StarDefs = () => (
     <defs>
-        {/* Blur filter for stars */}
+        {/* Blur filter for major stars */}
         <filter id="star-blur" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
         </filter>

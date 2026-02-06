@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect, useMemo, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import '../css/HomePage.css';
 import timelineEvents from './timelineEvents.json';
 import philosophyConcepts from './philosophyConcepts.json';
@@ -84,7 +85,7 @@ function HomePage() {
     const [showGoToTop, setShowGoToTop] = useState(false);
     const [vortexPath, setVortexPath] = useState('');
     const [dotProgress, setDotProgress] = useState(0);
-    const [activeEra, setActiveEra] = useState(null);
+    // activeEra is derived from focusedIndex in the era selector JSX
     const [showEraSelector, setShowEraSelector] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
@@ -97,6 +98,9 @@ function HomePage() {
     const [parallaxOffset, setParallaxOffset] = useState(0);
     const [showSwipeHint, setShowSwipeHint] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [hoveredCard, setHoveredCard] = useState(null);
+    const [viewMode, setViewMode] = useState('flow'); // 'flow' or 'compact'
 
     const timelineRef = useRef(null);
     const itemRefs = useRef(validatedTimelineEvents.map(() => React.createRef()));
@@ -189,19 +193,20 @@ function HomePage() {
         );
     };
 
-    // Function to draw the SVG path connecting timeline items
+    // Function to draw the SVG path connecting timeline items - River of Ideas style
     const drawVortexPath = useCallback(() => {
         const ctaButton = ctaRef.current;
         if (!ctaButton || itemRefs.current.length === 0 || !timelineRef.current) return;
 
         const timelineContainerRect = timelineRef.current.getBoundingClientRect();
+        const containerWidth = timelineContainerRect.width;
+        const centerX = containerWidth / 2;
 
         const startPoint = ctaButton.getBoundingClientRect();
-        const startX = startPoint.left + startPoint.width / 2 - timelineContainerRect.left;
         const startY = startPoint.bottom - timelineContainerRect.top;
 
-        let pathData = `M ${startX},${startY}`;
-        let lastX = startX;
+        // Create a smooth flowing river path down the center
+        let pathData = `M ${centerX},${startY}`;
         let lastY = startY;
 
         itemRefs.current.forEach((itemRef, index) => {
@@ -209,17 +214,16 @@ function HomePage() {
             if (!item) return;
             const itemRect = item.getBoundingClientRect();
 
-            const pointX = itemRect.left + itemRect.width / 2 - timelineContainerRect.left;
             const pointY = itemRect.top + itemRect.height / 2 - timelineContainerRect.top;
 
-            const curveIntensity = 80;
-            const controlX1 = lastX + (index % 2 === 0 ? curveIntensity : -curveIntensity);
-            const controlY1 = lastY + (pointY - lastY) * 0.5;
-            const controlX2 = pointX + (index % 2 === 0 ? -curveIntensity : curveIntensity);
-            const controlY2 = pointY - (pointY - lastY) * 0.5;
+            // Gentle wave pattern - flows side to side
+            const waveAmplitude = 60;
+            const direction = index % 2 === 0 ? 1 : -1;
+            const midY = lastY + (pointY - lastY) / 2;
 
-            pathData += ` C ${controlX1},${controlY1} ${controlX2},${controlY2} ${pointX},${pointY}`;
-            lastX = pointX;
+            // Smooth S-curve to each point
+            pathData += ` Q ${centerX + (waveAmplitude * direction)},${midY} ${centerX},${pointY}`;
+
             lastY = pointY;
         });
 
@@ -314,6 +318,11 @@ function HomePage() {
             animationFrameId = requestAnimationFrame(() => {
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
+                const docHeight = document.documentElement.scrollHeight - windowHeight;
+
+                // Calculate overall scroll progress (0-100)
+                const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+                setScrollProgress(progress);
 
                 setShowGoToTop(scrollY > windowHeight / 2);
                 setShowEraSelector(scrollY > windowHeight * 0.8);
@@ -324,7 +333,6 @@ function HomePage() {
                 if (scrollY < windowHeight * 0.5) {
                     setFocusedIndex(null);
                     setDotProgress(0);
-                    setActiveEra(null);
                     return;
                 }
 
@@ -349,9 +357,7 @@ function HomePage() {
                     const targetProgress = (closestIndex + 1) / validatedTimelineEvents.length;
                     setDotProgress(targetProgress);
 
-                    // Update active era
-                    const currentEvent = timelineEvents[closestIndex];
-                    setActiveEra(getEraKey(currentEvent.era));
+                    // Era is now derived from focusedIndex in the JSX
 
                     // Create particle trail
                     const now = Date.now();
@@ -408,6 +414,32 @@ function HomePage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [showSearch, eventModal, conceptPanel]);
 
+    const navigateToNextEvent = useCallback(() => {
+        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
+        const nextEventElement = itemRefs.current[nextIndex]?.current;
+
+        if (nextEventElement) {
+            nextEventElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }, [focusedIndex]);
+
+    const navigateToPrevEvent = useCallback(() => {
+        const prevIndex = focusedIndex === null || focusedIndex === 0
+            ? validatedTimelineEvents.length - 1
+            : focusedIndex - 1;
+        const prevEventElement = itemRefs.current[prevIndex]?.current;
+
+        if (prevEventElement) {
+            prevEventElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }, [focusedIndex]);
+
     // Touch/swipe handlers for mobile
     useEffect(() => {
         let swipeHintTimeout;
@@ -452,33 +484,7 @@ function HomePage() {
             window.removeEventListener('touchend', handleTouchEnd);
             clearTimeout(swipeHintTimeout);
         };
-    }, [focusedIndex]);
-
-    const navigateToNextEvent = () => {
-        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
-        const nextEventElement = itemRefs.current[nextIndex]?.current;
-
-        if (nextEventElement) {
-            nextEventElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-    };
-
-    const navigateToPrevEvent = () => {
-        const prevIndex = focusedIndex === null || focusedIndex === 0
-            ? validatedTimelineEvents.length - 1
-            : focusedIndex - 1;
-        const prevEventElement = itemRefs.current[prevIndex]?.current;
-
-        if (prevEventElement) {
-            prevEventElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-    };
+    }, [focusedIndex, navigateToNextEvent, navigateToPrevEvent]);
 
     const navigateToEra = (era) => {
         const eraElement = eraRefs.current[era];
@@ -490,8 +496,14 @@ function HomePage() {
         }
     };
 
-    const openEventModal = (data) => setEventModal(data);
-    const closeEventModal = () => setEventModal(null);
+    const openEventModal = (data) => {
+        console.log('Opening modal for:', data?.title);
+        setEventModal(data);
+    };
+    const closeEventModal = () => {
+        console.log('Closing modal');
+        setEventModal(null);
+    };
 
     const openConceptPanel = (data) => {
         setConceptPanel(data);
@@ -554,14 +566,38 @@ function HomePage() {
 
     const ConceptTag = ({ concept, inModal = false }) => {
         const conceptData = conceptsMap.get(concept);
+        const tagRef = useRef(null);
+        const [tooltipStyle, setTooltipStyle] = useState({});
+
         if (!conceptData) return null;
 
         const frequency = conceptFrequency[concept] || 0;
         const frequencyLevel = Math.ceil((frequency / maxFrequency) * 5);
         const isFiltering = filterConcept === concept;
 
+        const handleMouseEnter = () => {
+            setHoveredConcept(concept);
+            if (tagRef.current && !inModal) {
+                const rect = tagRef.current.getBoundingClientRect();
+                const tooltipWidth = 320;
+                let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+
+                // Keep tooltip within viewport
+                if (left < 10) left = 10;
+                if (left + tooltipWidth > window.innerWidth - 10) {
+                    left = window.innerWidth - tooltipWidth - 10;
+                }
+
+                setTooltipStyle({
+                    left: `${left}px`,
+                    bottom: `${window.innerHeight - rect.top + 10}px`,
+                });
+            }
+        };
+
         return (
             <span
+                ref={tagRef}
                 className={`concept-tag ${isFiltering ? 'filter-active' : ''}`}
                 onClick={(e) => {
                     e.stopPropagation();
@@ -571,7 +607,7 @@ function HomePage() {
                         toggleConceptFilter(concept);
                     }
                 }}
-                onMouseEnter={() => setHoveredConcept(concept)}
+                onMouseEnter={handleMouseEnter}
                 onMouseLeave={() => setHoveredConcept(null)}
             >
                 {concept}
@@ -584,7 +620,7 @@ function HomePage() {
                     ))}
                 </span>
                 {!inModal && (
-                    <div className="tooltip">
+                    <div className="tooltip" style={tooltipStyle}>
                         <p className="tooltip-simple">{conceptData.simple}</p>
                         <p className="tooltip-prompt">Click to filter by this concept</p>
                     </div>
@@ -609,7 +645,18 @@ function HomePage() {
     };
 
     return (
-        <div className="homepage-container">
+        <div className={`homepage-container ${viewMode === 'compact' ? 'compact-mode' : ''}`}>
+            {/* Reading Progress Bar */}
+            <div className="reading-progress-container">
+                <div
+                    className="reading-progress-bar"
+                    style={{ width: `${scrollProgress}%` }}
+                />
+                <div className="reading-progress-text">
+                    {focusedIndex !== null ? `${focusedIndex + 1} / ${validatedTimelineEvents.length}` : ''}
+                </div>
+            </div>
+
             {/* Parallax Background */}
             <div className="parallax-container">
                 <div
@@ -647,20 +694,57 @@ function HomePage() {
                 </div>
             </div>
 
-            {/* Era Quick-Jump Selector */}
+            {/* Era Quick-Jump Selector with Progress */}
             <nav className={`era-selector ${showEraSelector ? 'visible' : ''}`}>
-                {Object.keys(eventsByEra).map(era => {
-                    const eraKey = getEraKey(era);
-                    return (
-                        <button
-                            key={era}
-                            className={`era-pill era-pill--${eraKey} ${activeEra === eraKey ? 'active' : ''}`}
-                            onClick={() => navigateToEra(era)}
-                        >
-                            {era.split(' ')[0]}
-                        </button>
-                    );
-                })}
+                <div className="era-selector-inner">
+                    {Object.keys(eventsByEra).map((era, index) => {
+                        const eraKey = getEraKey(era);
+                        const eraEvents = eventsByEra[era];
+                        const firstEventIndex = validatedTimelineEvents.findIndex(e => e.era === era);
+                        const lastEventIndex = firstEventIndex + eraEvents.length - 1;
+                        const isCurrentEra = focusedIndex !== null && focusedIndex >= firstEventIndex && focusedIndex <= lastEventIndex;
+                        const isPastEra = focusedIndex !== null && focusedIndex > lastEventIndex;
+
+                        return (
+                            <button
+                                key={era}
+                                className={`era-pill era-pill--${eraKey} ${isCurrentEra ? 'active' : ''} ${isPastEra ? 'completed' : ''}`}
+                                onClick={() => navigateToEra(era)}
+                                title={era}
+                            >
+                                <span className="era-pill-icon">{index + 1}</span>
+                                <span className="era-pill-label">{era.split(' ')[0]}</span>
+                                {isPastEra && (
+                                    <svg className="era-check" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* View Mode Toggle */}
+                <div className="view-mode-toggle">
+                    <button
+                        className={`view-mode-btn ${viewMode === 'flow' ? 'active' : ''}`}
+                        onClick={() => setViewMode('flow')}
+                        title="Flow View"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <button
+                        className={`view-mode-btn ${viewMode === 'compact' ? 'active' : ''}`}
+                        onClick={() => setViewMode('compact')}
+                        title="Compact View"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </nav>
 
             {/* Search Bar */}
@@ -680,7 +764,7 @@ function HomePage() {
                         onBlur={() => setTimeout(() => setShowSearch(false), 200)}
                     />
                     <div className={`search-results ${searchResults.length > 0 && showSearch ? 'active' : ''}`}>
-                        {searchResults.map((result, index) => (
+                        {searchResults.map((result) => (
                             <div
                                 key={`${result.type}-${result.data.id || result.data.concept}`}
                                 className={`search-result-item ${filterConcept === result.data.concept ? 'highlighted' : ''}`}
@@ -740,7 +824,36 @@ function HomePage() {
                 </svg>
 
                 <svg className="timeline-vortex" aria-hidden="true">
-                    <path className="vortex-path" d={vortexPath} />
+                    <defs>
+                        <linearGradient id="flowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="var(--era-ancient-primary)" stopOpacity="0.6" />
+                            <stop offset="25%" stopColor="var(--era-medieval-primary)" stopOpacity="0.6" />
+                            <stop offset="50%" stopColor="var(--era-enlightenment-primary)" stopOpacity="0.6" />
+                            <stop offset="75%" stopColor="var(--era-19th-primary)" stopOpacity="0.6" />
+                            <stop offset="100%" stopColor="var(--era-contemporary-primary)" stopOpacity="0.6" />
+                        </linearGradient>
+                        <filter id="flowGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    {/* Background glow path */}
+                    <path className="vortex-path-glow" d={vortexPath} filter="url(#flowGlow)" />
+                    {/* Main flow path */}
+                    <path className="vortex-path" d={vortexPath} stroke="url(#flowGradient)" />
+                    {/* Animated flow particles along path */}
+                    <circle className="flow-particle flow-particle-1" r="4">
+                        <animateMotion dur="8s" repeatCount="indefinite" path={vortexPath} />
+                    </circle>
+                    <circle className="flow-particle flow-particle-2" r="3">
+                        <animateMotion dur="8s" repeatCount="indefinite" path={vortexPath} begin="2s" />
+                    </circle>
+                    <circle className="flow-particle flow-particle-3" r="2">
+                        <animateMotion dur="8s" repeatCount="indefinite" path={vortexPath} begin="4s" />
+                    </circle>
                 </svg>
 
                 {/* Particle Trail Container */}
@@ -783,14 +896,18 @@ function HomePage() {
                                 const currentIndex = validatedTimelineEvents.findIndex(e => e.id === event.id);
                                 const isFocused = currentIndex === focusedIndex;
                                 const isFiltered = isEventFiltered(event);
+                                const isHovered = hoveredCard === event.id;
 
                                 return (
                                     <div
                                         key={event.id}
-                                        className={`timeline-item-wrapper ${isFocused ? 'focused' : ''} ${isFiltered ? 'filtered-out' : ''}`}
+                                        className={`timeline-item-wrapper ${isFocused ? 'focused' : ''} ${isFiltered ? 'filtered-out' : ''} ${isHovered ? 'hovered' : ''}`}
                                         data-era={getEraFromEvent(event)}
+                                        data-index={currentIndex}
                                         ref={itemRefs.current[currentIndex]}
                                         onClick={() => isFocused && openEventModal(event)}
+                                        onMouseEnter={() => setHoveredCard(event.id)}
+                                        onMouseLeave={() => setHoveredCard(null)}
                                         onKeyDown={(e) => {
                                             if (isFocused && (e.key === 'Enter' || e.key === ' ')) {
                                                 e.preventDefault();
@@ -801,16 +918,46 @@ function HomePage() {
                                         tabIndex={isFocused ? 0 : -1}
                                         aria-label={`View details for ${event.title}`}
                                     >
+                                        {/* Year column with flow node */}
+                                        <div className="timeline-year-column">
+                                            <div className="year-display">
+                                                <span className="year-text">{event.year}</span>
+                                            </div>
+                                            <div className={`flow-node ${isFocused ? 'active' : ''}`}>
+                                                <div className="flow-node-inner" />
+                                                <div className="flow-node-ring" />
+                                            </div>
+                                        </div>
+
+                                        {/* Content column */}
                                         <div className="timeline-item-content">
                                             <div className="content-header">
                                                 <h3>{event.title}</h3>
-                                                <span>{event.year}</span>
+                                                <span className="event-index">#{currentIndex + 1}</span>
                                             </div>
                                             <p>{event.summary}</p>
                                             <div className="concepts-container">
                                                 {event.concepts.map(c => <ConceptTag key={c} concept={c} />)}
                                             </div>
-                                            {isFocused && <div className="event-details-prompt">Click to discover more</div>}
+
+                                            {/* Enhanced click prompt with icon */}
+                                            <button
+                                                className={`event-details-prompt ${isFocused ? 'visible' : ''}`}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    console.log('Button clicked for:', event.title);
+                                                    openEventModal(event);
+                                                }}
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                                type="button"
+                                                aria-label={`Explore ${event.title}`}
+                                            >
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
+                                                <span>Explore this moment</span>
+                                            </button>
                                         </div>
                                     </div>
                                 );
@@ -820,15 +967,15 @@ function HomePage() {
                 </div>
             </main>
 
-            {/* Event Modal */}
-            {eventModal && (
+            {/* Event Modal - using Portal to render at body level */}
+            {eventModal && createPortal(
                 <div className="modal-overlay" onClick={closeEventModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">{eventModal.title}</h2>
-                        <p className="modal-year">{eventModal.fullYear}</p>
-                        <p className="modal-description">{eventModal.description}</p>
+                        <h2 className="modal-title">{eventModal.title || 'No Title'}</h2>
+                        <p className="modal-year">{eventModal.fullYear || eventModal.year || 'No Year'}</p>
+                        <p className="modal-description">{eventModal.description || 'No Description'}</p>
                         <div className="concepts-container">
-                            {eventModal.concepts.map(c => <ConceptTag key={c} concept={c} inModal={true} />)}
+                            {eventModal.concepts && eventModal.concepts.map(c => <ConceptTag key={c} concept={c} inModal={true} />)}
                         </div>
                         {eventModal.miniEvents && eventModal.miniEvents.length > 0 && (
                             <>
@@ -867,7 +1014,8 @@ function HomePage() {
                         )}
                         <button className="modal-close" onClick={closeEventModal}>Close</button>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
             {/* Concept Slide-In Panel */}
