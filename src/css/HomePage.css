@@ -1416,13 +1416,11 @@ body::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-r
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(124, 58, 237, 0.3);
     pointer-events: none;
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease;
 }
 
 .mini-event-preview.visible {
     opacity: 1;
-    transform: translateY(0);
 }
 
 .mini-event-preview h5 {

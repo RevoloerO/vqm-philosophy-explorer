@@ -1,0 +1,321 @@
+/**
+ * ConceptEvolution Styles
+ * Horizontal concept timeline overlay
+ */
+
+.concept-evo-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: evoFadeIn 0.3s ease;
+}
+
+@keyframes evoFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.concept-evo-panel {
+    width: 94vw;
+    max-width: 1100px;
+    max-height: 85vh;
+    background: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: evoSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes evoSlideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.concept-evo-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.concept-evo-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.25rem;
+}
+
+.concept-evo-subtitle {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+}
+
+.concept-evo-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.concept-evo-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.concept-evo-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.concept-evo-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+/* Concept selector */
+.concept-evo-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.concept-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.concept-chip:hover {
+    border-color: var(--chip-color);
+    color: var(--chip-color);
+}
+
+.concept-chip.active {
+    background: var(--chip-color);
+    border-color: var(--chip-color);
+    color: #fff;
+}
+
+.chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.concept-chip.active .chip-dot {
+    background-color: #fff !important;
+}
+
+.chip-count {
+    font-size: 0.6rem;
+    opacity: 0.6;
+    margin-left: 0.15rem;
+}
+
+/* Evolution timeline */
+.concept-evo-timeline {
+    margin-top: 1rem;
+}
+
+.evo-concept-info {
+    margin-bottom: 2rem;
+}
+
+.evo-concept-info h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.5rem;
+}
+
+.evo-concept-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0 0 0.5rem;
+}
+
+.evo-concept-category {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Timeline track */
+.evo-timeline-track {
+    position: relative;
+    height: 200px;
+    margin: 2rem 3rem;
+}
+
+.evo-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(139, 92, 246, 0.1) 100%);
+    transform: translateY(-50%);
+}
+
+/* Node */
+.evo-node {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.evo-node.hovered {
+    z-index: 10;
+}
+
+.evo-node-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.evo-node:hover .evo-node-dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 12px currentColor;
+}
+
+/* Labels alternate above/below */
+.evo-node-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.evo-node-label.above {
+    bottom: calc(100% + 10px);
+}
+
+.evo-node-label.below {
+    top: calc(100% + 10px);
+}
+
+.evo-node-name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.evo-node-year {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Hover detail card */
+.evo-node-detail {
+    position: absolute;
+    top: calc(100% + 25px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13, 17, 23, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    width: 200px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.evo-node-detail strong {
+    display: block;
+    font-size: 0.8rem;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.evo-node-detail span {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.evo-node-detail p {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0.4rem 0 0;
+    line-height: 1.5;
+}
+
+/* Empty state */
+.concept-evo-empty {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.9rem;
+}
+
+/* Scrollbar */
+.concept-evo-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.concept-evo-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.concept-evo-body::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .concept-evo-panel {
+        width: 98vw;
+        max-height: 92vh;
+    }
+
+    .evo-timeline-track {
+        margin: 2rem 1rem;
+        height: 250px;
+    }
+
+    .evo-node-name {
+        font-size: 0.6rem;
+    }
+}

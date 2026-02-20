@@ -15,5 +15,5 @@ export { default as TimelineAxis } from './TimelineAxis';
 export { default as MetroMap } from './MetroMap';
 export { default as MapOfThought } from './MapOfThought';
 
-// Default export is the wrapper with view toggle
-export { default } from './MapOfThought';
+// Default export is the constellation map (used by App.jsx)
+export { default } from './ConstellationMap';

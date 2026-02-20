@@ -11,7 +11,9 @@
       "Bash(npm run lint:*)",
       "Bash(npm i:*)",
       "Bash(npm run dev:*)",
-      "Bash(npm audit fix:*)"
+      "Bash(npm audit fix:*)",
+      "Bash(npx vite build)",
+      "Bash(node -e:*)"
     ]
   }
 }

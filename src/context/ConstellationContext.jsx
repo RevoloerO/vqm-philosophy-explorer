@@ -12,7 +12,7 @@ const ConstellationContext = createContext(null);
  * ConstellationProvider - Provides shared state to child components
  */
 export const ConstellationProvider = ({ children }) => {
-    // View mode: 'timeline' or 'constellation'
+    // View mode: 'timeline', 'constellation', or 'metro'
     const [viewMode, setViewMode] = useState('constellation');
 
     // Selected philosopher (shared between views)
@@ -32,22 +32,26 @@ export const ConstellationProvider = ({ children }) => {
 
         setIsTransitioning(true);
 
-        // Allow CSS transition to start
+        // Wait for overlay to fully cover the screen (matches CSS 0.4s transition)
         setTimeout(() => {
             setViewMode(newMode);
 
-            // Complete transition
-            setTimeout(() => {
-                setIsTransitioning(false);
-            }, 50);
-        }, 300);
+            // Let the new view mount, then fade the overlay out
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsTransitioning(false);
+                });
+            });
+        }, 420);
     }, [viewMode]);
 
     /**
      * Toggle between views
      */
     const toggleView = useCallback(() => {
-        switchView(viewMode === 'timeline' ? 'constellation' : 'timeline');
+        const order = ['timeline', 'constellation', 'metro'];
+        const nextIndex = (order.indexOf(viewMode) + 1) % order.length;
+        switchView(order[nextIndex]);
     }, [viewMode, switchView]);
 
     /**

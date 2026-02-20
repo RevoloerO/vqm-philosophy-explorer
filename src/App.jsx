@@ -3,7 +3,9 @@ import HomePage from './pages/HomePage';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ConstellationProvider, useConstellationContext } from './context/ConstellationContext';
 import ConstellationMap from './components/ConstellationMap';
+import { MetroMap } from './components/ConstellationMap';
 import ViewToggle from './components/shared/ViewToggle';
+import './css/MetroMap.css';
 
 /**
  * MainView - Handles the toggle between Timeline and Constellation views
@@ -31,14 +33,20 @@ function MainView() {
 
       {/* View Container */}
       <div className="view-container">
-        {viewMode === 'timeline' ? (
+        {viewMode === 'timeline' && (
           <HomePage
             selectedPhilosopher={selectedPhilosopher}
             onPhilosopherSelect={setSelectedPhilosopher}
           />
-        ) : (
+        )}
+        {viewMode === 'constellation' && (
           <ConstellationMap
             selectedPhilosopher={selectedPhilosopher}
+            onPhilosopherSelect={setSelectedPhilosopher}
+          />
+        )}
+        {viewMode === 'metro' && (
+          <MetroMap
             onPhilosopherSelect={setSelectedPhilosopher}
           />
         )}

@@ -147,8 +147,37 @@ export const getConnectionColor = (category) => {
     return CATEGORY_COLORS[category] || CATEGORY_COLORS['Other'];
 };
 
+/**
+ * Build influence connections from philosopher influenced_by fields
+ * @param {Array} philosophers - Array of philosopher objects with influenced_by[]
+ * @returns {Array} Array of influence connection objects
+ */
+export const buildInfluenceConnections = (philosophers) => {
+    const connections = [];
+    const philosopherMap = new Map(philosophers.map(p => [p.id, p]));
+
+    philosophers.forEach(philosopher => {
+        (philosopher.influenced_by || []).forEach(influencerId => {
+            const influencer = philosopherMap.get(influencerId);
+            if (!influencer) return;
+
+            connections.push({
+                id: `influence-${influencerId}-${philosopher.id}`,
+                type: 'influence',
+                from: influencerId,
+                to: philosopher.id,
+                fromTitle: influencer.title,
+                toTitle: philosopher.title
+            });
+        });
+    });
+
+    return connections;
+};
+
 export default {
     buildConstellations,
+    buildInfluenceConnections,
     getConnectionsByConcept,
     getConnectionsByPhilosopher,
     getConceptsFromConnections,

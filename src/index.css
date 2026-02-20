@@ -196,17 +196,23 @@ body {
     }
 }
 
-/* Hide timeline-specific elements when constellation is active */
+/* Hide timeline-specific elements when constellation/metro is active */
 .main-view[data-view="constellation"] .era-selector,
 .main-view[data-view="constellation"] .search-container,
-.main-view[data-view="constellation"] .filter-indicator {
+.main-view[data-view="constellation"] .filter-indicator,
+.main-view[data-view="metro"] .era-selector,
+.main-view[data-view="metro"] .search-container,
+.main-view[data-view="metro"] .filter-indicator {
     display: none;
 }
 
-/* Hide constellation elements when timeline is active */
+/* Hide constellation elements when timeline/metro is active */
 .main-view[data-view="timeline"] .constellation-zoom-controls,
 .main-view[data-view="timeline"] .time-slider-container,
-.main-view[data-view="timeline"] .search-toggle-btn {
+.main-view[data-view="timeline"] .search-toggle-btn,
+.main-view[data-view="metro"] .constellation-zoom-controls,
+.main-view[data-view="metro"] .time-slider-container,
+.main-view[data-view="metro"] .search-toggle-btn {
     display: none;
 }
 

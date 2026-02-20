@@ -15,9 +15,12 @@ import TimelineAxis from './TimelineAxis';
 import { useZoomPan } from '../../hooks/useZoomPan';
 import { useTimeFilter } from '../../hooks/useTimeFilter';
 import { computeStarPositions } from '../../utils/constellationLayout';
-import { buildConstellations } from '../../utils/connectionBuilder';
+import { buildConstellations, buildInfluenceConnections } from '../../utils/connectionBuilder';
 import timelineEvents from '../../pages/timelineEvents.json';
 import philosophyConcepts from '../../pages/philosophyConcepts.json';
+import LifetimeOverlap from '../LifetimeOverlap/LifetimeOverlap';
+import ComparePanel from '../ComparePanel/ComparePanel';
+import ConceptEvolution from '../ConceptEvolution/ConceptEvolution';
 import '../../css/ConstellationMap.css';
 
 // Default canvas size (will be responsive)
@@ -99,11 +102,41 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
         return buildConstellations(timelineEvents, philosophyConcepts);
     }, []);
 
+    // Build influence connections
+    const influenceConnections = useMemo(() => {
+        return buildInfluenceConnections(timelineEvents);
+    }, []);
+
+    // Toggle for showing influence arrows
+    const [showInfluences, setShowInfluences] = useState(false);
+
     // Track hovered concept for highlighting connections
     const [hoveredConcept, setHoveredConcept] = useState(null);
 
     // Search state
     const [showSearch, setShowSearch] = useState(false);
+
+    // Lifetime overlap panel
+    const [showLifetimeOverlap, setShowLifetimeOverlap] = useState(false);
+
+    // Compare mode
+    const [showCompare, setShowCompare] = useState(false);
+    const [comparePhilosopher, setComparePhilosopher] = useState(null);
+
+    const handleCompare = useCallback((philosopher) => {
+        setComparePhilosopher(philosopher);
+        setShowCompare(true);
+        setIsPanelOpen(false);
+    }, []);
+
+    // Concept evolution
+    const [showConceptEvolution, setShowConceptEvolution] = useState(false);
+    const [evolutionConcept, setEvolutionConcept] = useState(null);
+
+    const handleConceptEvolution = useCallback((concept) => {
+        setEvolutionConcept(concept);
+        setShowConceptEvolution(true);
+    }, []);
 
     // Entrance animation
     useEffect(() => {
@@ -172,12 +205,15 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
         setIsPanelOpen(false);
         // Delay clearing data for exit animation
         setTimeout(() => {
-            if (!isPanelOpen) {
-                setPanelData(null);
-                setSelectedStarId(null);
-            }
+            setIsPanelOpen(current => {
+                if (!current) {
+                    setPanelData(null);
+                    setSelectedStarId(null);
+                }
+                return current;
+            });
         }, 300);
-    }, [isPanelOpen]);
+    }, []);
 
     // Handle keyboard shortcuts
     useEffect(() => {
@@ -273,6 +309,8 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 {/* Constellation Lines */}
                 <ConstellationLines
                     connections={connections}
+                    influenceConnections={influenceConnections}
+                    showInfluences={showInfluences}
                     positions={starPositions}
                     highlightedPhilosopherId={selectedStarId || hoveredStarId}
                     hoveredConcept={hoveredConcept}
@@ -302,6 +340,14 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 onNavigateToPhilosopher={handleNavigateToPhilosopher}
                 connections={connections}
                 allPhilosophers={timelineEvents}
+                onCompare={handleCompare}
+            />
+
+            {/* Compare Panel */}
+            <ComparePanel
+                isOpen={showCompare}
+                onClose={() => setShowCompare(false)}
+                initialPhilosopher={comparePhilosopher}
             />
 
             {/* Era Filter Bar */}
@@ -316,6 +362,19 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 showMinor={showMinor}
                 onToggleShowMinor={toggleShowMinor}
             />
+
+            {/* Influence Toggle */}
+            <button
+                className={`influence-toggle-btn ${showInfluences ? 'active' : ''}`}
+                onClick={() => setShowInfluences(prev => !prev)}
+                aria-label="Toggle influence arrows"
+                title={showInfluences ? 'Hide Influence Arrows' : 'Show Influence Arrows'}
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path d="M12 5l0 14" />
+                    <path d="M5 12l7 7 7-7" />
+                </svg>
+            </button>
 
             {/* Search Button */}
             <button
@@ -339,6 +398,53 @@ const ConstellationMap = ({ onPhilosopherSelect, selectedPhilosopher }) => {
                 isOpen={showSearch}
                 onClose={() => setShowSearch(false)}
             />
+
+            {/* Lifetime Overlap Button */}
+            <button
+                className="lifetime-toggle-btn"
+                onClick={() => setShowLifetimeOverlap(true)}
+                aria-label="Show lifetime overlaps"
+                title="Philosopher Lifetimes"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <rect x="3" y="6" width="18" height="3" rx="1" />
+                    <rect x="6" y="11" width="14" height="3" rx="1" />
+                    <rect x="4" y="16" width="12" height="3" rx="1" />
+                </svg>
+            </button>
+
+            {/* Lifetime Overlap Panel */}
+            <LifetimeOverlap
+                isOpen={showLifetimeOverlap}
+                onClose={() => setShowLifetimeOverlap(false)}
+                onPhilosopherSelect={(philosopher) => {
+                    setShowLifetimeOverlap(false);
+                    handleStarClick(philosopher);
+                }}
+            />
+
+            {/* Concept Evolution */}
+            <ConceptEvolution
+                isOpen={showConceptEvolution}
+                onClose={() => setShowConceptEvolution(false)}
+                initialConcept={evolutionConcept}
+                onPhilosopherSelect={(philosopher) => {
+                    setShowConceptEvolution(false);
+                    handleStarClick(philosopher);
+                }}
+            />
+
+            {/* Concept Evolution Button */}
+            <button
+                className="concept-evo-toggle-btn"
+                onClick={() => handleConceptEvolution(null)}
+                aria-label="Concept Evolution"
+                title="Concept Evolution Timeline"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path d="M2 12h4l3-9 4 18 3-9h4" />
+                </svg>
+            </button>
 
             {/* Instructions overlay (shows briefly on first load) */}
             <div className="constellation-instructions">

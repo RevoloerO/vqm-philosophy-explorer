@@ -23,6 +23,19 @@
                 "title": "Anaximenes's 'Aer'",
                 "summary": "Suggests 'aer' (air) is the primary substance, explaining matter via condensation and rarefaction."
             }
+        ],
+        "birth_year": "c. 624 BC",
+        "death_year": "c. 546 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "The most difficult thing in life is to know yourself.",
+                "source": "Attributed by Diogenes Laertius"
+            },
+            {
+                "text": "Water is the principle of all things.",
+                "source": "Attributed by Aristotle, Metaphysics"
+            }
         ]
     },
     {
@@ -50,6 +63,23 @@
                 "title": "Trial and Execution",
                 "summary": "His methods led to his trial for corrupting the youth, where he chose death over exile."
             }
+        ],
+        "birth_year": "c. 470 BC",
+        "death_year": "399 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "The unexamined life is not worth living.",
+                "source": "Plato, Apology"
+            },
+            {
+                "text": "I know that I know nothing.",
+                "source": "Plato, Apology"
+            },
+            {
+                "text": "True wisdom comes to each of us when we realize how little we understand about life, ourselves, and the world around us.",
+                "source": "Attributed by Plato"
+            }
         ]
     },
     {
@@ -76,6 +106,23 @@
                 "id": "3b",
                 "title": "The 'Symposium'",
                 "summary": "A dialogue exploring the nature of love, climbing from carnal desire to abstract beauty."
+            }
+        ],
+        "birth_year": "c. 428 BC",
+        "death_year": "c. 348 BC",
+        "influenced_by": [2],
+        "quotes": [
+            {
+                "text": "Be kind, for everyone you meet is fighting a hard battle.",
+                "source": "Attributed to Plato"
+            },
+            {
+                "text": "The measure of a man is what he does with power.",
+                "source": "Plato, The Republic"
+            },
+            {
+                "text": "Opinion is the medium between knowledge and ignorance.",
+                "source": "Plato, The Republic"
             }
         ]
     },
@@ -105,6 +152,23 @@
                 "title": "Prior Analytics",
                 "summary": "The invention of the syllogism, a form of deductive reasoning that founded logic for centuries."
             }
+        ],
+        "birth_year": "384 BC",
+        "death_year": "322 BC",
+        "influenced_by": [3],
+        "quotes": [
+            {
+                "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+                "source": "Nicomachean Ethics (paraphrased by Will Durant)"
+            },
+            {
+                "text": "Man is by nature a political animal.",
+                "source": "Aristotle, Politics"
+            },
+            {
+                "text": "Knowing yourself is the beginning of all wisdom.",
+                "source": "Attributed to Aristotle"
+            }
         ]
     },
     {
@@ -120,7 +184,20 @@
             "Metaphysics",
             "Naturalism"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "c. 570 BC",
+        "death_year": "c. 495 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "There is geometry in the humming of the strings, there is music in the spacing of the spheres.",
+                "source": "Attributed to Pythagoras"
+            },
+            {
+                "text": "Number is the ruler of forms and ideas.",
+                "source": "Attributed to Pythagoras"
+            }
+        ]
     },
     {
         "id": 16,
@@ -136,7 +213,20 @@
             "Naturalism",
             "Dialectic"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "c. 535 BC",
+        "death_year": "c. 475 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "No man ever steps in the same river twice, for it is not the same river and he is not the same man.",
+                "source": "Attributed by Plato, Cratylus"
+            },
+            {
+                "text": "The only thing that is constant is change.",
+                "source": "Attributed to Heraclitus"
+            }
+        ]
     },
     {
         "id": 17,
@@ -158,6 +248,19 @@
                 "title": "The Garden",
                 "summary": "Epicurus's school in Athens, open to all including women and slaves, emphasizing communal philosophical living."
             }
+        ],
+        "birth_year": "341 BC",
+        "death_year": "270 BC",
+        "influenced_by": [36],
+        "quotes": [
+            {
+                "text": "Death does not concern us, because as long as we exist, death is not here. And when it does come, we no longer exist.",
+                "source": "Epicurus, Letter to Menoeceus"
+            },
+            {
+                "text": "Do not spoil what you have by desiring what you have not.",
+                "source": "Attributed to Epicurus"
+            }
         ]
     },
     {
@@ -174,7 +277,20 @@
             "Ethics",
             "Logic"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "c. 334 BC",
+        "death_year": "c. 262 BC",
+        "influenced_by": [2],
+        "quotes": [
+            {
+                "text": "Man conquers the world by conquering himself.",
+                "source": "Attributed to Zeno of Citium"
+            },
+            {
+                "text": "We have two ears and one mouth, so we should listen more than we say.",
+                "source": "Attributed to Zeno of Citium by Diogenes Laertius"
+            }
+        ]
     },
     {
         "id": 5,
@@ -200,6 +316,23 @@
                 "id": "5b",
                 "title": "Just War Theory",
                 "summary": "Early articulations of the conditions under which war could be morally justifiable."
+            }
+        ],
+        "birth_year": "354 AD",
+        "death_year": "430 AD",
+        "influenced_by": [3],
+        "quotes": [
+            {
+                "text": "The world is a book and those who do not travel read only one page.",
+                "source": "Attributed to Augustine"
+            },
+            {
+                "text": "Faith is to believe what you do not see; the reward of this faith is to see what you believe.",
+                "source": "Augustine, Sermones"
+            },
+            {
+                "text": "Our hearts are restless until they rest in Thee.",
+                "source": "Augustine, Confessions"
             }
         ]
     },
@@ -227,6 +360,19 @@
                 "id": "6b",
                 "title": "Proof of the Truthful",
                 "summary": "An ontological argument for the existence of God as a 'necessary existent'."
+            }
+        ],
+        "birth_year": "c. 980 AD",
+        "death_year": "1037 AD",
+        "influenced_by": [4],
+        "quotes": [
+            {
+                "text": "The knowledge of anything, since all things have causes, is not acquired or complete unless it is known by its causes.",
+                "source": "Avicenna, The Book of Healing"
+            },
+            {
+                "text": "Now it is established in the sciences that no knowledge is acquired save through the study of its causes and beginnings.",
+                "source": "Avicenna, The Canon of Medicine"
             }
         ]
     },
@@ -256,6 +402,23 @@
                 "title": "Natural Law",
                 "summary": "His theory that human reason can discern universal moral principles inherent in nature."
             }
+        ],
+        "birth_year": "1225",
+        "death_year": "1274",
+        "influenced_by": [4, 6],
+        "quotes": [
+            {
+                "text": "To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.",
+                "source": "Attributed to Thomas Aquinas"
+            },
+            {
+                "text": "The things that we love tell us what we are.",
+                "source": "Attributed to Thomas Aquinas"
+            },
+            {
+                "text": "There is nothing on this earth more to be prized than true friendship.",
+                "source": "Attributed to Thomas Aquinas"
+            }
         ]
     },
     {
@@ -272,7 +435,20 @@
             "Theology",
             "Logic"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "c. 477 AD",
+        "death_year": "524 AD",
+        "influenced_by": [3, 4],
+        "quotes": [
+            {
+                "text": "In every adversity of fortune, to have been happy is the most unhappy kind of misfortune.",
+                "source": "Boethius, The Consolation of Philosophy"
+            },
+            {
+                "text": "Nothing is miserable unless you think it so; and on the other hand, nothing brings happiness unless you are content with it.",
+                "source": "Boethius, The Consolation of Philosophy"
+            }
+        ]
     },
     {
         "id": 20,
@@ -288,7 +464,20 @@
             "Logic",
             "Metaphysics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "c. 872 AD",
+        "death_year": "c. 950 AD",
+        "influenced_by": [3, 4],
+        "quotes": [
+            {
+                "text": "The idea of the virtuous city is that community where people aim through association at the highest happiness.",
+                "source": "Al-Farabi, The Virtuous City"
+            },
+            {
+                "text": "Philosophy first emerged in the Chaldean nation, among the people of Iraq.",
+                "source": "Al-Farabi, On the Appearance of Philosophy"
+            }
+        ]
     },
     {
         "id": 21,
@@ -304,7 +493,20 @@
             "Metaphysics",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1138",
+        "death_year": "1204",
+        "influenced_by": [4, 20],
+        "quotes": [
+            {
+                "text": "Teach thy tongue to say I do not know, and thou shalt progress.",
+                "source": "Attributed to Maimonides"
+            },
+            {
+                "text": "Give a man a fish and you feed him for a day; teach a man to fish and you feed him for a lifetime.",
+                "source": "Attributed to Maimonides, Mishneh Torah"
+            }
+        ]
     },
     {
         "id": 22,
@@ -325,6 +527,19 @@
                 "id": "22a",
                 "title": "Ockham's Razor",
                 "summary": "The methodological principle that the simplest explanation is usually the best, deeply influential in science and philosophy."
+            }
+        ],
+        "birth_year": "c. 1287",
+        "death_year": "1347",
+        "influenced_by": [4],
+        "quotes": [
+            {
+                "text": "Entities should not be multiplied without necessity.",
+                "source": "Attributed to William of Ockham (Ockham's Razor)"
+            },
+            {
+                "text": "It is vain to do with more what can be done with fewer.",
+                "source": "William of Ockham, Summa Logicae"
             }
         ]
     },
@@ -353,6 +568,23 @@
                 "title": "Cartesian Dualism",
                 "summary": "The formal separation of the immaterial mind from the material body, setting the stage for debate."
             }
+        ],
+        "birth_year": "1596",
+        "death_year": "1650",
+        "influenced_by": [5],
+        "quotes": [
+            {
+                "text": "I think, therefore I am.",
+                "source": "Descartes, Discourse on the Method"
+            },
+            {
+                "text": "Doubt is the origin of wisdom.",
+                "source": "Attributed to Descartes"
+            },
+            {
+                "text": "It is not enough to have a good mind; the main thing is to use it well.",
+                "source": "Descartes, Discourse on the Method"
+            }
         ]
     },
     {
@@ -379,6 +611,23 @@
                 "id": "9b",
                 "title": "Tabula Rasa",
                 "summary": "His theory of the 'blank slate' mind, a cornerstone of empiricism."
+            }
+        ],
+        "birth_year": "1632",
+        "death_year": "1704",
+        "influenced_by": [8],
+        "quotes": [
+            {
+                "text": "No man's knowledge here can go beyond his experience.",
+                "source": "Locke, An Essay Concerning Human Understanding"
+            },
+            {
+                "text": "New opinions are always suspected, and usually opposed, without any other reason but because they are not already common.",
+                "source": "Locke, An Essay Concerning Human Understanding"
+            },
+            {
+                "text": "The end of law is not to abolish or restrain, but to preserve and enlarge freedom.",
+                "source": "Locke, Two Treatises of Government"
             }
         ]
     },
@@ -408,6 +657,23 @@
                 "title": "'What is Enlightenment?'",
                 "summary": "An influential essay arguing for the use of one's own reason and courage to think for oneself ('Sapere aude')."
             }
+        ],
+        "birth_year": "1724",
+        "death_year": "1804",
+        "influenced_by": [24, 25],
+        "quotes": [
+            {
+                "text": "Act only according to that maxim whereby you can at the same time will that it should become a universal law.",
+                "source": "Kant, Groundwork of the Metaphysics of Morals"
+            },
+            {
+                "text": "Dare to know! Have the courage to use your own understanding.",
+                "source": "Kant, What is Enlightenment?"
+            },
+            {
+                "text": "Two things fill the mind with ever new and increasing admiration and awe: the starry heavens above me and the moral law within me.",
+                "source": "Kant, Critique of Practical Reason"
+            }
         ]
     },
     {
@@ -424,7 +690,20 @@
             "Rationalism",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1632",
+        "death_year": "1677",
+        "influenced_by": [8],
+        "quotes": [
+            {
+                "text": "Peace is not an absence of war, it is a virtue, a state of mind, a disposition for benevolence, confidence, justice.",
+                "source": "Spinoza, Theological-Political Treatise"
+            },
+            {
+                "text": "The highest activity a human being can attain is learning for understanding, because to understand is to be free.",
+                "source": "Spinoza, Ethics"
+            }
+        ]
     },
     {
         "id": 24,
@@ -446,6 +725,23 @@
                 "title": "The Problem of Induction",
                 "summary": "Hume's argument that we cannot rationally justify the assumption that the future will resemble the past."
             }
+        ],
+        "birth_year": "1711",
+        "death_year": "1776",
+        "influenced_by": [9],
+        "quotes": [
+            {
+                "text": "Reason is, and ought only to be the slave of the passions.",
+                "source": "Hume, A Treatise of Human Nature"
+            },
+            {
+                "text": "A wise man proportions his belief to the evidence.",
+                "source": "Hume, An Enquiry Concerning Human Understanding"
+            },
+            {
+                "text": "Custom is the great guide of human life.",
+                "source": "Hume, An Enquiry Concerning Human Understanding"
+            }
         ]
     },
     {
@@ -462,7 +758,20 @@
             "Ethics",
             "Liberalism"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1712",
+        "death_year": "1778",
+        "influenced_by": [9],
+        "quotes": [
+            {
+                "text": "Man is born free, and everywhere he is in chains.",
+                "source": "Rousseau, The Social Contract"
+            },
+            {
+                "text": "I prefer liberty with danger than peace with slavery.",
+                "source": "Rousseau, The Social Contract"
+            }
+        ]
     },
     {
         "id": 26,
@@ -478,7 +787,92 @@
             "PoliticalPhilosophy",
             "Epistemology"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1694",
+        "death_year": "1778",
+        "influenced_by": [9],
+        "quotes": [
+            {
+                "text": "Judge a man by his questions rather than by his answers.",
+                "source": "Attributed to Voltaire"
+            },
+            {
+                "text": "Those who can make you believe absurdities can make you commit atrocities.",
+                "source": "Voltaire, Questions sur les miracles"
+            },
+            {
+                "text": "We must cultivate our garden.",
+                "source": "Voltaire, Candide"
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "Gottfried Wilhelm Leibniz",
+        "year": "1714",
+        "fullYear": "1646–1716",
+        "summary": "We live in the best of all possible worlds.",
+        "description": "Leibniz was a polymath who developed calculus independently of Newton, proposed the theory of monads, and argued that God created the best possible world through the principle of sufficient reason.",
+        "concepts": [
+            "Rationalism",
+            "Metaphysics",
+            "Theodicy"
+        ],
+        "miniEvents": [
+            {
+                "id": "38a",
+                "title": "Monadology",
+                "summary": "His theory that reality consists of simple, indivisible substances called monads, each reflecting the entire universe."
+            }
+        ],
+        "birth_year": "1646",
+        "death_year": "1716",
+        "influenced_by": [8, 23],
+        "quotes": [
+            {
+                "text": "This is the best of all possible worlds.",
+                "source": "Leibniz, Theodicy"
+            },
+            {
+                "text": "Nothing is without reason.",
+                "source": "Leibniz, Principle of Sufficient Reason"
+            },
+            {
+                "text": "There are two kinds of truths: truths of reasoning and truths of fact.",
+                "source": "Leibniz, Monadology"
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "type": "minor",
+        "era": "The Age of Reason & Enlightenment",
+        "title": "George Berkeley",
+        "year": "1710",
+        "fullYear": "1685–1753",
+        "summary": "To be is to be perceived.",
+        "description": "Berkeley's idealism argued that material objects exist only as perceptions in minds. He famously questioned whether a tree falling in an empty forest makes a sound.",
+        "concepts": [
+            "Idealism",
+            "Empiricism",
+            "Epistemology"
+        ],
+        "miniEvents": [],
+        "birth_year": "1685",
+        "death_year": "1753",
+        "influenced_by": [9],
+        "quotes": [
+            {
+                "text": "To be is to be perceived.",
+                "source": "Berkeley, A Treatise Concerning the Principles of Human Knowledge"
+            },
+            {
+                "text": "Truth is the cry of all, but the game of few.",
+                "source": "Berkeley, Siris"
+            }
+        ]
     },
     {
         "id": 11,
@@ -504,6 +898,23 @@
                 "id": "11b",
                 "title": "Master-Slave Dialectic",
                 "summary": "A famous allegory describing the development of self-consciousness through a struggle for recognition."
+            }
+        ],
+        "birth_year": "1770",
+        "death_year": "1831",
+        "influenced_by": [10, 23],
+        "quotes": [
+            {
+                "text": "The real is rational and the rational is real.",
+                "source": "Hegel, Elements of the Philosophy of Right"
+            },
+            {
+                "text": "The owl of Minerva spreads its wings only with the falling of the dusk.",
+                "source": "Hegel, Elements of the Philosophy of Right"
+            },
+            {
+                "text": "We learn from history that we do not learn from history.",
+                "source": "Attributed to Hegel"
             }
         ]
     },
@@ -532,6 +943,23 @@
                 "title": "Master-Slave Morality",
                 "summary": "A central theme critiquing Judeo-Christian ethics as a 'slave revolt' in morality."
             }
+        ],
+        "birth_year": "1844",
+        "death_year": "1900",
+        "influenced_by": [27],
+        "quotes": [
+            {
+                "text": "He who has a why to live for can bear almost any how.",
+                "source": "Nietzsche, Twilight of the Idols"
+            },
+            {
+                "text": "God is dead. God remains dead. And we have killed him.",
+                "source": "Nietzsche, The Gay Science"
+            },
+            {
+                "text": "Without music, life would be a mistake.",
+                "source": "Nietzsche, Twilight of the Idols"
+            }
         ]
     },
     {
@@ -548,7 +976,20 @@
             "Aesthetics",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1788",
+        "death_year": "1860",
+        "influenced_by": [10],
+        "quotes": [
+            {
+                "text": "All truth passes through three stages. First, it is ridiculed. Second, it is violently opposed. Third, it is accepted as being self-evident.",
+                "source": "Attributed to Schopenhauer"
+            },
+            {
+                "text": "Talent hits a target no one else can hit; genius hits a target no one else can see.",
+                "source": "Schopenhauer, The World as Will and Representation"
+            }
+        ]
     },
     {
         "id": 28,
@@ -569,6 +1010,23 @@
                 "id": "28a",
                 "title": "Either/Or",
                 "summary": "A work presenting contrasting aesthetic and ethical modes of life as fundamental existential choices."
+            }
+        ],
+        "birth_year": "1813",
+        "death_year": "1855",
+        "influenced_by": [11],
+        "quotes": [
+            {
+                "text": "Life can only be understood backwards; but it must be lived forwards.",
+                "source": "Kierkegaard, Journals"
+            },
+            {
+                "text": "Anxiety is the dizziness of freedom.",
+                "source": "Kierkegaard, The Concept of Anxiety"
+            },
+            {
+                "text": "The most common form of despair is not being who you are.",
+                "source": "Kierkegaard, The Sickness Unto Death"
             }
         ]
     },
@@ -592,6 +1050,23 @@
                 "title": "The Communist Manifesto",
                 "summary": "A political pamphlet calling for the workers of the world to unite and overthrow the bourgeoisie."
             }
+        ],
+        "birth_year": "1818",
+        "death_year": "1883",
+        "influenced_by": [11],
+        "quotes": [
+            {
+                "text": "The philosophers have only interpreted the world, in various ways; the point is to change it.",
+                "source": "Marx, Theses on Feuerbach"
+            },
+            {
+                "text": "The history of all hitherto existing society is the history of class struggles.",
+                "source": "Marx and Engels, The Communist Manifesto"
+            },
+            {
+                "text": "Religion is the opium of the people.",
+                "source": "Marx, Critique of Hegel's Philosophy of Right"
+            }
         ]
     },
     {
@@ -608,7 +1083,121 @@
             "Liberalism",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1806",
+        "death_year": "1873",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "It is better to be a human being dissatisfied than a pig satisfied; better to be Socrates dissatisfied than a fool satisfied.",
+                "source": "Mill, Utilitarianism"
+            },
+            {
+                "text": "Over himself, over his own body and mind, the individual is sovereign.",
+                "source": "Mill, On Liberty"
+            },
+            {
+                "text": "The only freedom which deserves the name is that of pursuing our own good in our own way.",
+                "source": "Mill, On Liberty"
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Parmenides",
+        "year": "c. 475 BC",
+        "fullYear": "c. 515–450 BC",
+        "summary": "What is, is; what is not, is not.",
+        "description": "Parmenides argued that reality is one, unchanging, and eternal. Change and plurality are mere illusions. His logical arguments about being profoundly influenced metaphysics.",
+        "concepts": [
+            "Metaphysics",
+            "Logic",
+            "Monism"
+        ],
+        "miniEvents": [],
+        "birth_year": "c. 515 BC",
+        "death_year": "c. 450 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "What is, is; what is not, is not.",
+                "source": "Parmenides, On Nature"
+            },
+            {
+                "text": "For never shall this be proved, that things that are not are.",
+                "source": "Parmenides, On Nature"
+            }
+        ]
+    },
+    {
+        "id": 36,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Democritus",
+        "year": "c. 420 BC",
+        "fullYear": "c. 460–370 BC",
+        "summary": "Nothing exists except atoms and empty space.",
+        "description": "Democritus developed atomic theory, proposing that all matter consists of indivisible particles called atoms moving through void. This materialist view anticipated modern physics.",
+        "concepts": [
+            "Metaphysics",
+            "Naturalism",
+            "Materialism"
+        ],
+        "miniEvents": [],
+        "birth_year": "c. 460 BC",
+        "death_year": "c. 370 BC",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "Nothing exists except atoms and empty space; everything else is opinion.",
+                "source": "Attributed to Democritus"
+            },
+            {
+                "text": "Happiness resides not in possessions, and not in gold; happiness dwells in the soul.",
+                "source": "Attributed to Democritus"
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "type": "minor",
+        "era": "Ancient & Classical Thought",
+        "title": "Marcus Aurelius",
+        "year": "c. 170 AD",
+        "fullYear": "121–180 AD",
+        "summary": "The philosopher emperor.",
+        "description": "Roman Emperor Marcus Aurelius authored 'Meditations', a series of personal writings embodying Stoic philosophy. His reflections on duty, mortality, and inner peace remain influential.",
+        "concepts": [
+            "Stoicism",
+            "Ethics",
+            "PoliticalPhilosophy"
+        ],
+        "miniEvents": [
+            {
+                "id": "37a",
+                "title": "Meditations",
+                "summary": "Personal writings offering practical Stoic wisdom on maintaining virtue amid the pressures of ruling an empire."
+            }
+        ],
+        "birth_year": "121 AD",
+        "death_year": "180 AD",
+        "influenced_by": [18],
+        "quotes": [
+            {
+                "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+                "source": "Marcus Aurelius, Meditations"
+            },
+            {
+                "text": "The happiness of your life depends upon the quality of your thoughts.",
+                "source": "Marcus Aurelius, Meditations"
+            },
+            {
+                "text": "Waste no more time arguing about what a good man should be. Be one.",
+                "source": "Marcus Aurelius, Meditations"
+            }
+        ]
     },
     {
         "id": 13,
@@ -634,6 +1223,23 @@
                 "id": "13b",
                 "title": "'Philosophical Investigations'",
                 "summary": "His posthumous work rejecting many of his earlier ideas, introducing the concept of language as a tool with many uses."
+            }
+        ],
+        "birth_year": "1889",
+        "death_year": "1951",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "The limits of my language mean the limits of my world.",
+                "source": "Wittgenstein, Tractatus Logico-Philosophicus"
+            },
+            {
+                "text": "Whereof one cannot speak, thereof one must be silent.",
+                "source": "Wittgenstein, Tractatus Logico-Philosophicus"
+            },
+            {
+                "text": "A serious and good philosophical work could be written consisting entirely of jokes.",
+                "source": "Wittgenstein, Culture and Value"
             }
         ]
     },
@@ -662,6 +1268,23 @@
                 "title": "Ethics of Ambiguity",
                 "summary": "An exploration of existentialist ethics, arguing that human freedom is the ultimate good."
             }
+        ],
+        "birth_year": "1908",
+        "death_year": "1986",
+        "influenced_by": [32],
+        "quotes": [
+            {
+                "text": "One is not born, but rather becomes, a woman.",
+                "source": "Beauvoir, The Second Sex"
+            },
+            {
+                "text": "Change your life today. Don't gamble on the future, act now, without delay.",
+                "source": "Attributed to Simone de Beauvoir"
+            },
+            {
+                "text": "I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely.",
+                "source": "Beauvoir, Memoirs of a Dutiful Daughter"
+            }
         ]
     },
     {
@@ -684,6 +1307,23 @@
                 "title": "Being and Time",
                 "summary": "A groundbreaking work analyzing human existence through temporality, authenticity, and being-toward-death."
             }
+        ],
+        "birth_year": "1889",
+        "death_year": "1976",
+        "influenced_by": [10, 28],
+        "quotes": [
+            {
+                "text": "The most thought-provoking thing in our thought-provoking time is that we are still not thinking.",
+                "source": "Heidegger, What Is Called Thinking?"
+            },
+            {
+                "text": "Language is the house of Being.",
+                "source": "Heidegger, Letter on Humanism"
+            },
+            {
+                "text": "Every man is born as many men and dies as a single one.",
+                "source": "Attributed to Heidegger"
+            }
         ]
     },
     {
@@ -700,7 +1340,24 @@
             "Phenomenology",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1905",
+        "death_year": "1980",
+        "influenced_by": [31, 11],
+        "quotes": [
+            {
+                "text": "Existence precedes essence.",
+                "source": "Sartre, Existentialism Is a Humanism"
+            },
+            {
+                "text": "Man is condemned to be free; because once thrown into the world, he is responsible for everything he does.",
+                "source": "Sartre, Being and Nothingness"
+            },
+            {
+                "text": "Hell is other people.",
+                "source": "Sartre, No Exit"
+            }
+        ]
     },
     {
         "id": 33,
@@ -716,7 +1373,24 @@
             "Existentialism",
             "Ethics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1913",
+        "death_year": "1960",
+        "influenced_by": [12, 28],
+        "quotes": [
+            {
+                "text": "One must imagine Sisyphus happy.",
+                "source": "Camus, The Myth of Sisyphus"
+            },
+            {
+                "text": "In the depth of winter, I finally learned that within me there lay an invincible summer.",
+                "source": "Camus, Return to Tipasa"
+            },
+            {
+                "text": "The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.",
+                "source": "Attributed to Camus"
+            }
+        ]
     },
     {
         "id": 34,
@@ -738,99 +1412,24 @@
                 "title": "Discipline and Punish",
                 "summary": "An analysis of how modern institutions use surveillance and discipline to control individuals."
             }
-        ]
-    },
-    {
-        "id": 35,
-        "type": "minor",
-        "era": "Ancient & Classical Thought",
-        "title": "Parmenides",
-        "year": "c. 475 BC",
-        "fullYear": "c. 515–450 BC",
-        "summary": "What is, is; what is not, is not.",
-        "description": "Parmenides argued that reality is one, unchanging, and eternal. Change and plurality are mere illusions. His logical arguments about being profoundly influenced metaphysics.",
-        "concepts": [
-            "Metaphysics",
-            "Logic",
-            "Monism"
         ],
-        "miniEvents": []
-    },
-    {
-        "id": 36,
-        "type": "minor",
-        "era": "Ancient & Classical Thought",
-        "title": "Democritus",
-        "year": "c. 420 BC",
-        "fullYear": "c. 460–370 BC",
-        "summary": "Nothing exists except atoms and empty space.",
-        "description": "Democritus developed atomic theory, proposing that all matter consists of indivisible particles called atoms moving through void. This materialist view anticipated modern physics.",
-        "concepts": [
-            "Metaphysics",
-            "Naturalism",
-            "Materialism"
-        ],
-        "miniEvents": []
-    },
-    {
-        "id": 37,
-        "type": "minor",
-        "era": "Ancient & Classical Thought",
-        "title": "Marcus Aurelius",
-        "year": "c. 170 AD",
-        "fullYear": "121–180 AD",
-        "summary": "The philosopher emperor.",
-        "description": "Roman Emperor Marcus Aurelius authored 'Meditations', a series of personal writings embodying Stoic philosophy. His reflections on duty, mortality, and inner peace remain influential.",
-        "concepts": [
-            "Stoicism",
-            "Ethics",
-            "PoliticalPhilosophy"
-        ],
-        "miniEvents": [
+        "birth_year": "1926",
+        "death_year": "1984",
+        "influenced_by": [12, 31],
+        "quotes": [
             {
-                "id": "37a",
-                "title": "Meditations",
-                "summary": "Personal writings offering practical Stoic wisdom on maintaining virtue amid the pressures of ruling an empire."
+                "text": "Where there is power, there is resistance.",
+                "source": "Foucault, The History of Sexuality"
+            },
+            {
+                "text": "Knowledge is not made for understanding; it is made for cutting.",
+                "source": "Foucault, Language, Counter-Memory, Practice"
+            },
+            {
+                "text": "People know what they do; frequently they know why they do what they do; but what they don't know is what what they do does.",
+                "source": "Attributed to Foucault by Gilles Deleuze"
             }
         ]
-    },
-    {
-        "id": 38,
-        "type": "minor",
-        "era": "The Age of Reason & Enlightenment",
-        "title": "Gottfried Wilhelm Leibniz",
-        "year": "1714",
-        "fullYear": "1646–1716",
-        "summary": "We live in the best of all possible worlds.",
-        "description": "Leibniz was a polymath who developed calculus independently of Newton, proposed the theory of monads, and argued that God created the best possible world through the principle of sufficient reason.",
-        "concepts": [
-            "Rationalism",
-            "Metaphysics",
-            "Theodicy"
-        ],
-        "miniEvents": [
-            {
-                "id": "38a",
-                "title": "Monadology",
-                "summary": "His theory that reality consists of simple, indivisible substances called monads, each reflecting the entire universe."
-            }
-        ]
-    },
-    {
-        "id": 39,
-        "type": "minor",
-        "era": "The Age of Reason & Enlightenment",
-        "title": "George Berkeley",
-        "year": "1710",
-        "fullYear": "1685–1753",
-        "summary": "To be is to be perceived.",
-        "description": "Berkeley's idealism argued that material objects exist only as perceptions in minds. He famously questioned whether a tree falling in an empty forest makes a sound.",
-        "concepts": [
-            "Idealism",
-            "Empiricism",
-            "Epistemology"
-        ],
-        "miniEvents": []
     },
     {
         "id": 40,
@@ -852,6 +1451,23 @@
                 "title": "The Principles of Psychology",
                 "summary": "A groundbreaking text that established psychology as a distinct scientific discipline."
             }
+        ],
+        "birth_year": "1842",
+        "death_year": "1910",
+        "influenced_by": [],
+        "quotes": [
+            {
+                "text": "Act as if what you do makes a difference. It does.",
+                "source": "Attributed to William James"
+            },
+            {
+                "text": "The greatest discovery of my generation is that a human being can alter his life by altering his attitudes.",
+                "source": "Attributed to William James"
+            },
+            {
+                "text": "A great many people think they are thinking when they are merely rearranging their prejudices.",
+                "source": "Attributed to William James"
+            }
         ]
     },
     {
@@ -868,7 +1484,20 @@
             "Logic",
             "Semiotics"
         ],
-        "miniEvents": []
+        "miniEvents": [],
+        "birth_year": "1839",
+        "death_year": "1914",
+        "influenced_by": [10],
+        "quotes": [
+            {
+                "text": "Consider what effects, that might conceivably have practical bearings, we conceive the object of our conception to have. Then, our conception of these effects is the whole of our conception of the object.",
+                "source": "Peirce, How to Make Our Ideas Clear"
+            },
+            {
+                "text": "The opinion which is fated to be ultimately agreed to by all who investigate, is what we mean by the truth.",
+                "source": "Peirce, How to Make Our Ideas Clear"
+            }
+        ]
     },
     {
         "id": 42,
@@ -889,6 +1518,23 @@
                 "id": "42a",
                 "title": "The Human Condition",
                 "summary": "An exploration of vita activa—labor, work, and action—and what it means to live a fully human life."
+            }
+        ],
+        "birth_year": "1906",
+        "death_year": "1975",
+        "influenced_by": [31, 10],
+        "quotes": [
+            {
+                "text": "The sad truth is that most evil is done by people who never make up their minds to be good or evil.",
+                "source": "Arendt, The Life of the Mind"
+            },
+            {
+                "text": "Forgiveness is the key to action and freedom.",
+                "source": "Arendt, The Human Condition"
+            },
+            {
+                "text": "The most radical revolutionary will become a conservative the day after the revolution.",
+                "source": "Attributed to Hannah Arendt"
             }
         ]
     },
@@ -912,6 +1558,19 @@
                 "title": "The Veil of Ignorance",
                 "summary": "A thought experiment where people choose principles of justice without knowing their place in society."
             }
+        ],
+        "birth_year": "1921",
+        "death_year": "2002",
+        "influenced_by": [10, 30],
+        "quotes": [
+            {
+                "text": "Justice is the first virtue of social institutions, as truth is of systems of thought.",
+                "source": "Rawls, A Theory of Justice"
+            },
+            {
+                "text": "Injustice, then, is simply inequalities that are not to the benefit of all.",
+                "source": "Rawls, A Theory of Justice"
+            }
         ]
     },
     {
@@ -933,6 +1592,23 @@
                 "id": "44a",
                 "title": "Of Grammatology",
                 "summary": "A seminal work challenging Western philosophy's privileging of speech over writing."
+            }
+        ],
+        "birth_year": "1930",
+        "death_year": "2004",
+        "influenced_by": [31],
+        "quotes": [
+            {
+                "text": "There is nothing outside the text.",
+                "source": "Derrida, Of Grammatology"
+            },
+            {
+                "text": "To pretend, I actually do the thing: I have therefore only pretended to pretend.",
+                "source": "Attributed to Derrida"
+            },
+            {
+                "text": "Every other is wholly other.",
+                "source": "Derrida, The Gift of Death"
             }
         ]
     }

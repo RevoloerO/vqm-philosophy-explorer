@@ -144,10 +144,94 @@ const ConstellationLine = memo(({
 ConstellationLine.displayName = 'ConstellationLine';
 
 /**
+ * Single influence arrow component (dashed line with arrowhead)
+ */
+const InfluenceLine = memo(({
+    connection,
+    startPos,
+    endPos,
+    isHighlighted,
+    opacity = 1,
+    index = 0
+}) => {
+    const curveDirection = index % 2 === 0 ? 0.1 : -0.1;
+    const path = generateFlowingPath(
+        startPos.x, startPos.y,
+        endPos.x, endPos.y,
+        curveDirection
+    );
+
+    const baseOpacity = isHighlighted ? 0.8 : 0.25;
+    const strokeWidth = isHighlighted ? 2 : 1.2;
+    const color = '#f59e0b'; // amber for influence
+
+    return (
+        <g className="influence-line-group">
+            {isHighlighted && (
+                <path
+                    d={path}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth={strokeWidth + 4}
+                    strokeLinecap="round"
+                    opacity={0.12}
+                    style={{ filter: 'blur(4px)' }}
+                />
+            )}
+            <path
+                d={path}
+                fill="none"
+                stroke={color}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray="6 4"
+                markerEnd="url(#influence-arrow)"
+                opacity={baseOpacity * opacity}
+                style={{
+                    transition: 'stroke-width 0.3s ease, opacity 0.3s ease'
+                }}
+            />
+            {isHighlighted && (
+                <g className="influence-label">
+                    <rect
+                        x={(startPos.x + endPos.x) / 2 - 35}
+                        y={(startPos.y + endPos.y) / 2 - 22}
+                        width={70}
+                        height={18}
+                        rx={9}
+                        fill="rgba(13, 17, 23, 0.85)"
+                        opacity={0.9}
+                    />
+                    <text
+                        x={(startPos.x + endPos.x) / 2}
+                        y={(startPos.y + endPos.y) / 2 - 10}
+                        fill={color}
+                        fontSize="9"
+                        textAnchor="middle"
+                        style={{
+                            pointerEvents: 'none',
+                            fontFamily: 'Inter, sans-serif',
+                            fontWeight: 600,
+                            letterSpacing: '0.5px'
+                        }}
+                    >
+                        influenced
+                    </text>
+                </g>
+            )}
+        </g>
+    );
+});
+
+InfluenceLine.displayName = 'InfluenceLine';
+
+/**
  * ConstellationLines - Renders all constellation connection lines
  */
 const ConstellationLines = memo(({
     connections,
+    influenceConnections = [],
+    showInfluences = false,
     positions,
     highlightedConcept = null,
     highlightedPhilosopherId = null,
@@ -204,9 +288,29 @@ const ConstellationLines = memo(({
             });
     }, [connections, positionMap, highlightedConcept, highlightedPhilosopherId, hoveredConcept]);
 
+    // Process influence connections
+    const processedInfluences = useMemo(() => {
+        if (!showInfluences) return [];
+        return influenceConnections
+            .map((connection, index) => {
+                const startPos = positionMap.get(connection.from);
+                const endPos = positionMap.get(connection.to);
+                if (!startPos || !endPos) return null;
+                const startOpacity = startPos.opacity ?? 1;
+                const endOpacity = endPos.opacity ?? 1;
+                const connectionOpacity = Math.min(startOpacity, endOpacity);
+                if (connectionOpacity < 0.1) return null;
+                const isHighlighted =
+                    connection.from === highlightedPhilosopherId ||
+                    connection.to === highlightedPhilosopherId;
+                return { ...connection, startPos, endPos, isHighlighted, connectionOpacity, index };
+            })
+            .filter(Boolean);
+    }, [showInfluences, influenceConnections, positionMap, highlightedPhilosopherId]);
+
     return (
         <g className="constellation-lines-layer">
-            {/* SVG filter for smoother lines */}
+            {/* SVG defs: filter + arrowhead marker */}
             <defs>
                 <filter id="line-glow" x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
@@ -215,6 +319,17 @@ const ConstellationLines = memo(({
                         <feMergeNode in="SourceGraphic" />
                     </feMerge>
                 </filter>
+                <marker
+                    id="influence-arrow"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="6"
+                    markerHeight="6"
+                    orient="auto-start-reverse"
+                >
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
+                </marker>
             </defs>
 
             {processedConnections.map(conn => (
@@ -225,6 +340,19 @@ const ConstellationLines = memo(({
                     endPos={conn.endPos}
                     isHighlighted={conn.isHighlighted}
                     isHovered={conn.isHovered}
+                    opacity={opacity * conn.connectionOpacity}
+                    index={conn.index}
+                />
+            ))}
+
+            {/* Influence arrows */}
+            {processedInfluences.map(conn => (
+                <InfluenceLine
+                    key={conn.id}
+                    connection={conn}
+                    startPos={conn.startPos}
+                    endPos={conn.endPos}
+                    isHighlighted={conn.isHighlighted}
                     opacity={opacity * conn.connectionOpacity}
                     index={conn.index}
                 />

@@ -73,11 +73,6 @@ const eraMapping = {
 // Get era key for CSS class
 const getEraKey = (eraName) => eraMapping[eraName] || 'default';
 
-// Get era index from event
-const getEraFromEvent = (event) => {
-    return getEraKey(event.era);
-};
-
 function HomePage() {
     const [eventModal, setEventModal] = useState(null);
     const [conceptPanel, setConceptPanel] = useState(null);
@@ -110,6 +105,12 @@ function HomePage() {
     const particleIdCounter = useRef(0);
     const touchStartX = useRef(0);
     const touchStartY = useRef(0);
+    const focusedIndexRef = useRef(focusedIndex);
+
+    // Keep ref in sync with state for use in scroll handler
+    useEffect(() => {
+        focusedIndexRef.current = focusedIndex;
+    }, [focusedIndex]);
 
     // Memoize eventsByEra calculation
     const eventsByEra = useMemo(() => {
@@ -185,7 +186,8 @@ function HomePage() {
     // Highlight text in search results
     const highlightText = (text, query) => {
         if (!query.trim()) return text;
-        const parts = text.split(new RegExp(`(${query})`, 'gi'));
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
         return parts.map((part, i) =>
             part.toLowerCase() === query.toLowerCase()
                 ? <span key={i} className="search-highlight">{part}</span>
@@ -309,6 +311,7 @@ function HomePage() {
     }, [isLoading, drawVortexPath]);
 
     // Effect for scroll-based animations and focusing
+    // Uses focusedIndexRef to avoid re-registering the listener on every focus change
     useEffect(() => {
         let animationFrameId = null;
         let lastParticleTime = 0;
@@ -352,12 +355,10 @@ function HomePage() {
                     }
                 });
 
-                if (closestIndex !== -1 && closestIndex !== focusedIndex) {
+                if (closestIndex !== -1 && closestIndex !== focusedIndexRef.current) {
                     setFocusedIndex(closestIndex);
                     const targetProgress = (closestIndex + 1) / validatedTimelineEvents.length;
                     setDotProgress(targetProgress);
-
-                    // Era is now derived from focusedIndex in the JSX
 
                     // Create particle trail
                     const now = Date.now();
@@ -384,7 +385,7 @@ function HomePage() {
             window.removeEventListener('scroll', handleScroll);
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
         };
-    }, [focusedIndex, createParticle]);
+    }, [createParticle]);
 
     // Clean up old particles
     useEffect(() => {
@@ -415,7 +416,8 @@ function HomePage() {
     }, [showSearch, eventModal, conceptPanel]);
 
     const navigateToNextEvent = useCallback(() => {
-        const nextIndex = (focusedIndex === null ? 0 : focusedIndex + 1) % validatedTimelineEvents.length;
+        const current = focusedIndexRef.current;
+        const nextIndex = (current === null ? 0 : current + 1) % validatedTimelineEvents.length;
         const nextEventElement = itemRefs.current[nextIndex]?.current;
 
         if (nextEventElement) {
@@ -424,12 +426,13 @@ function HomePage() {
                 block: 'center'
             });
         }
-    }, [focusedIndex]);
+    }, []);
 
     const navigateToPrevEvent = useCallback(() => {
-        const prevIndex = focusedIndex === null || focusedIndex === 0
+        const current = focusedIndexRef.current;
+        const prevIndex = current === null || current === 0
             ? validatedTimelineEvents.length - 1
-            : focusedIndex - 1;
+            : current - 1;
         const prevEventElement = itemRefs.current[prevIndex]?.current;
 
         if (prevEventElement) {
@@ -438,7 +441,7 @@ function HomePage() {
                 block: 'center'
             });
         }
-    }, [focusedIndex]);
+    }, []);
 
     // Touch/swipe handlers for mobile
     useEffect(() => {
@@ -484,7 +487,7 @@ function HomePage() {
             window.removeEventListener('touchend', handleTouchEnd);
             clearTimeout(swipeHintTimeout);
         };
-    }, [focusedIndex, navigateToNextEvent, navigateToPrevEvent]);
+    }, [navigateToNextEvent, navigateToPrevEvent]);
 
     const navigateToEra = (era) => {
         const eraElement = eraRefs.current[era];
@@ -497,11 +500,9 @@ function HomePage() {
     };
 
     const openEventModal = (data) => {
-        console.log('Opening modal for:', data?.title);
         setEventModal(data);
     };
     const closeEventModal = () => {
-        console.log('Closing modal');
         setEventModal(null);
     };
 
@@ -902,7 +903,7 @@ function HomePage() {
                                     <div
                                         key={event.id}
                                         className={`timeline-item-wrapper ${isFocused ? 'focused' : ''} ${isFiltered ? 'filtered-out' : ''} ${isHovered ? 'hovered' : ''}`}
-                                        data-era={getEraFromEvent(event)}
+                                        data-era={getEraKey(event.era)}
                                         data-index={currentIndex}
                                         ref={itemRefs.current[currentIndex]}
                                         onClick={() => isFocused && openEventModal(event)}
@@ -946,7 +947,6 @@ function HomePage() {
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
-                                                    console.log('Button clicked for:', event.title);
                                                     openEventModal(event);
                                                 }}
                                                 onMouseDown={(e) => e.stopPropagation()}
@@ -1061,11 +1061,10 @@ function HomePage() {
             {/* Mini-Event Preview Tooltip */}
             {miniEventPreview && (
                 <div
-                    className={`mini-event-preview ${miniEventPreview ? 'visible' : ''}`}
+                    className="mini-event-preview visible"
                     style={{
                         left: miniEventPreview.x,
-                        top: miniEventPreview.y,
-                        transform: 'translateY(-100%)'
+                        bottom: window.innerHeight - miniEventPreview.y + 10
                     }}
                 >
                     <h5>{miniEventPreview.data.title}</h5>
@@ -1108,7 +1107,7 @@ function HomePage() {
             </button>
 
             <footer className="footer">
-                <p>&copy; 2025 Map of Thought. A VQM Project.</p>
+                <p>&copy; 2026 Map of Thought. A VQM Project.</p>
             </footer>
         </div>
     );

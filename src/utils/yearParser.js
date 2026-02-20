@@ -103,11 +103,54 @@ export const ERA_BOUNDARIES = [
     { year: 1950, label: '1950', era: 'contemporary' }
 ];
 
+/**
+ * Parse birth and death years from a fullYear string
+ * Handles formats like "c. 624–546 BC", "354-430 AD", "1596–1650", "c. 387 BC"
+ * Falls back to birth_year / death_year fields if available
+ * @param {Object} philosopher - Philosopher object
+ * @returns {{ birth: number, death: number }} Numeric birth/death years
+ */
+export const parseBirthDeath = (philosopher) => {
+    // Try explicit fields first
+    if (philosopher.birth_year && philosopher.death_year) {
+        return {
+            birth: parseYear(philosopher.birth_year),
+            death: parseYear(philosopher.death_year)
+        };
+    }
+
+    const fullYear = philosopher.fullYear || '';
+    // Try to match a range like "c. 624–546 BC" or "1596–1650" or "354-430 AD"
+    const rangeMatch = fullYear.match(/c?\.\s*(\d+)\s*(?:BC|AD|BCE|CE)?\s*[–\-]\s*c?\.\s*(\d+)\s*(BC|AD|BCE|CE)?/i);
+
+    if (rangeMatch) {
+        const num1 = parseInt(rangeMatch[1], 10);
+        const num2 = parseInt(rangeMatch[2], 10);
+        const era = rangeMatch[3]?.toUpperCase();
+
+        if (era === 'BC' || era === 'BCE') {
+            // Both are BC: "624–546 BC" → -624, -546
+            return { birth: -num1, death: -num2 };
+        } else if (era === 'AD' || era === 'CE') {
+            // Both are AD: "354-430 AD"
+            return { birth: num1, death: num2 };
+        } else {
+            // No era suffix — plain numbers like "1596–1650"
+            return { birth: num1, death: num2 };
+        }
+    }
+
+    // Single year, use parseYear for a point
+    const year = parseYear(philosopher.year || fullYear);
+    return { birth: year - 30, death: year + 30 };
+};
+
 export default {
     parseYear,
     normalizeYear,
     denormalizeYear,
     formatYear,
     getEraFromYear,
+    parseBirthDeath,
     ERA_BOUNDARIES
 };

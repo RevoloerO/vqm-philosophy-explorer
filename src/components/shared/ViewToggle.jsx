@@ -1,14 +1,11 @@
 /**
  * ViewToggle Component
- * Toggle button to switch between Timeline and Constellation views
+ * Toggle button to switch between Timeline, Constellation, and Metro views
  */
 
 import React, { memo } from 'react';
 import './ViewToggle.css';
 
-/**
- * Timeline Icon
- */
 const TimelineIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
         <line x1="3" y1="12" x2="21" y2="12" />
@@ -18,9 +15,6 @@ const TimelineIcon = () => (
     </svg>
 );
 
-/**
- * Constellation Icon (stars)
- */
 const ConstellationIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
         <circle cx="12" cy="6" r="2" />
@@ -32,33 +26,39 @@ const ConstellationIcon = () => (
     </svg>
 );
 
-/**
- * ViewToggle - Toggle button component
- */
+const MetroIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <path d="M4 8h16" />
+        <path d="M4 14h16" />
+        <circle cx="8" cy="8" r="2" fill="currentColor" />
+        <circle cx="14" cy="14" r="2" fill="currentColor" />
+        <circle cx="18" cy="8" r="2" fill="currentColor" />
+        <circle cx="10" cy="14" r="2" fill="currentColor" />
+    </svg>
+);
+
+const VIEW_MODES = [
+    { key: 'timeline', label: 'Timeline', Icon: TimelineIcon },
+    { key: 'constellation', label: 'Stars', Icon: ConstellationIcon },
+    { key: 'metro', label: 'Metro', Icon: MetroIcon },
+];
+
 const ViewToggle = ({ viewMode, onToggle, isTransitioning }) => {
     return (
         <div className={`view-toggle ${isTransitioning ? 'transitioning' : ''}`}>
-            <button
-                className={`view-toggle-btn ${viewMode === 'timeline' ? 'active' : ''}`}
-                onClick={() => onToggle('timeline')}
-                disabled={isTransitioning}
-                aria-label="Timeline view"
-                title="Timeline View"
-            >
-                <TimelineIcon />
-                <span className="view-toggle-label">Timeline</span>
-            </button>
-
-            <button
-                className={`view-toggle-btn ${viewMode === 'constellation' ? 'active' : ''}`}
-                onClick={() => onToggle('constellation')}
-                disabled={isTransitioning}
-                aria-label="Constellation view"
-                title="Constellation View"
-            >
-                <ConstellationIcon />
-                <span className="view-toggle-label">Constellation</span>
-            </button>
+            {VIEW_MODES.map(({ key, label, Icon }) => (
+                <button
+                    key={key}
+                    className={`view-toggle-btn ${viewMode === key ? 'active' : ''}`}
+                    onClick={() => onToggle(key)}
+                    disabled={isTransitioning}
+                    aria-label={`${label} view`}
+                    title={`${label} View`}
+                >
+                    <Icon />
+                    <span className="view-toggle-label">{label}</span>
+                </button>
+            ))}
         </div>
     );
 };
