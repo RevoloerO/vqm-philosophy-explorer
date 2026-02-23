@@ -5,7 +5,6 @@ import { ConstellationProvider, useConstellationContext } from './context/Conste
 import ConstellationMap from './components/ConstellationMap';
 import { MetroMap } from './components/ConstellationMap';
 import ViewToggle from './components/shared/ViewToggle';
-import './css/MetroMap.css';
 
 /**
  * MainView - Handles the toggle between Timeline and Constellation views

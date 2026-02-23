@@ -13,7 +13,9 @@
       "Bash(npm run dev:*)",
       "Bash(npm audit fix:*)",
       "Bash(npx vite build)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(grep:*)",
+      "Bash(node test-bugs.mjs:*)"
     ]
   }
 }

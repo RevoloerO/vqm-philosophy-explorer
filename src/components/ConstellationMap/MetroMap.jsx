@@ -286,6 +286,7 @@ const MetroMap = ({ onPhilosopherSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
     const [highlightedLine, setHighlightedLine] = useState(null);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [hoveredConcept, setHoveredConcept] = useState(null);
 
     // Pan state
     const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -478,6 +479,8 @@ const MetroMap = ({ onPhilosopherSelect }) => {
                 isOpen={isPanelOpen}
                 onClose={handleClosePanel}
                 conceptsMap={conceptsMap}
+                hoveredConcept={hoveredConcept}
+                onConceptHover={setHoveredConcept}
                 onNavigateToPhilosopher={handleNavigateToPhilosopher}
                 connections={connections}
                 allPhilosophers={timelineEvents}
